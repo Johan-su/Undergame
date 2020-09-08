@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-class Game
+class Game //TODO: change to namespace
 {
 public:
 
