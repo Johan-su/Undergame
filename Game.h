@@ -3,22 +3,26 @@
 class Game
 {
 public:
-	Game();
-	~Game();
 
 
-	void init();
+	static bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
 
-	void clean();
+	static void clean();
 
-	void update();
+	static void update();
 
-	void render();
+	static void events();
+
+	static void render();
 
 public:
-	static SDL_renderer* renderer;
+	static bool Running;
+
+	static SDL_Window* window;
+	static SDL_Renderer* renderer;
 
 private:
+	Game();
 
 private:
 };
