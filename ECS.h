@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "EntityManager.h"
 #include "ComponentArray.h"
+#include "ComponentManager.h"
+#include "SystemManager.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
 

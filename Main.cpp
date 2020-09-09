@@ -43,6 +43,8 @@ int main(int argc, char* argv[])
 	std::cout << "ca" << "ID " << e.id << " = " << ca->get_component(e) << std::endl;
 
 	std::cin.ignore();
+	delete ca;
+	delete em;
 
 	/*if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0))
 	{
@@ -72,8 +74,6 @@ int main(int argc, char* argv[])
 		Game::render();
 	}
 	Game::clean();*/
-	delete ca;
-	delete em;
 	return 0;
 }
 

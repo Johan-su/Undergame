@@ -20,11 +20,12 @@ public:
 	}
 	void destroy_component(const Entity& e)
 	{
-		if (index[e.id] == m_size)
+		if (index[e.id] == m_size-1)
 		{
 			--m_size;
 			return;
 		}
+		index[m_size - 1] = e.id;
 		m_componentArray[index[e.id]] = m_componentArray[m_size-1];
 
 
