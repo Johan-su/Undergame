@@ -1,12 +1,12 @@
 #pragma once
-#include "Entity.h"
-#include "Component.h"
 #include <memory>
+#include "Entity.h"
+#include "EntityManager.h"
+#include "ComponentArray.h"
+#include "TransformComponent.h"
+#include "RenderComponent.h"
 
 
+//static const std::uint8_t MAX_COMPONENTS = 64;
+//static const std::uint32_t MAX_ENTITIES = 500000;
 
-inline std::size_t getID()
-{
-	static std::size_t id = 0u;
-	return ++id;
-}

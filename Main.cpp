@@ -1,11 +1,50 @@
-#include <chrono>
+//#include <chrono>
 #include <iostream>
 #include <SDL.h>
+#include "ECS.h"
 #include "Game.h"
 
+
+#define arrSize 10
 int main(int argc, char* argv[])
 {
-	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0))
+	EntityManager *em = new EntityManager();
+	Entity eArr[arrSize];
+	for (int i = 0; i < arrSize; ++i)
+	{
+		eArr[i] = em->Create_entity();
+	}
+	for (int i = 0; i < arrSize; ++i)
+	{
+		std::cout << "ID " << i << " = " << eArr[i].id << std::endl;
+	}
+	ComponentArray<int> *ca = new ComponentArray<int>();
+
+
+
+	for (int i = 0; i < arrSize; ++i)
+	{
+		ca->add_component(eArr[i], i);
+	}
+
+
+	Entity e = em->Create_entity();
+
+	ca->add_component(e,9999);
+	em->Destroy_entity(eArr[2]);
+	ca->destroy_component(eArr[2]);
+
+	std::cout << ca->get_component(eArr[2]) << std::endl;
+
+	for (int i = 0; i < ca->get_size(); ++i)
+	{
+		std::cout << "ca" << "ID " << i << " = " << ca->get_component(eArr[i]) << std::endl;
+	}
+	std::cout << "ca" << "ID " << e.id << " = " << ca->get_component(e) << std::endl;
+
+	std::cin.ignore();
+
+	/*if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0))
 	{
 		std::cout << "SDL_initalization failed" << std::endl;
 		std::cin;
@@ -32,7 +71,9 @@ int main(int argc, char* argv[])
 		}
 		Game::render();
 	}
-	Game::clean();
+	Game::clean();*/
+	delete ca;
+	delete em;
 	return 0;
 }
 
