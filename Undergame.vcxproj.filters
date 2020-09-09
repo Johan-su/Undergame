@@ -16,6 +16,9 @@
     <Filter Include="Header Files\ECS">
       <UniqueIdentifier>{43420c91-b436-41a4-90e0-961f122195ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\data">
+      <UniqueIdentifier>{b29e0299-c1c0-41dd-aa53-827bddf12bec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -44,6 +47,12 @@
     </ClInclude>
     <ClInclude Include="ECS.h">
       <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="vecf.h">
+      <Filter>Header Files\data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -168,6 +168,8 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tilemap.h" />
+    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="vecf.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
