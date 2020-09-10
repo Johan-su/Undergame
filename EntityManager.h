@@ -5,8 +5,6 @@
 #include "Entity.h"
 #include "ECS.h"
 
-#define MAX_COMPONENTS 64u
-#define MAX_ENTITIES 500000u
 
 class EntityManager
 {

@@ -1,8 +1,7 @@
 #pragma once
 #include <iostream>
 #include "ECS.h"
-#define MAX_COMPONENTS 64u
-#define MAX_ENTITIES 500000u
+
 template<typename T>
 class ComponentArray
 {
@@ -36,7 +35,7 @@ public:
 		return m_componentArray[index[e.id]];
 	}
 
-	size_t get_size() const
+	uint32_t get_size() const
 	{
 		return m_size;
 	}
@@ -44,5 +43,5 @@ public:
 private:
 	std::array<T, MAX_ENTITIES> m_componentArray;
 	std::array<uint32_t, MAX_ENTITIES> index;
-	size_t m_size;
+	uint32_t m_size;
 };

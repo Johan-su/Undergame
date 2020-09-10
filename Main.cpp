@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 
 	std::cout << ca->get_component(eArr[2]) << std::endl;
 
-	for (int i = 0; i < ca->get_size(); ++i)
+	for (unsigned int i = 0; i < ca->get_size(); ++i)
 	{
 		std::cout << "ca" << "ID " << i << " = " << ca->get_component(eArr[i]) << std::endl;
 	}

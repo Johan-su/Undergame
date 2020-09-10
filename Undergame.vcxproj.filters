@@ -25,6 +25,12 @@
     <Filter Include="Source Files\data">
       <UniqueIdentifier>{35ee1589-b18e-492a-a541-1a5a4b85a783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{7b3c137f-5bd9-4fd3-ac8d-ad687a58a663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Systems">
+      <UniqueIdentifier>{e981c45b-81fd-4f20-8ec5-633cf1ffefe4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -42,23 +48,14 @@
     <ClInclude Include="Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="ECS.h">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="vecf.h">
       <Filter>Header Files\data</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">
       <Filter>Header Files\ECS</Filter>
@@ -70,6 +67,21 @@
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="SystemManager.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordinator.h">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
   </ItemGroup>
