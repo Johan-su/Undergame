@@ -30,13 +30,13 @@ public:
 		++m_componentTypeCount;
 	}
 	template<typename T>
-	void add_component(const Entity& e)
+	void add_component(const Entity& e, T component)
 	{
 		std::string componentName = typeid(T).name();
 
 		if (m_typeToArray.find(componentName) != m_typeToArray.end())
 		{
-
+			get_component_array<T>()->
 		}
 
 	}
@@ -69,5 +69,5 @@ private:
 	std::unordered_map<std::string, uint8_t> m_typeToArray;
 	uint8_t m_componentTypeCount;
 
-	std::array<void*, MAX_COMPONENTS> m_arrayPointers;
+	std::array<ComponentArray*, MAX_COMPONENTS> m_arrayPointers; //todo fix get component array, add component
 };

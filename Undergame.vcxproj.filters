@@ -25,11 +25,11 @@
     <Filter Include="Source Files\data">
       <UniqueIdentifier>{35ee1589-b18e-492a-a541-1a5a4b85a783}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{7b3c137f-5bd9-4fd3-ac8d-ad687a58a663}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Systems">
+    <Filter Include="Header Files\ECS\Systems">
       <UniqueIdentifier>{e981c45b-81fd-4f20-8ec5-633cf1ffefe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Components">
+      <UniqueIdentifier>{7b3c137f-5bd9-4fd3-ac8d-ad687a58a663}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,10 +76,10 @@
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="Coordinator.h">
       <Filter>Header Files\ECS</Filter>
@@ -94,9 +94,6 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Source Files\ECS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
