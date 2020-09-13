@@ -3,7 +3,6 @@
 #define MAX_ENTITIES 500000u
 #define MAX_SYSTEMS 255u
 
-#include <memory>
 #include "Entity.h"
 #include "ComponentArray.h"
 #include "System.h"
@@ -12,7 +11,19 @@
 #include "SystemManager.h"
 #include "Scene.h"
 #include "Coordinator.h"
+
+
+
+
+
+
+
+
+
+
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include "PlayerComponent.h"
+#include "HealthComponent.h"
 
 

@@ -2,8 +2,20 @@
 #include <iostream>
 #include "ECS.h"
 
+
+
+
+class ComponentArrayV
+{
+public:
+	virtual void destroy_component(const Entity& e) = 0;
+};
+
+
+
+
 template<typename T>
-class ComponentArray
+class ComponentArray : public ComponentArrayV
 {
 public:
 	ComponentArray()
@@ -17,17 +29,15 @@ public:
 		index[e.id] = m_size;
 		++m_size;
 	}
-	void destroy_component(const Entity& e)
+	void destroy_component(const Entity& e) override
 	{
-		if (index[e.id] == m_size-1)
+		if (index[e.id] == m_size-1) // if at the end of array just remove it, it will still be a packed array.
 		{
 			--m_size;
 			return;
 		}
-		index[m_size - 1] = e.id;
-		m_componentArray[index[e.id]] = m_componentArray[m_size-1];
-
-
+		index[m_size - 1] = e.id; // replace last index to point to, replace the last element with the newly destroyed one.
+		m_componentArray[index[e.id]] = m_componentArray[m_size-1]; // moves component from last element, to newly destroyed.
 		--m_size;
 	}
 	T& get_component(const Entity& e)

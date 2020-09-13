@@ -1,9 +1,8 @@
 #pragma once
 #include <SDL.h>
-#include "vecf.h"
 
 struct RenderComponent
 {
-	SDL_Rect srcrect;
+	SDL_Rect src_rect;
 	SDL_Texture* texture;
 };

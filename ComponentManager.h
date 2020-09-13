@@ -1,13 +1,14 @@
 #pragma once
 #include <string>
 #include <array>
+#include <memory>
 #include <unordered_map>
 #include "ECS.h"
 class ComponentManager
 {
 public:
 	ComponentManager()
-	: m_componentTypeCount(0)
+	: m_componentTypeCount(0), m_arrayPointers({})
 	{
 	}
 	template<typename T>
@@ -16,6 +17,7 @@ public:
 		if (m_componentTypeCount >= 64)
 		{
 			throw "too many component types";
+			return;
 		}
 		std::string componentName = typeid(T).name();
 		for (int i = 0; i < m_componentTypeCount; ++i)
@@ -33,14 +35,21 @@ public:
 	void add_component(const Entity& e, T component)
 	{
 		std::string componentName = typeid(T).name();
-
-		if (m_typeToArray.find(componentName) != m_typeToArray.end())
-		{
-			get_component_array<T>()->
-		}
+		get_component_array<T>()->add_component(e, component);
 
 	}
-
+	template<typename T>
+	void destroy_component(const Entity& e)
+	{
+		get_component_array<T>->destroy_component(e);
+	}
+	void remove_entity(const Entity& e)
+	{
+		for (auto const& arr : m_arrayPointers)
+		{
+			arr->destroy_component(e);
+		}
+	}
 	template<typename T>
 	ComponentArray<T>* get_component_array()
 	{
@@ -51,6 +60,13 @@ public:
 		}
 		std::cout << "failed to find array" << std::endl;
 		return nullptr;
+	}
+
+	template<typename T>
+	uint8_t get_component_pos()
+	{
+		std::string componentName = typeid(T).name();
+		return m_typeToArray.find(componentName);
 	}
 
 
@@ -69,5 +85,5 @@ private:
 	std::unordered_map<std::string, uint8_t> m_typeToArray;
 	uint8_t m_componentTypeCount;
 
-	std::array<ComponentArray*, MAX_COMPONENTS> m_arrayPointers; //todo fix get component array, add component
+	std::array<ComponentArrayV*, MAX_COMPONENTS> m_arrayPointers; //todo fix get component array, add component
 };

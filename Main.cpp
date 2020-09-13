@@ -1,50 +1,26 @@
 //#include <chrono>
 #include <iostream>
+#include <memory>
 #include <SDL.h>
 #include "ECS.h"
 #include "Game.h"
 
 
-#define arrSize 10
 int main(int argc, char* argv[])
 {
-	EntityManager *em = new EntityManager();
-	Entity eArr[arrSize];
-	for (int i = 0; i < arrSize; ++i)
-	{
-		eArr[i] = em->Create_entity();
-	}
-	for (int i = 0; i < arrSize; ++i)
-	{
-		std::cout << "ID " << i << " = " << eArr[i].id << std::endl;
-	}
-	ComponentArray<int> *ca = new ComponentArray<int>();
+	std::unique_ptr<Coordinator> m_coordinator = std::make_unique<Coordinator>();
 
+	std::vector<Entity> m_entities(MAX_ENTITIES);
+	m_coordinator->init();
 
+	m_coordinator->register_component<TransformComponent>();
+	m_coordinator->register_component<RenderComponent>();
+	m_coordinator->register_component<PlayerComponent>();
+	m_coordinator->register_component<HealthComponent>();
 
-	for (int i = 0; i < arrSize; ++i)
-	{
-		ca->add_component(eArr[i], i);
-	}
-
-
-	Entity e = em->Create_entity();
-
-	ca->add_component(e,9999);
-	em->Destroy_entity(eArr[2]);
-	ca->destroy_component(eArr[2]);
-
-	std::cout << ca->get_component(eArr[2]) << std::endl;
-
-	for (unsigned int i = 0; i < ca->get_size(); ++i)
-	{
-		std::cout << "ca" << "ID " << i << " = " << ca->get_component(eArr[i]) << std::endl;
-	}
-	std::cout << "ca" << "ID " << e.id << " = " << ca->get_component(e) << std::endl;
+	m_coordinator->create_entity();
 
 	std::cin.ignore();
-	delete ca;
-	delete em;
 
 	/*if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0))
 	{

@@ -20,10 +20,6 @@ public:
 
 	Entity Create_entity()
 	{
-		if (m_entityCount > MAX_ENTITIES)
-		{
-			throw "too many entities";
-		}
 
 		Entity e;
 		e.id = m_AvailableIDs.front();
@@ -45,7 +41,7 @@ public:
 		m_signatures[e.id] = signature;
 	}
 
-	std::bitset<MAX_COMPONENTS> Get_signature(const Entity& e)
+	std::bitset<MAX_COMPONENTS>& Get_signature(const Entity& e)
 	{
 		return m_signatures[e.id];
 	}
