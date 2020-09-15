@@ -1,6 +1,3 @@
 #pragma once
-class Entity
-{
-public:
-	unsigned long id;
-};
+#include <cstdint>
+using Entity = uint32_t;

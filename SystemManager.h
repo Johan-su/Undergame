@@ -1,13 +1,17 @@
 #pragma once
+#include <memory>
 #include "ECS.h"
 
 class SystemManager
 {
 public:
 	template<typename T>
-	T* register_system()
+	System* register_system()
 	{
 		std::string systemName = typeid(T).name();
+		auto system = new T;
+		m_systemMap.insert(systemName, system);
+		return system;
 
 	}
 	template<typename T>
@@ -19,15 +23,15 @@ public:
 	}
 	void remove_entity(const Entity& e)
 	{
-		for (auto const& pair : m_systemArray)
+		for (auto const& pair : m_systemMap)
 		{
 			auto const& system = pair.second;
-			system->m_entities.erase(e.id);
+			system->m_entities.erase(e);
 		}
 	}
 	void entity_changed_signature(const Entity& e, std::bitset<MAX_COMPONENTS> e_signature)
 	{
-		for (auto const& pair : m_systemArray)
+		for (auto const& pair : m_systemMap)
 		{
 			auto const& type = pair.first;
 			auto const& system = pair.second;
@@ -36,11 +40,11 @@ public:
 
 			if (comparisionSignature == signature)
 			{
-				system->m_entities.insert(e.id);
+				system->m_entities.insert(e);
 			}
 			else
 			{
-				system->m_entities.erase(e.id);
+				system->m_entities.erase(e);
 			}
 		}
 	}
@@ -48,5 +52,5 @@ private:
 
 	std::unordered_map<std::string, std::bitset<MAX_COMPONENTS>> m_signatures;
 
-	std::unordered_map<std::string, System*> m_systemArray;
+	std::unordered_map<std::string, System*> m_systemMap;
 };

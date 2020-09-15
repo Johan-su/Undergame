@@ -41,7 +41,7 @@ public:
 	template<typename T>
 	void destroy_component(const Entity& e)
 	{
-		get_component_array<T>->destroy_component(e);
+		get_component_array<T>()->destroy_component(e);
 	}
 	void remove_entity(const Entity& e)
 	{
@@ -56,7 +56,8 @@ public:
 		std::string componentName = typeid(T).name();
 		if (m_typeToArray.find(componentName) != m_typeToArray.end())
 		{
-			return m_arrayPointers[m_typeToArray[componentName]];
+			return static_cast<ComponentArray<T>*>(m_arrayPointers[m_typeToArray[componentName]]);
+			//return m_arrayPointers[m_typeToArray[componentName]];
 		}
 		std::cout << "failed to find array" << std::endl;
 		return nullptr;
@@ -66,8 +67,15 @@ public:
 	uint8_t get_component_pos()
 	{
 		std::string componentName = typeid(T).name();
-		return m_typeToArray.find(componentName);
+		return m_typeToArray.at(componentName);
 	}
+
+	template<typename T>
+	T& get_component(const Entity& e)
+	{
+		return get_component_array<T>()->get_component(e);
+	}
+
 
 
 
@@ -85,5 +93,5 @@ private:
 	std::unordered_map<std::string, uint8_t> m_typeToArray;
 	uint8_t m_componentTypeCount;
 
-	std::array<ComponentArrayV*, MAX_COMPONENTS> m_arrayPointers; //todo fix get component array, add component
+	std::array<ComponentArrayV*, MAX_COMPONENTS> m_arrayPointers;
 };

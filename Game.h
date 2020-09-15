@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL.h>
+#include "ECS.h"
+
 class Game //TODO: change to namespace
 {
 public:
@@ -17,7 +19,6 @@ public:
 
 public:
 	static bool Running;
-
 	static SDL_Window* window;
 	static SDL_Renderer* renderer;
 

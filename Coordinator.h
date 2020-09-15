@@ -44,8 +44,14 @@ public:
 		m_entityManager->Set_signature(e, sig);
 		m_systemManager->entity_changed_signature(e, sig);
 	}
+	template<typename T>
+	T& get_component(const Entity& e)
+	{
+		return m_componentManager->get_component<T>(e);
+	}
+
+	std::unique_ptr<EntityManager> m_entityManager; // todo move to private
+	std::unique_ptr<ComponentManager> m_componentManager; // todo move to private
+	std::unique_ptr<SystemManager> m_systemManager; // todo move to private
 private:
-	std::unique_ptr<EntityManager> m_entityManager;
-	std::unique_ptr<ComponentManager> m_componentManager;
-	std::unique_ptr<SystemManager> m_systemManager;
 };

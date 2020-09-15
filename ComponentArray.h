@@ -26,23 +26,23 @@ public:
 	void add_component(const Entity& e, T component)
 	{
 		m_componentArray[m_size] = component;
-		index[e.id] = m_size;
+		index[e] = m_size;
 		++m_size;
 	}
 	void destroy_component(const Entity& e) override
 	{
-		if (index[e.id] == m_size-1) // if at the end of array just remove it, it will still be a packed array.
+		if (index[e] == m_size-1) // if at the end of array just remove it, it will still be a packed array.
 		{
 			--m_size;
 			return;
 		}
-		index[m_size - 1] = e.id; // replace last index to point to, replace the last element with the newly destroyed one.
-		m_componentArray[index[e.id]] = m_componentArray[m_size-1]; // moves component from last element, to newly destroyed.
+		index[m_size - 1] = e; // replace last index to point to, replace the last element with the newly destroyed one.
+		m_componentArray[index[e]] = m_componentArray[m_size-1]; // moves component from last element, to newly destroyed.
 		--m_size;
 	}
 	T& get_component(const Entity& e)
 	{
-		return m_componentArray[index[e.id]];
+		return m_componentArray[index[e]];
 	}
 
 	uint32_t get_size() const
@@ -50,8 +50,8 @@ public:
 		return m_size;
 	}
 
+	std::array<T, MAX_ENTITIES> m_componentArray; //TODO change to private
 private:
-	std::array<T, MAX_ENTITIES> m_componentArray;
 	std::array<uint32_t, MAX_ENTITIES> index;
 	uint32_t m_size;
 };

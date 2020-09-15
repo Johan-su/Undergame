@@ -21,8 +21,7 @@ public:
 	Entity Create_entity()
 	{
 
-		Entity e;
-		e.id = m_AvailableIDs.front();
+		Entity e = m_AvailableIDs.front();
 		m_AvailableIDs.pop();
 		++m_entityCount;
 		return e;
@@ -30,20 +29,20 @@ public:
 
 	void Destroy_entity(const Entity& e)
 	{
-		m_signatures[e.id].reset();
+		m_signatures[e].reset();
 
-		m_AvailableIDs.push(e.id);
+		m_AvailableIDs.push(e);
 		--m_entityCount;
 	}
 
 	void Set_signature(const Entity& e, std::bitset<MAX_COMPONENTS> signature)
 	{
-		m_signatures[e.id] = signature;
+		m_signatures[e] = signature;
 	}
 
 	std::bitset<MAX_COMPONENTS>& Get_signature(const Entity& e)
 	{
-		return m_signatures[e.id];
+		return m_signatures[e];
 	}
 
 private:

@@ -4,5 +4,5 @@
 
 class RenderSystem : public System
 {
-
+	void render();
 };

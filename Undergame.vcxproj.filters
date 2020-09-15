@@ -31,6 +31,9 @@
     <Filter Include="Header Files\ECS\Components">
       <UniqueIdentifier>{7b3c137f-5bd9-4fd3-ac8d-ad687a58a663}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ECS\Systems">
+      <UniqueIdentifier>{87cdf582-38a9-4dd7-9847-3f4dafba3112}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

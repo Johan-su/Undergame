@@ -5,20 +5,51 @@
 #include "ECS.h"
 #include "Game.h"
 
+static std::unique_ptr<Coordinator> g_coordinator;
+
 
 int main(int argc, char* argv[])
 {
-	std::unique_ptr<Coordinator> m_coordinator = std::make_unique<Coordinator>();
+	g_coordinator = std::make_unique<Coordinator>();
+
 
 	std::vector<Entity> m_entities(MAX_ENTITIES);
-	m_coordinator->init();
+	g_coordinator->init();
 
-	m_coordinator->register_component<TransformComponent>();
-	m_coordinator->register_component<RenderComponent>();
-	m_coordinator->register_component<PlayerComponent>();
-	m_coordinator->register_component<HealthComponent>();
+	g_coordinator->register_component<TransformComponent>();
+	g_coordinator->register_component<RenderComponent>();
+	g_coordinator->register_component<PlayerComponent>();
+	g_coordinator->register_component<HealthComponent>();
 
-	m_coordinator->create_entity();
+	Entity e[5];
+	e[0] = g_coordinator->create_entity();
+	e[1] = g_coordinator->create_entity();
+	e[2] = g_coordinator->create_entity();
+	e[3] = g_coordinator->create_entity();
+	e[4] = g_coordinator->create_entity();
+
+
+	for (int i = 0; i < 5; ++i)
+	{
+	g_coordinator->add_component(e[i], TransformComponent());
+	g_coordinator->add_component(e[i], RenderComponent());
+	std::cout << (g_coordinator->m_entityManager->Get_signature(e[i])) << std::endl;
+	}
+	auto arr = g_coordinator->m_componentManager->get_component_array<TransformComponent>();
+
+
+
+
+	std::cout << "\n";
+	for (int i = 0; i < 5; ++i)
+	{
+		std::cout << (g_coordinator->m_entityManager->Get_signature(e[i])) << std::endl;
+	}
+
+
+
+	//std::cout << (m_coordinator->m_entityManager->Get_signature(e1)) << std::endl;
+
 
 	std::cin.ignore();
 
