@@ -49,9 +49,30 @@ public:
 	{
 		return m_componentManager->get_component<T>(e);
 	}
+	template<typename T>
+	uint8_t get_signature_pos()
+	{
+		return m_componentManager->get_component_pos<T>();
+	}
+	template<typename T>
+	std::shared_ptr<T> register_system()
+	{
+		return m_systemManager->register_system<T>();
+	}
+	template<typename T>
+	void set_signature(T system, std::bitset<MAX_COMPONENTS> signature)
+	{
+		m_systemManager->set_signature(system, signature);
+	}
+
+
+
 
 	std::unique_ptr<EntityManager> m_entityManager; // todo move to private
 	std::unique_ptr<ComponentManager> m_componentManager; // todo move to private
 	std::unique_ptr<SystemManager> m_systemManager; // todo move to private
+
+
+
 private:
 };

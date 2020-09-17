@@ -6,11 +6,12 @@ class SystemManager
 {
 public:
 	template<typename T>
-	System* register_system()
+	std::shared_ptr<T> register_system()
 	{
 		std::string systemName = typeid(T).name();
-		auto system = new T;
-		m_systemMap.insert(systemName, system);
+		std::shared_ptr<T> system = std::make_shared<T>();
+		//m_systemMap.insert(systemName, system);
+		m_systemMap[systemName] = system;
 		return system;
 
 	}
@@ -52,5 +53,5 @@ private:
 
 	std::unordered_map<std::string, std::bitset<MAX_COMPONENTS>> m_signatures;
 
-	std::unordered_map<std::string, System*> m_systemMap;
+	std::unordered_map<std::string, std::shared_ptr<System>> m_systemMap;
 };

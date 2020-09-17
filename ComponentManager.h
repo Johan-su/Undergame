@@ -67,7 +67,7 @@ public:
 	uint8_t get_component_pos()
 	{
 		std::string componentName = typeid(T).name();
-		return m_typeToArray.at(componentName);
+		return m_typeToArray[componentName];
 	}
 
 	template<typename T>

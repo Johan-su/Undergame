@@ -1,25 +1,21 @@
-//#include <chrono>
+#include <chrono>
 #include <iostream>
 #include <memory>
 #include <SDL.h>
 #include "ECS.h"
 #include "Game.h"
 
-static std::unique_ptr<Coordinator> g_coordinator;
 
 
 int main(int argc, char* argv[])
 {
-	g_coordinator = std::make_unique<Coordinator>();
 
 
 	std::vector<Entity> m_entities(MAX_ENTITIES);
-	g_coordinator->init();
 
-	g_coordinator->register_component<TransformComponent>();
-	g_coordinator->register_component<RenderComponent>();
-	g_coordinator->register_component<PlayerComponent>();
-	g_coordinator->register_component<HealthComponent>();
+
+
+
 
 	Entity e[5];
 	e[0] = g_coordinator->create_entity();
@@ -28,7 +24,7 @@ int main(int argc, char* argv[])
 	e[3] = g_coordinator->create_entity();
 	e[4] = g_coordinator->create_entity();
 
-
+	 // todo: fix pointer error with entity somewhere
 	for (int i = 0; i < 5; ++i)
 	{
 	g_coordinator->add_component(e[i], TransformComponent());
@@ -48,12 +44,7 @@ int main(int argc, char* argv[])
 
 
 
-	//std::cout << (m_coordinator->m_entityManager->Get_signature(e1)) << std::endl;
-
-
-	std::cin.ignore();
-
-	/*if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0))
+	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0))
 	{
 		std::cout << "SDL_initalization failed" << std::endl;
 		std::cin;
@@ -80,7 +71,7 @@ int main(int argc, char* argv[])
 		}
 		Game::render();
 	}
-	Game::clean();*/
+	Game::clean();
 	return 0;
 }
 

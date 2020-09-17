@@ -20,14 +20,14 @@
 
 #include "Scene.h"
 
-extern std::unique_ptr<Coordinator> g_coordinator; // todo fix global link
+//extern std::unique_ptr<Coordinator> g_coordinator; // todo fix global link
+
+static std::unique_ptr<Coordinator> g_coordinator;
 
 
 
 
-
-
-
+#include "RenderSystem.h"
 
 #include "TransformComponent.h"
 #include "RenderComponent.h"
