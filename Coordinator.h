@@ -5,16 +5,31 @@
 class Coordinator
 {
 public:
+	void test()
+	{
+		if (m_componentManager == nullptr || m_systemManager == nullptr || m_entityManager == nullptr)
+		{
+			std::cout << "nullptr" << std::endl;
+		}
+		std::cout << m_componentManager << std::endl;
+		std::cout << m_systemManager << std::endl; // TODO: fix managers being nullptr
+		std::cout << m_entityManager << std::endl;
+		std::cout << "test executed successfully" << std::endl;
+	}
 	void init()
 	{
 
-		m_entityManager = std::make_unique<EntityManager>();
+		/*m_entityManager = std::make_unique<EntityManager>();
 		m_componentManager = std::make_unique<ComponentManager>(); 
-		m_systemManager = std::make_unique<SystemManager>();
+		m_systemManager = std::make_unique<SystemManager>();*/
+
+		m_entityManager = new EntityManager();
+		m_componentManager = new ComponentManager();
+		m_systemManager = new SystemManager();
 	}
 	Entity create_entity()
 	{
-		return m_entityManager->Create_entity();
+		return m_entityManager->Create_entity(); //TODO fix entity creation error
 	}
 	void destroy_entity(const Entity& e)
 	{
@@ -64,15 +79,22 @@ public:
 	{
 		m_systemManager->set_signature(system, signature);
 	}
+	std::bitset<MAX_COMPONENTS> get_signature(const Entity& e)
+	{
+		return m_entityManager->Get_signature(e);
+	}
 
 
 
 
-	std::unique_ptr<EntityManager> m_entityManager; // todo move to private
-	std::unique_ptr<ComponentManager> m_componentManager; // todo move to private
-	std::unique_ptr<SystemManager> m_systemManager; // todo move to private
 
 
 
 private:
+	/*std::unique_ptr<EntityManager> m_entityManager;
+	std::unique_ptr<ComponentManager> m_componentManager;
+	std::unique_ptr<SystemManager> m_systemManager;*/
+	EntityManager* m_entityManager;
+	ComponentManager* m_componentManager;
+	SystemManager* m_systemManager;
 };

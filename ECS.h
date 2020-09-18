@@ -22,7 +22,7 @@
 
 //extern std::unique_ptr<Coordinator> g_coordinator; // todo fix global link
 
-static std::unique_ptr<Coordinator> g_coordinator;
+static Coordinator* g_coordinator;
 
 
 
