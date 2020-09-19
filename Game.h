@@ -8,13 +8,7 @@ public:
 
 
 	static bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
-
-	static bool ECS_init();
-
-	static bool components_init();
-
-	static bool systems_init();
-
+	
 	static void clean();
 
 	static void update();
@@ -27,9 +21,9 @@ public:
 	static bool Running;
 	static SDL_Window* window;
 	static SDL_Renderer* renderer;
+	static Coordinator* coordinator;
 
 private:
-	static std::shared_ptr<System> renderSystem;
 	Game();
 
 private:

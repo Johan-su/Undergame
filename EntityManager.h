@@ -20,7 +20,10 @@ public:
 
 	Entity Create_entity()
 	{
-
+		if (m_AvailableIDs.size() == 0)
+		{
+			throw "queue size is 0";
+		}
 		Entity e = m_AvailableIDs.front();
 		m_AvailableIDs.pop();
 		++m_entityCount;

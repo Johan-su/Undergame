@@ -7,13 +7,7 @@ class Coordinator
 public:
 	void test()
 	{
-		if (m_componentManager == nullptr || m_systemManager == nullptr || m_entityManager == nullptr)
-		{
-			std::cout << "nullptr" << std::endl;
-		}
-		std::cout << m_componentManager << std::endl;
-		std::cout << m_systemManager << std::endl; // TODO: fix managers being nullptr
-		std::cout << m_entityManager << std::endl;
+		if (m_componentManager == nullptr || m_systemManager == nullptr || m_entityManager == nullptr) throw "nullptr";
 		std::cout << "test executed successfully" << std::endl;
 	}
 	void init()
@@ -29,7 +23,7 @@ public:
 	}
 	Entity create_entity()
 	{
-		return m_entityManager->Create_entity(); //TODO fix entity creation error
+		return m_entityManager->Create_entity();
 	}
 	void destroy_entity(const Entity& e)
 	{
@@ -48,6 +42,7 @@ public:
 		m_componentManager->add_component<T>(e, component);
 		auto& sig = m_entityManager->Get_signature(e);
 		sig.set(m_componentManager->get_component_pos<T>(), true);
+		m_systemManager->entity_changed_signature(e, sig);
 		//m_entityManager->Set_signature(e, sig);
 	}
 	template<typename T>

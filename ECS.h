@@ -18,16 +18,10 @@
 
 #include "Coordinator.h"
 
-#include "Scene.h"
-
-//extern std::unique_ptr<Coordinator> g_coordinator; // todo fix global link
-
-static Coordinator* g_coordinator;
-
-
 
 
 #include "RenderSystem.h"
+#include "PhysicsSystem.h"
 
 #include "TransformComponent.h"
 #include "RenderComponent.h"

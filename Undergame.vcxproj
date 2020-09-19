@@ -164,14 +164,16 @@
     <ClInclude Include="Coordinator.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityCreator.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="SystemManager.h" />
     <ClInclude Include="Texture.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="vecf.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EntityCreator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RenderSystem.cpp" />

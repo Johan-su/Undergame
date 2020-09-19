@@ -59,8 +59,7 @@ public:
 			return static_cast<ComponentArray<T>*>(m_arrayPointers[m_typeToArray[componentName]]);
 			//return m_arrayPointers[m_typeToArray[componentName]];
 		}
-		std::cout << "failed to find array" << std::endl;
-		return nullptr;
+		throw "failed to find array";
 	}
 
 	template<typename T>

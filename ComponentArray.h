@@ -21,7 +21,6 @@ public:
 	ComponentArray()
 		: m_size(0)
 	{
-		std::cout << MAX_ENTITIES << std::endl;
 	}
 	void add_component(const Entity& e, T component)
 	{
@@ -50,8 +49,8 @@ public:
 		return m_size;
 	}
 
-	std::array<T, MAX_ENTITIES> m_componentArray; //TODO change to private
 private:
+	std::array<T, MAX_ENTITIES> m_componentArray;
 	std::array<uint32_t, MAX_ENTITIES> index;
 	uint32_t m_size;
 };
