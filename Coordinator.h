@@ -21,7 +21,7 @@ public:
 		m_componentManager = new ComponentManager();
 		m_systemManager = new SystemManager();
 	}
-	Entity create_entity()
+	Entity create_entity() // should not be called explicitly, use EntityCreator.
 	{
 		return m_entityManager->Create_entity();
 	}
@@ -77,6 +77,12 @@ public:
 	std::bitset<MAX_COMPONENTS> get_signature(const Entity& e)
 	{
 		return m_entityManager->Get_signature(e);
+	}
+	void clean()
+	{
+		delete m_entityManager;;
+		delete m_componentManager;
+		delete m_systemManager;
 	}
 
 

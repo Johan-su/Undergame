@@ -10,11 +10,12 @@ std::vector<std::function<void(const float&, const float&, const Entity&)>> Enti
 
 void EntityCreator::init()
 {
-	func_pointers.push_back([](const float& x, const float& y, const Entity& e) // Player
+	func_pointers.push_back([](const float& x, const float& y, const Entity& e) // Playercontrolled
 		{
 			auto tc = TransformComponent();
 			auto rc = RenderComponent();
 			auto pc = PlayerComponent();
+			auto ic = InputComponent();
 			auto hc = HealthComponent();
 
 			tc.position.x = x;
@@ -32,30 +33,33 @@ void EntityCreator::init()
 			Game::coordinator->add_component<TransformComponent>(e, tc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
 			Game::coordinator->add_component<PlayerComponent>(e, pc);
+			Game::coordinator->add_component<InputComponent>(e, ic);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});
-	func_pointers.push_back([](const float& x, const float& y, const Entity& e)
+	func_pointers.push_back([](const float& x, const float& y, const Entity& e) // NPC
 		{
 			auto tc = TransformComponent();
 			auto rc = RenderComponent();
+			auto pc = PlayerComponent();
 			auto hc = HealthComponent();
 
 			tc.position.x = x;
 			tc.position.y = y;
 
-			tc.size.x = 16;
-			tc.size.y = 16;
+			tc.size.x = 50;
+			tc.size.y = 50;
 
 			rc.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture
 
 			rc.texture = nullptr; //TODO: determine texture
 
+			pc.id = create_player_id();
 
 			Game::coordinator->add_component<TransformComponent>(e, tc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
+			Game::coordinator->add_component<PlayerComponent>(e, pc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
-
 
 		});
 	func_pointers.push_back([](const float& x, const float& y, const Entity& e)

@@ -17,10 +17,17 @@ public:
 
 	static void render();
 
+	static void ECS_init();
+
+	static void components_init();
+
+	static void systems_init();
+
 public:
 	static bool Running;
 	static SDL_Window* window;
 	static SDL_Renderer* renderer;
+	static SDL_Event event;
 	static Coordinator* coordinator;
 
 private:

@@ -22,10 +22,13 @@
 
 #include "RenderSystem.h"
 #include "PhysicsSystem.h"
+#include "PlayerSystem.h"
+#include "InputSystem.h"
 
 #include "TransformComponent.h"
 #include "RenderComponent.h"
 #include "PlayerComponent.h"
+#include "InputComponent.h"
 #include "HealthComponent.h"
 
 
