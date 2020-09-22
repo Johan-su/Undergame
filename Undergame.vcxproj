@@ -171,7 +171,8 @@
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="MapGenerator.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileMapGenerator.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerSystem.h" />
@@ -180,9 +181,7 @@
     <ClInclude Include="System.h" />
     <ClInclude Include="SystemManager.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="Tile.h" />
     <ClInclude Include="TileComponent.h" />
-    <ClInclude Include="Tilemap.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="vecf.h" />
   </ItemGroup>
@@ -191,7 +190,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MapGenerator.cpp" />
+    <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="PlayerSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Texture.cpp" />

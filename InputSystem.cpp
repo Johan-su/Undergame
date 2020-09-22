@@ -82,6 +82,33 @@ void InputSystem::key_event_up(const int& keycode) const
 		}
 		std::cout << "W up" << std::endl;
 		break;
+	case SDLK_a:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[1] = false;
+		}
+		std::cout << "A up" << std::endl;
+		break;
+	case SDLK_s:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[2] = false;
+		}
+		std::cout << "S up" << std::endl;
+		break;
+	case SDLK_d:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[3] = false;
+		}
+		std::cout << "D up" << std::endl;
+		break;
 
 	default:
 		break;
