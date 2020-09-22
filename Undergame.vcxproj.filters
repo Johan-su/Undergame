@@ -111,6 +111,9 @@
     <ClInclude Include="TileMapGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StaticRenderSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="TileMapGenerator.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticRenderSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

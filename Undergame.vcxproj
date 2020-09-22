@@ -171,6 +171,7 @@
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="StaticRenderSystem.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileMapGenerator.h" />
     <ClInclude Include="PhysicsSystem.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="StaticRenderSystem.cpp" />
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="PlayerSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
