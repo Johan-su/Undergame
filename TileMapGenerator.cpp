@@ -1,6 +1,6 @@
 #include "TileMapGenerator.h"
 
-TileMap* TileMapGenerator::create_map(const unsigned long long& seed )
+TileMap* TileMapGenerator::create_map_random(const unsigned long long& seed )
 {
 
 }
