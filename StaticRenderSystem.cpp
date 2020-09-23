@@ -20,12 +20,17 @@ void StaticRenderSystem::init(TileMap* tilemap)
 		}
 	}
 
-	func_pointers.push_back([]()
+	func_pointers.push_back([](const float& x, const float& y)
 	{
 		//SDL_RenderCopy(Game::renderer, tile_textures[0]); //TODO: fix srcdest and textures
 	});
-	background_func_pointers.push_back([]()
+	func_pointers.push_back([](const float& x, const float& y)
 	{
+		//SDL_RenderCopy(Game::renderer, tile_textures[0]); //TODO: fix srcdest and textures
+	});
+	background_func_pointers.push_back([](const float& x, const float& y)
+	{
+			adasd..
 		//SDL_RenderCopy(Game::renderer, tile_textures[0]); //TODO: fix srcdest and textures
 	});
 
@@ -41,15 +46,18 @@ void StaticRenderSystem::render_tile()
 		auto& tc = Game::coordinator->get_component<TileComponent>(e);
 
 		const auto& func = func_pointers[tc.type];
-		func();
+		func(tc.pos.x, tc.pos.y);
 	}
 }
 void StaticRenderSystem::render_background_tile()
 {
 	for (const auto& i : *active_background_tiles_id)
 	{
+
+		const auto& x = i % 4096;
+		const auto& y = i / 4096;
 		const auto& type = m_tilemap->grid[i];
 		const auto& func = background_func_pointers[type];
-		func();
+		func(x, y);
 	}
 }

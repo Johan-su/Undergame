@@ -16,7 +16,7 @@ TileMap* TileMapGenerator::create_map_perlin(const unsigned int& seed)
 {
 	return nullptr;
 }
-TileMap* TileMapGenerator::create_map_cellular(const unsigned int& seed)
+TileMap* TileMapGenerator::create_map_cellular(const unsigned int& seed) // maybe not worth doing cellular automata generation
 {
 	return nullptr;
 }

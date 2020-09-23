@@ -17,8 +17,8 @@ public:
 
 	std::unique_ptr<std::vector<unsigned int>> active_background_tiles_id;
 private:
-	std::vector<std::function<void()>> func_pointers;
-	std::vector<std::function<void()>> background_func_pointers;
+	std::vector<std::function<void(const float&, const float&)>> func_pointers;
+	std::vector<std::function<void(const float&, const float&)>> background_func_pointers;
 	std::vector<SDL_Texture*> tile_textures;
 	std::vector<SDL_Texture*> background_tiles_textures;
 	TileMap* m_tilemap;
