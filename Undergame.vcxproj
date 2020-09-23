@@ -171,6 +171,9 @@
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="SizeComponent.h" />
     <ClInclude Include="StaticRenderSystem.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileMapGenerator.h" />
@@ -183,7 +186,6 @@
     <ClInclude Include="SystemManager.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileComponent.h" />
-    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="vecf.h" />
   </ItemGroup>
   <ItemGroup>

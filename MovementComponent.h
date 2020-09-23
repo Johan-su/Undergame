@@ -1,11 +1,7 @@
 #pragma once
 #include "vecf.h"
-
-
-struct TransformComponent
+struct MovementComponent
 {
-	Vec2f position;
-	Vec2f size;
 	Vec2f velocity;
 	float speed;
 	float rotation;

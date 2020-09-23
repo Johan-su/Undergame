@@ -12,17 +12,18 @@ void EntityCreator::init()
 {
 	func_pointers.push_back([](const float& x, const float& y, const Entity& e) // Playercontrolled
 		{
-			auto tc = TransformComponent();
+			auto positionc = PositionComponent();
+			auto sc = SizeComponent();
 			auto rc = RenderComponent();
 			auto pc = PlayerComponent();
 			auto ic = InputComponent();
 			auto hc = HealthComponent();
 
-			tc.position.x = x;
-			tc.position.y = y;
+			positionc.pos.x = x;
+			positionc.pos.y = y;
 
-			tc.size.x = 50;
-			tc.size.y = 50; 
+			sc.size.x = 50;
+			sc.size.y = 50; 
 
 			rc.src_rect = {0, 0, 0, 0}; //TODO: determine texture
 
@@ -30,7 +31,8 @@ void EntityCreator::init()
 
 			pc.id = create_player_id();
 
-			Game::coordinator->add_component<TransformComponent>(e, tc);
+			Game::coordinator->add_component<PositionComponent>(e, positionc);
+			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
 			Game::coordinator->add_component<PlayerComponent>(e, pc);
 			Game::coordinator->add_component<InputComponent>(e, ic);
@@ -39,16 +41,17 @@ void EntityCreator::init()
 		});
 	func_pointers.push_back([](const float& x, const float& y, const Entity& e) // NPC
 		{
-			auto tc = TransformComponent();
+			auto positionc = PositionComponent();
+			auto sc = SizeComponent();
 			auto rc = RenderComponent();
 			auto pc = PlayerComponent();
 			auto hc = HealthComponent();
 
-			tc.position.x = x;
-			tc.position.y = y;
+			positionc.pos.x = x;
+			positionc.pos.y = y;
 
-			tc.size.x = 50;
-			tc.size.y = 50;
+			sc.size.x = 50;
+			sc.size.y = 50;
 
 			rc.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture
 
@@ -56,14 +59,29 @@ void EntityCreator::init()
 
 			pc.id = create_player_id();
 
-			Game::coordinator->add_component<TransformComponent>(e, tc);
+			Game::coordinator->add_component<PositionComponent>(e, positionc);
+			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
 			Game::coordinator->add_component<PlayerComponent>(e, pc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});
-	func_pointers.push_back([](const float& x, const float& y, const Entity& e)
+	func_pointers.push_back([](const float& x, const float& y, const Entity& e) // tile
 		{
+			auto positionc = PositionComponent();
+			auto tc = TileComponent();
+			auto sc = SizeComponent();
+			auto rc = RenderComponent();
+			auto hc = HealthComponent();
+
+
+
+			Game::coordinator->add_component<PositionComponent>(e, positionc);
+			Game::coordinator->add_component<TileComponent>(e, tc);
+			Game::coordinator->add_component<SizeComponent>(e, sc);
+			Game::coordinator->add_component<RenderComponent>(e, rc);
+			Game::coordinator->add_component<HealthComponent>(e, hc);
+
 
 		});
 	func_pointers.push_back([](const float& x, const float& y, const Entity& e)
@@ -80,7 +98,7 @@ void EntityCreator::init()
 		});
 }
 
-Entity EntityCreator::create_entity(const float& x, const float& y, const size_t& type)
+Entity EntityCreator::create_entity(const float& x, const float& y, const size_t& type) //TODO: add a way to add extra args, maybe with variadic arguments or something else.
 {
 	if (Game::coordinator == nullptr)
 	{

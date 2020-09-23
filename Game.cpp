@@ -76,9 +76,12 @@ void Game::ECS_init()
 
 void Game::components_init()
 {
-	Game::coordinator->register_component<TransformComponent>();
+	Game::coordinator->register_component<TileComponent>();
+	Game::coordinator->register_component<SizeComponent>();
 	Game::coordinator->register_component<RenderComponent>();
+	Game::coordinator->register_component<PositionComponent>();
 	Game::coordinator->register_component<PlayerComponent>();
+	Game::coordinator->register_component<MovementComponent>();
 	Game::coordinator->register_component<InputComponent>();
 	Game::coordinator->register_component<HealthComponent>();
 }
@@ -87,8 +90,10 @@ void Game::systems_init()
 {
 	renderSystem = Game::coordinator->register_system<RenderSystem>();
 	std::bitset<MAX_COMPONENTS> sig;
-	sig.set(Game::coordinator->get_signature_pos<TransformComponent>());
 	sig.set(Game::coordinator->get_signature_pos<RenderComponent>());
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
+	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	Game::coordinator->set_signature(renderSystem, sig);
 
 	inputSystem = Game::coordinator->register_system<InputSystem>();

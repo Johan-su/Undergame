@@ -18,6 +18,14 @@
 
 #include "Coordinator.h"
 
+#include "TileComponent.h"
+#include "SizeComponent.h"
+#include "RenderComponent.h"
+#include "PositionComponent.h"
+#include "PlayerComponent.h"
+#include "MovementComponent.h"
+#include "InputComponent.h"
+#include "HealthComponent.h"
 
 #include "StaticRenderSystem.h"
 #include "RenderSystem.h"
@@ -25,11 +33,8 @@
 #include "PhysicsSystem.h"
 #include "InputSystem.h"
 
-#include "TransformComponent.h"
-#include "TileComponent.h"
-#include "RenderComponent.h"
-#include "PlayerComponent.h"
-#include "InputComponent.h"
-#include "HealthComponent.h"
+
+
+
 
 
