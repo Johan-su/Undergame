@@ -16,4 +16,5 @@ private:
 
 	static std::vector<SDL_Texture*>* m_textures;
 
+
 };

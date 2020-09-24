@@ -13,6 +13,8 @@ public:
 
 	static TileMap* create_map_simplex(const unsigned int& seed);
 
+	static void entities_from_map(TileMap*);
+
 private:
 
 

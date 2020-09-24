@@ -53,13 +53,7 @@ public:
 	template<typename T>
 	ComponentArray<T>* get_component_array()
 	{
-		std::string componentName = typeid(T).name();
-		if (m_typeToArray.find(componentName) != m_typeToArray.end())
-		{
-			return static_cast<ComponentArray<T>*>(m_arrayPointers[m_typeToArray[componentName]]);
-			//return m_arrayPointers[m_typeToArray[componentName]];
-		}
-		throw "failed to find array";
+		return static_cast<ComponentArray<T>*>(m_arrayPointers[m_typeToArray[typeid(T).name()]]);
 	}
 
 	template<typename T>

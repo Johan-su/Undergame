@@ -1,41 +1,45 @@
 #include <chrono>
 #include <iostream>
 #include <memory>
+#include <thread>
 #include <SDL.h>
 #include "EntityCreator.h"
 #include "Texture.h"
 #include "ECS.h"
 #include "Game.h"
+#include "Tilemap.h"
+#include "TileMapGenerator.h"
 
 
 
-
+void test()
+{
+	auto tm = TileMapGenerator::create_map_random(185819056);
+	TileMapGenerator::entities_from_map(tm);
+	delete tm;
+}
 
 int main(int argc, char* argv[])
 {
-	std::vector<Entity> m_entities(MAX_ENTITIES);
-
 	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0))
 	{
 		std::cout << "Game_initalization failed" << std::endl;
 
 		return 1;
 	}
-	Texture::init();
+
 	EntityCreator::init();
+	//std::thread t1(test);
+
+	
 
 
-	EntityCreator::create_entity(1337, 1337, ENTITY_TYPE_PLAYER);
+	test();
 
 
+	Game::entities->push_back(EntityCreator::create_entity(ENTITY_TYPE_PLAYER, 0, 0, 0));
 
-
-
-
-
-
-
-
+	//t1.join();
 
 
 

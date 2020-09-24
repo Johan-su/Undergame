@@ -41,7 +41,7 @@ public:
 	}
 	T& get_component(const Entity& e)
 	{
-		return m_componentArray[index[e]];
+		return m_componentArray[index[e]]; 
 	}
 
 	uint32_t get_size() const

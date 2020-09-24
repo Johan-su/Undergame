@@ -5,7 +5,7 @@
 #include "ECS.h"
 #include "Tilemap.h"
 
-class StaticRenderSystem : System
+class StaticRenderSystem : public System
 {
 public:
 
@@ -15,6 +15,5 @@ public:
 
 private:
 	std::vector<std::function<void(PositionComponent& pc, SizeComponent& sc)>> func_pointers;
-	//std::vector<std::function<void()>> func_pointers;
 	std::vector<SDL_Texture*> tile_textures;
 };

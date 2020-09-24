@@ -29,6 +29,7 @@ public:
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 	static Coordinator* coordinator;
+	static std::vector<Entity>* entities;
 
 private:
 	Game();

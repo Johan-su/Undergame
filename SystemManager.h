@@ -8,8 +8,8 @@ public:
 	template<typename T>
 	std::shared_ptr<T> register_system()
 	{
-		std::string systemName = typeid(T).name();
 		std::shared_ptr<T> system = std::make_shared<T>();
+		std::string systemName = typeid(system).name();
 		//m_systemMap.insert(systemName, system);
 		m_systemMap[systemName] = system;
 		return system;

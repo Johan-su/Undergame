@@ -20,10 +20,6 @@ public:
 
 	Entity Create_entity()
 	{
-		if (m_AvailableIDs.size() == 0)
-		{
-			throw "queue size is 0";
-		}
 		Entity e = m_AvailableIDs.front();
 		m_AvailableIDs.pop();
 		++m_entityCount;
@@ -51,7 +47,7 @@ public:
 private:
 	std::queue<uint32_t> m_AvailableIDs;
 
-	std::array<std::bitset<MAX_COMPONENTS>, 50000> m_signatures;
+	std::array<std::bitset<MAX_COMPONENTS>, MAX_ENTITIES> m_signatures;
 
 	uint32_t m_entityCount;
 };
