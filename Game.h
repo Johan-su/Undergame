@@ -2,6 +2,9 @@
 #include <SDL.h>
 #include "ECS.h"
 
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 576
+
 class Game //TODO: change to namespace
 {
 public:
@@ -30,6 +33,8 @@ public:
 	static SDL_Event event;
 	static Coordinator* coordinator;
 	static std::vector<Entity>* entities;
+
+	static int offsetx, offsety;
 
 private:
 	Game();

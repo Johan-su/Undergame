@@ -28,14 +28,14 @@ TileMap* TileMapGenerator::create_map_simplex(const unsigned int& seed)
 {
 	return nullptr;
 }
-void TileMapGenerator::entities_from_map(TileMap* tm)
+void TileMapGenerator::entities_from_map(TileMap* tm) //TODO: maybe change to multithreading
 {
 	for (unsigned int i = 0; i < tm->grid.size(); ++i)
 	{
 		int x = TILE_SIZE * (i % (MAP_SIZE));
 		int y = TILE_SIZE * (i / (MAP_SIZE));
-		int type = tm->grid[i];
-		//std::cout << i << "\n";
+		const auto& type = tm->grid[i];
+		std::cout << i << "\n";
 		Game::entities->push_back(EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), type));
 	}
 }

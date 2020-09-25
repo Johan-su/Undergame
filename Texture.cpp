@@ -14,7 +14,7 @@ void Texture::init()
 	load_texture("resources/textures/test/MakingMap2.bmp"); 
 
 
-
+	load_texture("resources/textures/test/Player_placeholder.bmp");
 
 
 

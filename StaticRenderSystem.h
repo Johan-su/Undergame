@@ -11,9 +11,9 @@ public:
 
 	void init();
 
-	void render_tile();
+	void render_tile(const int& x, const int& y);
 
 private:
-	std::vector<std::function<void(PositionComponent& pc, SizeComponent& sc)>> func_pointers;
+	std::vector<std::function<void(PositionComponent & pc, SizeComponent & sc, const int& x, const int& y)>> func_pointers;
 	std::vector<SDL_Texture*> tile_textures;
 };

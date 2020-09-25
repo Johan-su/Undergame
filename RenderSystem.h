@@ -4,5 +4,6 @@
 
 class RenderSystem : public System
 {
-	void render();
+public:
+	void render(const int& x, const int& y);
 };
