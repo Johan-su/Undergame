@@ -16,8 +16,7 @@ void Create_entities()
 {
 	auto before = std::chrono::high_resolution_clock::now();
 
-
-	auto tm = TileMapGenerator::create_map_random(185819056);
+	auto tm = TileMapGenerator::create_map_random(0);
 	TileMapGenerator::entities_from_map(tm);
 	delete tm;
 	Game::entities->push_back(EntityCreator::create_entity(ENTITY_TYPE_PLAYER, 0, 0, 0));
@@ -38,8 +37,8 @@ int main(int argc, char* argv[])
 	}
 
 	EntityCreator::init();
-	std::thread t1(Create_entities);
-	//Create_entities();
+	//std::thread t1(Create_entities);
+	Create_entities();
 	
 
 
@@ -61,7 +60,7 @@ int main(int argc, char* argv[])
 		}
 		Game::render();
 	}
-	t1.join();
+	//t1.join();
 	Game::clean();
 	return 0;
 }

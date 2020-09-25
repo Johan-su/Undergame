@@ -8,4 +8,7 @@ public:
 	void update();
 
 private:
+
+	void set_Camera_to_player(const PositionComponent& pc);
+
 };

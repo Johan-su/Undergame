@@ -64,6 +64,5 @@ void Texture::load_texture(const char* path)
 
 SDL_Texture* Texture::get_texture(uint32_t pos)
 {
-	std::cout << m_textures->at(pos) << std::endl;
 	return m_textures->at(pos);
 }

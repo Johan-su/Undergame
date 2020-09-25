@@ -5,6 +5,7 @@
 
 TileMap* TileMapGenerator::create_map_random(const unsigned int& seed )
 {
+
 	auto tilemap = new TileMap();
 
 	for (int i = 0; i < tilemap->grid.size(); ++i)
@@ -35,7 +36,7 @@ void TileMapGenerator::entities_from_map(TileMap* tm) //TODO: maybe change to mu
 		int x = TILE_SIZE * (i % (MAP_SIZE));
 		int y = TILE_SIZE * (i / (MAP_SIZE));
 		const auto& type = tm->grid[i];
-		std::cout << i << "\n";
+		//std::cout << i << "\n";
 		Game::entities->push_back(EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), type));
 	}
 }

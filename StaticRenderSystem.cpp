@@ -10,9 +10,8 @@ void StaticRenderSystem::init()
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 0, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 0, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y })); // 0
 	});
-
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
@@ -41,91 +40,91 @@ void StaticRenderSystem::init()
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 1, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 64, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 64, 1, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 64, 64, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 128, 1, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 128, 64, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 192, 1, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 192, 64, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 256, 1, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 256, 64, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 2, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 128, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 64, 2, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 64, 128, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 128, 2, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 128, 128, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 192, 2, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 192, 128, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y })); // 13
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 256, 2, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 256, 128, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 3, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 0, 192, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y }));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 64, 3, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 64, 192, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 128, 3, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 128, 192, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 192, 3, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 192, 192, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
 	});
 
 
 	func_pointers.push_back([&](PositionComponent& pc, SizeComponent& sc, const int& x, const int& y)
 	{
-		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 256, 3, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
+		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 256, 192, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
 	});
 
 
