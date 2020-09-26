@@ -136,13 +136,15 @@ void StaticRenderSystem::render_tile(const int& x, const int& y)
 	for (const auto& e : m_entities)
 	{
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
+
+		if (pc.pos.x >= -100 + x && pc.pos.y >= -100 + y && pc.pos.x <= SCREEN_WIDTH + 100 + x && pc.pos.y <= SCREEN_HEIGHT + 100 + y)
+		{
 		auto& sc = Game::coordinator->get_component<SizeComponent>(e);
-
-
-		//TODO: only render visible objects on window
-
 		auto& tc = Game::coordinator->get_component<TileComponent>(e);
 		const auto& func = func_pointers[tc.type];
 		func(pc, sc, x, y);
+		}
+
+
 	}
 }

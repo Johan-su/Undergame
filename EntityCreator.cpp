@@ -95,6 +95,8 @@ void EntityCreator::init()
 			sc.size.x = TILE_SIZE;
 			sc.size.y = TILE_SIZE;
 
+			if(data == 18)
+
 			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
 

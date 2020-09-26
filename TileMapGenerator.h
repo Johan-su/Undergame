@@ -13,7 +13,9 @@ public:
 
 	static TileMap* create_map_simplex(const unsigned int& seed);
 
-	static void entities_from_map(TileMap*);
+	static void entities_from_map(TileMap* tm);
+
+	static void create_boundary(TileMap* tm);
 
 private:
 
