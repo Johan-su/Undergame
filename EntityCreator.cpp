@@ -86,6 +86,7 @@ void EntityCreator::init()
 			auto tc = TileComponent();
 			auto sc = SizeComponent();
 			auto hc = HealthComponent();
+			auto cc = ColliderComponent();
 
 			positionc.pos.x = x;
 			positionc.pos.y = y;
@@ -95,7 +96,6 @@ void EntityCreator::init()
 			sc.size.x = TILE_SIZE;
 			sc.size.y = TILE_SIZE;
 
-			if(data == 18)
 
 			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
@@ -105,6 +105,8 @@ void EntityCreator::init()
 			Game::coordinator->add_component<TileComponent>(e, tc);
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
+			Game::coordinator->add_component<ColliderComponent>(e, cc);
+
 
 		});
 	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data)

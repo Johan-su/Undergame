@@ -36,7 +36,7 @@ TileMap* TileMapGenerator::create_map_simplex(const unsigned int& seed)
 }
 void TileMapGenerator::entities_from_map(TileMap* tm) //TODO: maybe change to multithreading
 {
-	for (unsigned int i = 0; i < tm->grid.size(); ++i)
+	for (unsigned int i = 1; i < tm->grid.size(); ++i)
 	{
 		int x = TILE_SIZE * (i % (MAP_SIZE));
 		int y = TILE_SIZE * (i / (MAP_SIZE));

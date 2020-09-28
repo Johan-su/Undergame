@@ -9,7 +9,6 @@ void CollisionSystem::update()
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
-		auto& move = Game::coordinator->get_component<MovementComponent>(e);
 
 		int middlex = static_cast<int>(pos.pos.x + size.size.x);
 		int middley = static_cast<int>(pos.pos.y + size.size.y);
