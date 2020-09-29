@@ -28,24 +28,54 @@ void CollisionSystem::update()
 
 		for (unsigned int i = 0; i < 9; ++i) //TODO: add collision checks
 		{
-			bool b1 = pos.pos.x >= TILE_SIZE * (id[i] % MAP_SIZE);
-			bool b2 = pos.pos.x + size.size.x <= TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
-			bool b3 = pos.pos.y <= TILE_SIZE * (id[i] / MAP_SIZE);
-			bool b4 = pos.pos.y + size.size.y <= TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
 
-			int i1 = TILE_SIZE * (id[i] % MAP_SIZE);
-			int i2 = TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
-			int i3 = TILE_SIZE * (id[i] / MAP_SIZE);
-			int i4 = TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
+			int x1 = TILE_SIZE * (id[i] % MAP_SIZE);
+			int x2 = TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
+			int y1 = TILE_SIZE * (id[i] / MAP_SIZE);
+			int y2 = TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
 
 
+			bool b1 = pos.pos.x > x2;
 
+			bool b2 = x1 > pos.pos.x + size.size.x;
 
+			bool b3 = true;
 
-			if (b1 && b2 && b3 && b4)
+			if (b1 || b2)
+			{
+				b3 = false;
+			}
+			//bool b2 = pos.pos.x + size.size.x >= TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
+
+			bool b4 = pos.pos.y > y2;
+
+			bool b5 = y1 < pos.pos.y + size.size.y;
+
+			if (b4 || b5)
+			{
+				b3 = false;
+			}
+
+			if (b3)
 			{
 				std::cout << "intersection ID: " << id[i] << "\n";
+
 			}
+			//bool b7 = pos.pos.y + size.size.y >= TILE_SIZE * (id[i] / MAP_SIZE);
+
+			//bool b3 = pos.pos.y >= TILE_SIZE * (id[i] / MAP_SIZE);
+			
+			//bool b5 = pos.pos.x + size.size.x >= TILE_SIZE * (id[i] % MAP_SIZE);
+
+			//bool b6 = pos.pos.x + size.size.x <= TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
+			//bool b8 = pos.pos.y + size.size.y <= TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
+
+
+
+
+
+
+
 		}
 
 	}
