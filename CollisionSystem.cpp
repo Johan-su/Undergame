@@ -13,7 +13,7 @@ void CollisionSystem::update()
 		int middlex = static_cast<int>(pos.pos.x + size.size.x);
 		int middley = static_cast<int>(pos.pos.y + size.size.y);
 
-		int id[9];
+		unsigned short id[9];
 
 		id[4] = (middlex / TILE_SIZE) + MAP_SIZE * (middley / TILE_SIZE);
 
@@ -28,7 +28,24 @@ void CollisionSystem::update()
 
 		for (unsigned int i = 0; i < 9; ++i) //TODO: add collision checks
 		{
+			bool b1 = pos.pos.x >= TILE_SIZE * (id[i] % MAP_SIZE);
+			bool b2 = pos.pos.x + size.size.x <= TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
+			bool b3 = pos.pos.y <= TILE_SIZE * (id[i] / MAP_SIZE);
+			bool b4 = pos.pos.y + size.size.y <= TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
 
+			int i1 = TILE_SIZE * (id[i] % MAP_SIZE);
+			int i2 = TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
+			int i3 = TILE_SIZE * (id[i] / MAP_SIZE);
+			int i4 = TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
+
+
+
+
+
+			if (b1 && b2 && b3 && b4)
+			{
+				std::cout << "intersection ID: " << id[i] << "\n";
+			}
 		}
 
 	}
