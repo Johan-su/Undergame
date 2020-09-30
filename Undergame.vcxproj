@@ -162,6 +162,8 @@
     <ClInclude Include="AiComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="ProjectileComponent.h" />
+    <ClInclude Include="ProjectileSystem.h" />
     <ClInclude Include="StaticCollisionSystem.h" />
     <ClInclude Include="ComponentArray.h" />
     <ClInclude Include="ComponentManager.h" />
@@ -194,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="ProjectileSystem.cpp" />
     <ClCompile Include="StaticCollisionSystem.cpp" />
     <ClCompile Include="EntityCreator.cpp" />
     <ClCompile Include="Game.cpp" />

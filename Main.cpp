@@ -15,15 +15,15 @@
 void Create_entities()
 {
 
-	auto tm = TileMapGenerator::create_map_random(52321232340);
+	auto tm = TileMapGenerator::create_map_random(-1);
 	TileMapGenerator::entities_from_map(tm);
 	float x, y;
 	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
 	{
 		if (Game::tileEntities[i] == 0)
 		{
-			x = TILE_SIZE * (i % MAP_SIZE) + TILE_SIZE / 2;
-			y = TILE_SIZE * (i / MAP_SIZE) + TILE_SIZE / 2;
+			x = static_cast<float>(TILE_SIZE * (i % MAP_SIZE) + TILE_SIZE / 2);
+			y = static_cast<float>(TILE_SIZE * (i / MAP_SIZE) + TILE_SIZE / 2);
 			break;
 		}
 	}

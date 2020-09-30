@@ -14,10 +14,10 @@ void PlayerSystem::update()
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
 
 		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
-		movec.rotation = 1.57079632679 + atanf(static_cast<float>(pc.pos.y + size.size.y - inputc.y) / static_cast<float>(pc.pos.x + size.size.x - inputc.x)); // 1.57079632679 == pi / 2
+		movec.rotation = static_cast<float>(1.57079632679 + atanf(static_cast<float>(pc.pos.y + size.size.y - static_cast<float>(inputc.y)) / static_cast<float>(pc.pos.x + size.size.x - static_cast<float>(inputc.x)))); // 1.57079632679 == pi / 2
 		if (inputc.x - pc.pos.x < 0)
 		{
-			movec.rotation -= 3.14159265359; // pi
+			movec.rotation -= 3.14159265359f; // pi
 		} //TODO:fix player targeting mouse
 
 
@@ -44,10 +44,22 @@ void PlayerSystem::update()
 		{
 			movec.velocity.x = 1;
 		}
+		if (inputc.buttonStates[4]) // mouse left
+		{
+
+		}
+		if (inputc.buttonStates[5]) // mouse middle
+		{
+
+		}
+		if (inputc.buttonStates[6]) // mouse right
+		{
+
+		}
 	}
 }
 void PlayerSystem::set_Camera_to_player(const PositionComponent& pc)
 {
-	Game::offsetx = pc.pos.x - SCREEN_WIDTH / 2;
-	Game::offsety = pc.pos.y - SCREEN_HEIGHT / 2;
+	Game::offsetx = static_cast<int>(pc.pos.x - static_cast<float>(SCREEN_WIDTH) / 2);
+	Game::offsety = static_cast<int>(pc.pos.y - static_cast<float>(SCREEN_HEIGHT) / 2);
 }

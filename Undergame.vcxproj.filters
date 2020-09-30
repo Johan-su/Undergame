@@ -132,6 +132,12 @@
     <ClInclude Include="CollisionSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -168,6 +174,9 @@
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
   </ItemGroup>

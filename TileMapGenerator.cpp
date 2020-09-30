@@ -5,7 +5,7 @@
 #include "ECS.h"
 
 
-TileMap* TileMapGenerator::create_map_random(const unsigned int& seed )
+TileMap* TileMapGenerator::create_map_random(const unsigned int& seed)
 {
 	std::default_random_engine r;
 	r.seed(seed);

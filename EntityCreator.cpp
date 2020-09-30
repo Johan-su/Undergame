@@ -26,8 +26,13 @@ void EntityCreator::init()
 			auto hc = HealthComponent();
 			auto mc = MovementComponent();
 
+			auto shc = ShooterComponent();
+
 			positionc.pos.x = x;
 			positionc.pos.y = y;
+
+			cc.id = 0xFFFFFFFF;
+			cc.Entity = 0xFFFFFFFF;
 
 			sc.size.x = 24;
 			sc.size.y = 24; 
@@ -51,6 +56,8 @@ void EntityCreator::init()
 
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 			Game::coordinator->add_component<MovementComponent>(e, mc);
+
+			Game::coordinator->add_component<ShooterComponent>(e, shc);
 
 		});
 	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // NPC 
@@ -86,7 +93,6 @@ void EntityCreator::init()
 			auto tc = TileComponent();
 			auto sc = SizeComponent();
 			auto hc = HealthComponent();
-			auto cc = ColliderComponent();
 
 			positionc.pos.x = x;
 			positionc.pos.y = y;
@@ -105,7 +111,6 @@ void EntityCreator::init()
 			Game::coordinator->add_component<TileComponent>(e, tc);
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
-			Game::coordinator->add_component<ColliderComponent>(e, cc);
 
 
 		});
@@ -123,6 +128,9 @@ void EntityCreator::init()
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
+			cc.id = 0xFFFFFFFF;
+			cc.Entity = 0xFFFFFFFF;
+
 			sc.size.x = 0;
 			sc.size.y = 0;
 
@@ -139,6 +147,40 @@ void EntityCreator::init()
 			Game::coordinator->add_component<RenderComponent>(e, rc);
 
 			Game::coordinator->add_component<HealthComponent>(e, hc);
+			Game::coordinator->add_component<MovementComponent>(e, mc);
+		});
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // bullet
+		{
+			auto positionc = PositionComponent();
+			auto cc = ColliderComponent();
+
+			auto sc = SizeComponent();
+			auto rc = RenderComponent();
+
+			auto mc = MovementComponent();
+			auto pc = ProjectileComponent();
+
+			positionc.pos.x = x;
+			positionc.pos.y = y;
+
+			cc.id = 0xFFFFFFFF;
+			cc.Entity = 0xFFFFFFFF;
+
+			sc.size.x = 0;
+			sc.size.y = 0;
+
+			rc.src_rect = { 0, 0, 0, 0 }; // TODO: determine texture
+
+			rc.texture = nullptr; // TODO: determine texture
+
+			mc.speed = 2.0f;
+
+			Game::coordinator->add_component<PositionComponent>(e, positionc);
+			Game::coordinator->add_component<ColliderComponent>(e, cc);
+
+			Game::coordinator->add_component<SizeComponent>(e, sc);
+			Game::coordinator->add_component<RenderComponent>(e, rc);
+
 			Game::coordinator->add_component<MovementComponent>(e, mc);
 		});
 }

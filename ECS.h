@@ -28,16 +28,20 @@
 #include "MovementComponent.h"
 #include "PlayerComponent.h"
 #include "PositionComponent.h"
+#include "ProjectileComponent.h"
 #include "RenderComponent.h"
+#include "ShooterComponent.h"
 #include "SizeComponent.h"
 #include "TileComponent.h"
 
 #include "CollisionSystem.h"
-#include "StaticCollisionSystem.h"
 #include "InputSystem.h"
 #include "MovementSystem.h"
 #include "PlayerSystem.h"
+#include "ProjectileSystem.h"
 #include "RenderSystem.h"
+#include "ShooterSystem.h"
+#include "StaticCollisionSystem.h"
 #include "StaticRenderSystem.h"
 
 
