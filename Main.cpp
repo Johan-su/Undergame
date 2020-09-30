@@ -17,8 +17,17 @@ void Create_entities()
 
 	auto tm = TileMapGenerator::create_map_random(52321232340);
 	TileMapGenerator::entities_from_map(tm);
-	delete tm;
-	Game::entities->push_back(EntityCreator::create_entity(ENTITY_TYPE_PLAYER, 0, 0, 0));
+	float x, y;
+	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
+	{
+		if (Game::tileEntities[i] == 0)
+		{
+			x = TILE_SIZE * (i % MAP_SIZE) + TILE_SIZE / 2;
+			y = TILE_SIZE * (i / MAP_SIZE) + TILE_SIZE / 2;
+			break;
+		}
+	}
+	Game::entities->push_back(EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0));
 
 
 }

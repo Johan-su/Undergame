@@ -31,7 +31,7 @@
 #include "TileComponent.h"
 
 
-#include "CollisionSystem.h"
+#include "StaticCollisionSystem.h"
 #include "InputSystem.h"
 #include "MovementSystem.h"
 #include "PlayerSystem.h"

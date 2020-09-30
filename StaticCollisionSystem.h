@@ -1,7 +1,7 @@
 #pragma once
 #include "ECS.h"
 
-class CollisionSystem : public System
+class StaticCollisionSystem : public System
 {
 public:
 

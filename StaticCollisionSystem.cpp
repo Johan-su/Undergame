@@ -1,12 +1,13 @@
-#include "CollisionSystem.h"
+#include "StaticCollisionSystem.h"
 #include "ECS.h"
 
 constexpr int maxID = MAP_SIZE * MAP_SIZE - 1;
-void CollisionSystem::update() 
+void StaticCollisionSystem::update() 
 {
 	for (const auto& e : m_entities)
 	{
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
+		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
 
@@ -46,7 +47,19 @@ void CollisionSystem::update()
 
 			if (b1 && b2 && b3 && b4)
 			{
-				std::cout << "intersection ID: " << id[i] << "\n";
+				//std::cout << "intersection ID: " << id[i] << "\n";
+				if (Game::tileEntities[id[i]] != 0)
+				{
+					collider.id = id[i];
+					auto speed = movement.speed;
+					if (movement.velocity.x && movement.velocity.y)
+					{
+						speed *= 0.707106781187f; // 1 / sqrt(2);
+					}
+
+					pos.pos.x += speed * (-movement.velocity.x);
+					pos.pos.y += speed * (-movement.velocity.y);
+				}
 
 			}
 		}

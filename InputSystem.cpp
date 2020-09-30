@@ -4,27 +4,127 @@
 
 void InputSystem::update()
 {
+	mouse_pos();
 	switch (Game::event.type)
 	{
 	case SDL_QUIT:
 		Game::Running = false;
 		break;
-	case SDL_KEYDOWN:
-		key_event_down(Game::event.key.keysym.sym);
-		break;
-	case SDL_KEYUP:
-		key_event_up(Game::event.key.keysym.sym);
+
+	case SDL_MOUSEBUTTONDOWN:
+		mouse_event_down();
 		break;
 
-	default:
+	case SDL_MOUSEBUTTONUP:
+		mouse_event_up();
+		break;
+
+	case SDL_KEYDOWN:
+		key_event_down();
+		break;
+
+	case SDL_KEYUP:
+		key_event_up();
 		break;
 	}
-
-
 }
-void InputSystem::key_event_down(const int& keycode) const
+
+void InputSystem::mouse_pos() const
 {
-	switch (keycode)
+	for (const auto& e : m_entities)
+	{
+		auto& ic = Game::coordinator->get_component<InputComponent>(e);
+		ic.x = Game::event.button.x + Game::offsetx;
+		ic.y = Game::event.button.y + Game::offsety;
+
+	}
+}
+
+
+void InputSystem::mouse_event_down() const
+{
+	switch (Game::event.button.button)
+	{
+	case SDL_BUTTON_LEFT:
+		for (const auto& e : m_entities)
+		{
+		auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+		ic.buttonStates[4] = true;
+		std::cout << "mouse_left down" << std::endl;
+		std::cout << "mouse_x " << ic.x << " mouse_y " << ic.y << std::endl;
+		}
+		break;
+	case SDL_BUTTON_MIDDLE:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[5] = true;
+			std::cout << "mouse_middle down" << std::endl;
+			std::cout << "mouse_x " << ic.x << " mouse_y " << ic.y << std::endl;
+
+		}
+		break;
+	case SDL_BUTTON_RIGHT:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[6] = true;
+			std::cout << "mouse_right down" << std::endl;
+			std::cout << "mouse_x " << ic.x << " mouse_y " << ic.y << std::endl;
+
+		}
+		break;
+	}
+	
+}
+void InputSystem::mouse_event_up() const
+{
+	switch (Game::event.button.button)
+	{
+	case SDL_BUTTON_LEFT:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[4] = false;
+			std::cout << "mouse_left up" << std::endl;
+			std::cout << "mouse_x " << ic.x << " mouse_y " << ic.y << std::endl;
+
+		}
+		break;
+	case SDL_BUTTON_MIDDLE:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[5] = false;
+			std::cout << "mouse_middle up" << std::endl;
+			std::cout << "mouse_x " << ic.x << " mouse_y " << ic.y << std::endl;
+
+		}
+		break;
+	case SDL_BUTTON_RIGHT:
+		for (const auto& e : m_entities)
+		{
+			auto& ic = Game::coordinator->get_component<InputComponent>(e);
+
+			ic.buttonStates[6] = false;
+			std::cout << "mouse_right up" << std::endl;
+			std::cout << "mouse_x " << ic.x << " mouse_y " << ic.y << std::endl;
+
+		}
+		break;
+	}
+}
+
+
+
+void InputSystem::key_event_down() const
+{
+	switch (Game::event.key.keysym.sym)
 	{
 	case SDLK_w:
 		for (const auto& e : m_entities)
@@ -62,15 +162,12 @@ void InputSystem::key_event_down(const int& keycode) const
 		}
 		std::cout << "D down" << std::endl;
 		break;
-
-
-	default:
-		break;
 	}
 }
-void InputSystem::key_event_up(const int& keycode) const
+
+void InputSystem::key_event_up() const
 {
-	switch (keycode)
+	switch (Game::event.key.keysym.sym)
 	{
 	case SDLK_w:
 		for (const auto& e : m_entities)
@@ -108,9 +205,6 @@ void InputSystem::key_event_up(const int& keycode) const
 			ic.buttonStates[3] = false;
 		}
 		std::cout << "D up" << std::endl;
-		break;
-
-	default:
 		break;
 	}
 }

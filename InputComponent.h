@@ -3,5 +3,7 @@
 #include "ECS.h"
 struct InputComponent
 {
-	bool buttonStates[10];
+	bool buttonStates[7];
+	int x;
+	int y;
 };

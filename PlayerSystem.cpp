@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "ECS.h"
+#include <cmath>
 #include "PlayerSystem.h"
 
 void PlayerSystem::update()
@@ -11,6 +12,9 @@ void PlayerSystem::update()
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
 
+		movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
+
+		std::cout << movec.rotation << std::endl;
 		set_Camera_to_player(pc);
 
 		movec.velocity.x = 0;
