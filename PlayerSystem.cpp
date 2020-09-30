@@ -6,7 +6,7 @@ void PlayerSystem::update()
 {
 	for (const auto& e : m_entities)
 	{
-		auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
+		//auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
 		auto& inputc = Game::coordinator->get_component<InputComponent>(e);
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);

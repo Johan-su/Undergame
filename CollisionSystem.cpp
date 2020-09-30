@@ -2,7 +2,7 @@
 #include "ECS.h"
 
 constexpr int maxID = MAP_SIZE * MAP_SIZE - 1;
-void CollisionSystem::update()
+void CollisionSystem::update() 
 {
 	for (const auto& e : m_entities)
 	{
@@ -29,54 +29,26 @@ void CollisionSystem::update()
 		for (unsigned int i = 0; i < 9; ++i) //TODO: add collision checks
 		{
 
-			int x1 = TILE_SIZE * (id[i] % MAP_SIZE);
-			int x2 = TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
-			int y1 = TILE_SIZE * (id[i] / MAP_SIZE);
-			int y2 = TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
+			int x1 = TILE_SIZE * (id[i] % MAP_SIZE); // lx
+			int x2 = TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE; //rx 
+			int y1 = TILE_SIZE * (id[i] / MAP_SIZE); // ly
+			int y2 = TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE; // ry
 
 
-			bool b1 = pos.pos.x > x2;
+			bool b1 = pos.pos.x < x2;
 
-			bool b2 = x1 > pos.pos.x + size.size.x;
+			bool b2 = pos.pos.x + size.size.x > x1;
 
-			bool b3 = true;
+			bool b3 = pos.pos.y < y2;
 
-			if (b1 || b2)
-			{
-				b3 = false;
-			}
-			//bool b2 = pos.pos.x + size.size.x >= TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
+			bool b4 = pos.pos.y + size.size.y > y1;
 
-			bool b4 = pos.pos.y > y2;
 
-			bool b5 = y1 < pos.pos.y + size.size.y;
-
-			if (b4 || b5)
-			{
-				b3 = false;
-			}
-
-			if (b3)
+			if (b1 && b2 && b3 && b4)
 			{
 				std::cout << "intersection ID: " << id[i] << "\n";
 
 			}
-			//bool b7 = pos.pos.y + size.size.y >= TILE_SIZE * (id[i] / MAP_SIZE);
-
-			//bool b3 = pos.pos.y >= TILE_SIZE * (id[i] / MAP_SIZE);
-			
-			//bool b5 = pos.pos.x + size.size.x >= TILE_SIZE * (id[i] % MAP_SIZE);
-
-			//bool b6 = pos.pos.x + size.size.x <= TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE;
-			//bool b8 = pos.pos.y + size.size.y <= TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE;
-
-
-
-
-
-
-
 		}
-
 	}
 }
