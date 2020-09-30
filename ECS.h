@@ -20,6 +20,8 @@
 
 #include "Coordinator.h"
 
+
+#include "AiComponent.h"
 #include "ColliderComponent.h"
 #include "HealthComponent.h"
 #include "InputComponent.h"
@@ -30,7 +32,7 @@
 #include "SizeComponent.h"
 #include "TileComponent.h"
 
-
+#include "CollisionSystem.h"
 #include "StaticCollisionSystem.h"
 #include "InputSystem.h"
 #include "MovementSystem.h"

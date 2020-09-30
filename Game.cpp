@@ -16,7 +16,7 @@ int Game::offsety;
 std::vector<Entity>* Game::entities;
 std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
 
-
+static std::shared_ptr<CollisionSystem> collisionSystem;
 static std::shared_ptr<StaticCollisionSystem> staticcollisionSystem;
 static std::shared_ptr<InputSystem> inputSystem;
 static std::shared_ptr<MovementSystem> movementSystem;
@@ -69,6 +69,7 @@ void Game::update()
 	playerSystem->update();
 	movementSystem->update();
 	staticcollisionSystem->update();
+	collisionSystem->update();
 
 	//offsetx++;
 	//offsety+= 16;
@@ -120,17 +121,23 @@ void Game::systems_init()
 {
 	std::bitset<MAX_COMPONENTS> sig;
 
+
+	collisionSystem = Game::coordinator->register_system<CollisionSystem>();
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
+	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
+	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
+	Game::coordinator->set_signature(collisionSystem, sig);
+	sig.reset();
+
+
 	staticcollisionSystem = Game::coordinator->register_system<StaticCollisionSystem>();
 	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
 	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
-
 	Game::coordinator->set_signature(staticcollisionSystem, sig);
 	sig.reset();
-
-
-
 
 
 	inputSystem = Game::coordinator->register_system<InputSystem>();

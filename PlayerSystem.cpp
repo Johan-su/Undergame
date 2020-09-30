@@ -9,10 +9,17 @@ void PlayerSystem::update()
 	{
 		//auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
 		auto& inputc = Game::coordinator->get_component<InputComponent>(e);
+		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
 
-		movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
+		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
+		movec.rotation = 1.57079632679 + atanf(static_cast<float>(pc.pos.y + size.size.y - inputc.y) / static_cast<float>(pc.pos.x + size.size.x - inputc.x)); // 1.57079632679 == pi / 2
+		if (inputc.x - pc.pos.x < 0)
+		{
+			movec.rotation -= 3.14159265359; // pi
+		} //TODO:fix player targeting mouse
+
 
 		std::cout << movec.rotation << std::endl;
 		set_Camera_to_player(pc);

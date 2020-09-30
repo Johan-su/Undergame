@@ -53,7 +53,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<MovementComponent>(e, mc);
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // NPC
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // NPC 
 		{
 			auto positionc = PositionComponent();
 			auto sc = SizeComponent();
@@ -109,13 +109,41 @@ void EntityCreator::init()
 
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data)
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // mole
 		{
+			auto positionc = PositionComponent();
+			auto cc = ColliderComponent();
 
+			auto sc = SizeComponent();
+			auto rc = RenderComponent();
+
+			auto hc = HealthComponent();
+			auto mc = MovementComponent();
+
+			positionc.pos.x = x;
+			positionc.pos.y = y;
+
+			sc.size.x = 0;
+			sc.size.y = 0;
+
+			rc.src_rect = { 0, 0, 0, 0 }; // TODO: determine texture
+
+			rc.texture = nullptr; // TODO: determine texture
+
+			mc.speed = 2.0f;
+
+			Game::coordinator->add_component<PositionComponent>(e, positionc);
+			Game::coordinator->add_component<ColliderComponent>(e, cc);
+
+			Game::coordinator->add_component<SizeComponent>(e, sc);
+			Game::coordinator->add_component<RenderComponent>(e, rc);
+
+			Game::coordinator->add_component<HealthComponent>(e, hc);
+			Game::coordinator->add_component<MovementComponent>(e, mc);
 		});
 }
 
-Entity EntityCreator::create_entity(const size_t& type, const float& x, const float& y, unsigned long long data) // data as NULL if not used
+Entity EntityCreator::create_entity(const size_t& type, const float& x, const float& y, unsigned long long data)
 {
 	SDL_assert(Game::coordinator != nullptr);
 	Entity e = Game::coordinator->create_entity();
