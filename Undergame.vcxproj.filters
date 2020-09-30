@@ -138,6 +138,12 @@
     <ClInclude Include="ProjectileComponent.h">
       <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ShooterComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ShooterSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">

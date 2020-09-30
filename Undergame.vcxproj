@@ -164,6 +164,8 @@
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="ProjectileComponent.h" />
     <ClInclude Include="ProjectileSystem.h" />
+    <ClInclude Include="ShooterComponent.h" />
+    <ClInclude Include="ShooterSystem.h" />
     <ClInclude Include="StaticCollisionSystem.h" />
     <ClInclude Include="ComponentArray.h" />
     <ClInclude Include="ComponentManager.h" />
