@@ -104,7 +104,7 @@ void EntityCreator::init()
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
-			tc.type = (char)data;
+			tc.type = *static_cast<uint8_t*>(data);
 
 			switch (tc.type) // setting tilehealth
 			{
@@ -126,6 +126,8 @@ void EntityCreator::init()
 			Game::coordinator->add_component<TileComponent>(e, tc);
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
+
+			std::cout << "tileID: " << e << std::endl;
 
 		});
 	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // mole
@@ -174,6 +176,8 @@ void EntityCreator::init()
 			auto mc = MovementComponent();
 			auto pc = ProjectileComponent();
 
+			auto health = HealthComponent();
+
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
@@ -188,12 +192,16 @@ void EntityCreator::init()
 			rc.texture = Texture::get_texture(1); // TODO: determine texture
 
 			mc.speed = 10.0f;
-			mc.rotation = *(float*)data;
+			mc.rotation = *static_cast<float*>(data);
 
 			mc.velocity.x = cosf(mc.rotation);
 			mc.velocity.y = sinf(mc.rotation);
 
 			pc.damage = 0.0f;
+
+			health.max_health = 1.0f;
+
+			health.health = health.max_health;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);
@@ -203,6 +211,8 @@ void EntityCreator::init()
 
 			Game::coordinator->add_component<MovementComponent>(e, mc);
 			Game::coordinator->add_component<ProjectileComponent>(e, pc);
+
+			Game::coordinator->add_component<HealthComponent>(e, health);
 
 		});
 }

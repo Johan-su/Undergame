@@ -8,30 +8,22 @@ void ProjectileSystem::update()
 	{
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
 		auto& proj = Game::coordinator->get_component<ProjectileComponent>(e);
-
-		if (collider.id != 0xFFFFFFFF)
-		{
-			Game::coordinator->destroy_entity(e);
-			return;
-		}
+		auto& health = Game::coordinator->get_component<HealthComponent>(e);
 
 		if (collider.Entity != 0xFFFFFFFF)
 		{
 			auto& otherhealth = Game::coordinator->get_component<HealthComponent>(collider.Entity);
 
-			dealDamage(collider.Entity, otherhealth, proj.damage);
-			Game::coordinator->destroy_entity(e);
-			return;
+			deal_damage(collider.Entity, otherhealth, proj.damage);
 		}
 
+		if (collider.id != 0xFFFFFFFF)
+		{
+			health.health = -1;
+		}
 	}
 }
-void ProjectileSystem::dealDamage(Entity e, HealthComponent& health, const float& damage)
+void ProjectileSystem::deal_damage(Entity e, HealthComponent& health, const float& damage)
 {
 	health.health -= damage;
-
-	if (health.health < 0)
-	{
-		Game::coordinator->destroy_entity(e);
-	}
 }

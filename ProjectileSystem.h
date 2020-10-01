@@ -9,5 +9,5 @@ public:
 
 private:
 
-	void dealDamage(Entity e, HealthComponent& health, const float& damage);
+	void deal_damage(Entity e, HealthComponent& health, const float& damage);
 };

@@ -162,6 +162,7 @@
     <ClInclude Include="AiComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="HealthSystem.h" />
     <ClInclude Include="ProjectileComponent.h" />
     <ClInclude Include="ProjectileSystem.h" />
     <ClInclude Include="ShooterComponent.h" />
@@ -198,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="HealthSystem.cpp" />
     <ClCompile Include="ProjectileSystem.cpp" />
     <ClCompile Include="ShooterSystem.cpp" />
     <ClCompile Include="StaticCollisionSystem.cpp" />

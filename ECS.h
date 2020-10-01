@@ -35,6 +35,7 @@
 #include "TileComponent.h"
 
 #include "CollisionSystem.h"
+#include "HealthSystem.h"
 #include "InputSystem.h"
 #include "MovementSystem.h"
 #include "PlayerSystem.h"
