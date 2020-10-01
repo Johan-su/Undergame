@@ -27,7 +27,7 @@ void Create_entities()
 			break;
 		}
 	}
-	Game::entities->push_back(EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0));
+	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
 
 
 }

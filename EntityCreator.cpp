@@ -6,13 +6,13 @@
 #include "EntityCreator.h"
 
 
-std::vector<std::function<void(const Entity& ,const float&, const float&, unsigned long long)>> EntityCreator::func_pointers;
+std::vector<std::function<void(const Entity& ,const float&, const float&, void* data)>> EntityCreator::func_pointers;
 
 
 
 void EntityCreator::init()
 {
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // Playercontrolled
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // Playercontrolled
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -43,7 +43,12 @@ void EntityCreator::init()
 
 			pc.id = create_player_id();
 
+			hc.max_health = 100.0f;
+			hc.health = hc.max_health;
+
 			mc.speed = 2.0f;
+
+			shc.gunlength = 34;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);
@@ -59,8 +64,10 @@ void EntityCreator::init()
 
 			Game::coordinator->add_component<ShooterComponent>(e, shc);
 
+			std::cout << "player id: " << e << std::endl;
+
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // NPC 
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // NPC 
 		{
 			auto positionc = PositionComponent();
 			auto sc = SizeComponent();
@@ -87,7 +94,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // tile
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // tile
 		{
 			auto positionc = PositionComponent();
 			auto tc = TileComponent();
@@ -97,7 +104,7 @@ void EntityCreator::init()
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
-			tc.type = static_cast<char>(data);
+			tc.type = (char)data;
 
 			switch (tc.type) // setting tilehealth
 			{
@@ -120,9 +127,8 @@ void EntityCreator::init()
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
-
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // mole
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // mole
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -157,7 +163,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 			Game::coordinator->add_component<MovementComponent>(e, mc);
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, unsigned long long data) // bullet
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // bullet
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -168,25 +174,26 @@ void EntityCreator::init()
 			auto mc = MovementComponent();
 			auto pc = ProjectileComponent();
 
-			auto shoot = ShooterComponent();
-
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
 			cc.id = 0xFFFFFFFF;
 			cc.Entity = 0xFFFFFFFF;
 
-			sc.size.x = 0;
-			sc.size.y = 0;
+			sc.size.x = 4;
+			sc.size.y = 4;
 
-			rc.src_rect = { 0, 0, 0, 0 }; // TODO: determine texture
+			rc.src_rect = { 0, 0, 677, 320 }; // TODO: determine texture
 
-			rc.texture = nullptr; // TODO: determine texture
+			rc.texture = Texture::get_texture(1); // TODO: determine texture
 
-			mc.speed = 2.0f;
-			mc.rotation = *((float*)(&data));
+			mc.speed = 10.0f;
+			mc.rotation = *(float*)data;
 
-			pc.damage = 5.0f;
+			mc.velocity.x = cosf(mc.rotation);
+			mc.velocity.y = sinf(mc.rotation);
+
+			pc.damage = 0.0f;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);
@@ -197,12 +204,10 @@ void EntityCreator::init()
 			Game::coordinator->add_component<MovementComponent>(e, mc);
 			Game::coordinator->add_component<ProjectileComponent>(e, pc);
 
-			Game::coordinator->add_component<ShooterComponent>(e, shoot);
-
 		});
 }
 
-Entity EntityCreator::create_entity(const size_t& type, const float& x, const float& y, unsigned long long data)
+void EntityCreator::create_entity(const size_t& type, const float& x, const float& y, void* data)
 {
 	SDL_assert(Game::coordinator != nullptr);
 	Entity e = Game::coordinator->create_entity();
@@ -210,14 +215,6 @@ Entity EntityCreator::create_entity(const size_t& type, const float& x, const fl
 
 	const auto& func = func_pointers[type];
 	func(e, x, y, data);
-
-
-
-
-
-
-
-	return e;
 }
 
 unsigned int EntityCreator::create_player_id()

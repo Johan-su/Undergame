@@ -2,6 +2,7 @@
 #include <array>
 #include <bitset>
 #include <queue>
+#include "SDL.h"
 #include "Entity.h"
 #include "ECS.h"
 
@@ -20,13 +21,15 @@ public:
 
 	Entity Create_entity()
 	{
+		SDL_assert(m_AvailableIDs.size() > 0);
+
 		Entity e = m_AvailableIDs.front();
 		m_AvailableIDs.pop();
 		++m_entityCount;
 		return e;
 	}
 
-	void Destroy_entity(const Entity& e)
+	void destroy_entity(const Entity& e)
 	{
 		m_signatures[e].reset();
 

@@ -45,10 +45,14 @@ public:
 	}
 	void remove_entity(const Entity& e)
 	{
-		for (auto const& arr : m_arrayPointers)
+		for (unsigned i = 0; i < m_componentTypeCount; ++i)
 		{
-			arr->destroy_component(e);
+			m_arrayPointers[i]->destroy_entity(e);
 		}
+		/*for (auto const& arr : m_arrayPointers)
+		{
+			arr->destroy_entity(e);
+		}*/
 	}
 	template<typename T>
 	ComponentArray<T>* get_component_array()

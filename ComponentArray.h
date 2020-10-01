@@ -8,7 +8,7 @@
 class ComponentArrayV
 {
 public:
-	virtual void destroy_component(const Entity& e) = 0;
+	virtual void destroy_entity(const Entity& e) = 0;
 };
 
 
@@ -28,7 +28,7 @@ public:
 		index[e] = m_size;
 		++m_size;
 	}
-	void destroy_component(const Entity& e) override
+	void destroy_component(const Entity& e)
 	{
 		if (index[e] == m_size-1) // if at the end of array just remove it, it will still be a packed array.
 		{
@@ -36,8 +36,16 @@ public:
 			return;
 		}
 		index[m_size - 1] = e; // replace last index to point to, replace the last element with the newly destroyed one.
+		//index[e] = m_size - 1;
 		m_componentArray[index[e]] = m_componentArray[m_size-1]; // moves component from last element, to newly destroyed.
 		--m_size;
+	}
+	void destroy_entity(const Entity& e) override
+	{
+		if (index[e] < m_size)
+		{
+			destroy_component(e);
+		}
 	}
 	T& get_component(const Entity& e)
 	{

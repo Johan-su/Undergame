@@ -15,14 +15,14 @@ void PlayerSystem::update()
 		auto& shoot = Game::coordinator->get_component<ShooterComponent>(e);
 
 		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
-		movec.rotation = static_cast<float>(1.57079632679 + atanf(static_cast<float>(pc.pos.y + size.size.y - static_cast<float>(inputc.y)) / static_cast<float>(pc.pos.x + size.size.x - static_cast<float>(inputc.x)))); // 1.57079632679 == pi / 2
+		movec.rotation = static_cast<float>(atanf(static_cast<float>(pc.pos.y + size.size.y - static_cast<float>(inputc.y)) / static_cast<float>(pc.pos.x + size.size.x - static_cast<float>(inputc.x)))); // 1.57079632679 == pi / 2
 		if (inputc.x - pc.pos.x < 0)
 		{
 			movec.rotation -= 3.14159265359f; // pi
 		} //TODO:fix player targeting mouse
 
 
-		std::cout << movec.rotation << std::endl;
+		//std::cout << movec.rotation << std::endl;
 		set_Camera_to_player(pc);
 
 		movec.velocity.x = 0;

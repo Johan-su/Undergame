@@ -50,6 +50,8 @@ void StaticCollisionSystem::update()
 				//std::cout << "intersection ID: " << id[i] << "\n";
 				if (Game::tileEntities[id[i]] != 0)
 				{
+					std::cout << "Tileintersection between " << e << " and " << id[i] << std::endl;
+
 					collider.id = id[i];
 					auto speed = movement.speed;
 					if (movement.velocity.x && movement.velocity.y)

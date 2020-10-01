@@ -32,7 +32,7 @@ public:
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 	static Coordinator* coordinator;
-	static std::vector<Entity>* entities;
+	//static std::vector<Entity>* entities;
 	static std::array<Entity, MAP_SIZE* MAP_SIZE> tileEntities;
 
 	static int offsetx, offsety;

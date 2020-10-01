@@ -21,10 +21,10 @@ class EntityCreator
 public:
 	static void init();
 
-	static Entity create_entity(const size_t& type, const float& x, const float& y, unsigned long long data);
+	static void create_entity(const size_t& type, const float& x, const float& y, void* data);
 
 private:
-	static std::vector<std::function<void(const Entity&, const float&, const float&, unsigned long long)>> func_pointers;
+	static std::vector<std::function<void(const Entity&, const float&, const float&, void* )>> func_pointers;
 
 	static unsigned int create_player_id();
 

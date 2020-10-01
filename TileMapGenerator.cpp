@@ -48,9 +48,8 @@ void TileMapGenerator::entities_from_map(TileMap* tm) //TODO: maybe change to mu
 		Game::tileEntities[i] = type;
 		continue;
 		}
-		Entity e = EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), type);
+		EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), (void*)type);
 		Game::tileEntities[i] = type;
-		Game::entities->push_back(e);
 	}
 }
 void TileMapGenerator::create_boundary(TileMap* tm)

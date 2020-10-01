@@ -13,7 +13,7 @@ void RenderSystem::render(const int& x, const int& y)
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& move = Game::coordinator->get_component<MovementComponent>(e);
 
-		SDL_RenderCopyExF(Game::renderer, render.texture, &render.src_rect, &SDL_FRect({ position.pos.x - x, position.pos.y - y, size.size.x, size.size.y }), move.rotation * 57.2957795131f, NULL, SDL_FLIP_NONE); // 57.2957795131 == 180 / PI
+		SDL_RenderCopyExF(Game::renderer, render.texture, &render.src_rect, &SDL_FRect({ position.pos.x - x, position.pos.y - y, size.size.x, size.size.y }), (1.57079632679f + move.rotation) * 57.2957795131f, NULL, SDL_FLIP_NONE); // 57.2957795131 == 180 / PI
 	}
 }
 

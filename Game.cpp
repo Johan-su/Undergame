@@ -13,7 +13,7 @@ Coordinator* Game::coordinator;
 int Game::offsetx;
 int Game::offsety;
 
-std::vector<Entity>* Game::entities;
+//std::vector<Entity>* Game::entities;
 std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
 
 static std::shared_ptr<CollisionSystem> collisionSystem;
@@ -105,12 +105,12 @@ void Game::ECS_init()
 	Game::coordinator->test();
 	components_init();
 	systems_init();
-	Game::entities = new std::vector<Entity>(MAX_ENTITIES);
+	//Game::entities = new std::vector<Entity>(MAX_ENTITIES);
 }
 
 void Game::components_init()
 {
-	Game::coordinator->register_component<AiComponent>();
+	//Game::coordinator->register_component<AiComponent>();
 	Game::coordinator->register_component<ColliderComponent>();
 	Game::coordinator->register_component<HealthComponent>();
 	Game::coordinator->register_component<InputComponent>();
@@ -203,6 +203,7 @@ void Game::systems_init()
 	Game::coordinator->set_signature(staticrenderSystem, sig);
 	staticrenderSystem->init();
 	sig.reset();
+
 
 
 
