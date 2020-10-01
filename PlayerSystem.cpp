@@ -12,6 +12,7 @@ void PlayerSystem::update()
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
+		auto& shoot = Game::coordinator->get_component<ShooterComponent>(e);
 
 		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
 		movec.rotation = static_cast<float>(1.57079632679 + atanf(static_cast<float>(pc.pos.y + size.size.y - static_cast<float>(inputc.y)) / static_cast<float>(pc.pos.x + size.size.x - static_cast<float>(inputc.x)))); // 1.57079632679 == pi / 2
@@ -46,7 +47,11 @@ void PlayerSystem::update()
 		}
 		if (inputc.buttonStates[4]) // mouse left
 		{
-
+			shoot.states[0] = true;
+		}
+		else
+		{
+			shoot.states[0] = false;
 		}
 		if (inputc.buttonStates[5]) // mouse middle
 		{

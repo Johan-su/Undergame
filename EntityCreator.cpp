@@ -99,6 +99,14 @@ void EntityCreator::init()
 
 			tc.type = static_cast<char>(data);
 
+			switch (tc.type) // setting tilehealth
+			{
+			case 1:
+
+			default:
+				break;
+			}
+
 			sc.size.x = TILE_SIZE;
 			sc.size.y = TILE_SIZE;
 
@@ -160,6 +168,8 @@ void EntityCreator::init()
 			auto mc = MovementComponent();
 			auto pc = ProjectileComponent();
 
+			auto shoot = ShooterComponent();
+
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
@@ -174,6 +184,9 @@ void EntityCreator::init()
 			rc.texture = nullptr; // TODO: determine texture
 
 			mc.speed = 2.0f;
+			mc.rotation = *((float*)(&data));
+
+			pc.damage = 5.0f;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);
@@ -182,6 +195,10 @@ void EntityCreator::init()
 			Game::coordinator->add_component<RenderComponent>(e, rc);
 
 			Game::coordinator->add_component<MovementComponent>(e, mc);
+			Game::coordinator->add_component<ProjectileComponent>(e, pc);
+
+			Game::coordinator->add_component<ShooterComponent>(e, shoot);
+
 		});
 }
 

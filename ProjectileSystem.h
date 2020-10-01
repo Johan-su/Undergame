@@ -1,7 +1,7 @@
 #pragma once
 #include "ECS.h"
 
-class ProjecttileSystem : public System
+class ProjectileSystem : public System
 {
 public:
 

@@ -2,7 +2,7 @@
 #include "ECS.h"
 
 
-void ProjecttileSystem::update()
+void ProjectileSystem::update()
 {
 	for (const auto e : m_entities)
 	{
@@ -26,7 +26,7 @@ void ProjecttileSystem::update()
 
 	}
 }
-void ProjecttileSystem::dealDamage(Entity e, HealthComponent& health, const float& damage)
+void ProjectileSystem::dealDamage(Entity e, HealthComponent& health, const float& damage)
 {
 	health.health -= damage;
 

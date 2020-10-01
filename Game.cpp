@@ -20,7 +20,7 @@ static std::shared_ptr<CollisionSystem> collisionSystem;
 static std::shared_ptr<InputSystem> inputSystem;
 static std::shared_ptr<MovementSystem> movementSystem;
 static std::shared_ptr<PlayerSystem> playerSystem;
-static std::shared_ptr<ProjecttileSystem> projectileSystem;
+static std::shared_ptr<ProjectileSystem> projectileSystem;
 static std::shared_ptr<RenderSystem> renderSystem;
 static std::shared_ptr<ShooterSystem> shooterSystem;
 static std::shared_ptr<StaticCollisionSystem> staticcollisionSystem;
@@ -69,9 +69,11 @@ void Game::clean()
 void Game::update()
 {
 	playerSystem->update();
+	shooterSystem->update();
 	movementSystem->update();
 	staticcollisionSystem->update();
 	collisionSystem->update();
+	projectileSystem->update();
 
 	//offsetx++;
 	//offsety+= 16;
@@ -108,13 +110,16 @@ void Game::ECS_init()
 
 void Game::components_init()
 {
+	Game::coordinator->register_component<AiComponent>();
 	Game::coordinator->register_component<ColliderComponent>();
 	Game::coordinator->register_component<HealthComponent>();
 	Game::coordinator->register_component<InputComponent>();
 	Game::coordinator->register_component<MovementComponent>();
 	Game::coordinator->register_component<PlayerComponent>();
 	Game::coordinator->register_component<PositionComponent>();
+	Game::coordinator->register_component<ProjectileComponent>();
 	Game::coordinator->register_component<RenderComponent>();
+	Game::coordinator->register_component<ShooterComponent>();
 	Game::coordinator->register_component<SizeComponent>();
 	Game::coordinator->register_component<TileComponent>();
 }
@@ -156,19 +161,10 @@ void Game::systems_init()
 	sig.reset();
 
 
-	projectileSystem = Game::coordinator->register_system<CollisionSystem>();
+	projectileSystem = Game::coordinator->register_system<ProjectileSystem>();
 	sig.set(Game::coordinator->get_signature_pos<ProjectileComponent>());
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
 	Game::coordinator->set_signature(projectileSystem, sig);
-	sig.reset();
-
-
-	shooterSystem = Game::coordinator->register_system<ShooterSystem>();
-	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
-	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
-	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
-	sig.set(Game::coordinator->get_signature_pos<ShooterComponent>());
-	Game::coordinator->set_signature(shooterSystem, sig);
 	sig.reset();
 
 
@@ -178,6 +174,15 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	Game::coordinator->set_signature(renderSystem, sig);
+	sig.reset();
+
+
+	shooterSystem = Game::coordinator->register_system<ShooterSystem>();
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
+	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
+	sig.set(Game::coordinator->get_signature_pos<ShooterComponent>());
+	Game::coordinator->set_signature(shooterSystem, sig);
 	sig.reset();
 
 

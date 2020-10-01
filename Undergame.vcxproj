@@ -199,6 +199,7 @@
   <ItemGroup>
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="ProjectileSystem.cpp" />
+    <ClCompile Include="ShooterSystem.cpp" />
     <ClCompile Include="StaticCollisionSystem.cpp" />
     <ClCompile Include="EntityCreator.cpp" />
     <ClCompile Include="Game.cpp" />
