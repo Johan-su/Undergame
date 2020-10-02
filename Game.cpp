@@ -111,7 +111,7 @@ void Game::ECS_init()
 
 void Game::components_init()
 {
-	//Game::coordinator->register_component<AiComponent>();
+	Game::coordinator->register_component<AiComponent>();
 	Game::coordinator->register_component<ColliderComponent>();
 	Game::coordinator->register_component<HealthComponent>();
 	Game::coordinator->register_component<InputComponent>();

@@ -13,7 +13,7 @@ void HealthSystem::clean()
 	dead_entities = nullptr;
 }
 
-void HealthSystem::update()
+void HealthSystem::update() //TODO: probably possible to make faster
 {
 	for(auto e : m_entities)
 	{

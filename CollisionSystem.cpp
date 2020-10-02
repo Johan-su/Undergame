@@ -1,7 +1,7 @@
 #include "CollisionSystem.h"
 #include "ECS.h"
 
-void CollisionSystem::update()
+void CollisionSystem::update() //TODO: make faster using the tile grid.
 {
 	for (const auto& e : m_entities)
 	{

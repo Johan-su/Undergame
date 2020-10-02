@@ -1,10 +1,10 @@
 #pragma once
 
 #define MAX_COMPONENTS 64u
-#define MAX_ENTITIES 3000u
+#define MAX_ENTITIES 100000u
 #define MAX_SYSTEMS 256u
 #define TILE_SIZE 64u
-#define MAP_SIZE 8u
+#define MAP_SIZE 256u
 
 #include "Entity.h"
 

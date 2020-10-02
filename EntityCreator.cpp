@@ -138,6 +138,8 @@ void EntityCreator::init()
 			auto hc = HealthComponent();
 			auto mc = MovementComponent();
 
+			auto ai = AiComponent();
+
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 

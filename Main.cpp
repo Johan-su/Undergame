@@ -52,6 +52,7 @@ int main(int argc, char* argv[])
 	auto dt = after - before;
 
 	std::cout << "ns: " << dt.count() << " ms: " << dt.count() / 1000000.0f << " s: " << dt.count() / 1000000000.0f << std::endl;
+
 #ifndef NLOOP
 	auto NS_PER_UPDATE = std::chrono::nanoseconds(16666666);
 	auto previous = std::chrono::high_resolution_clock::now();
