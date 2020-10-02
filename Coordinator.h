@@ -25,7 +25,7 @@ public:
 	{
 		return m_entityManager->Create_entity();
 	}
-	void destroy_entity(const Entity& e) //TODO: fix bug when shooting, it deletes the (renderComponent)? tiles from the back instead of what its hitting.
+	void destroy_entity(const Entity& e) 
 	{
 		m_systemManager->remove_entity(e);
 		m_componentManager->remove_entity(e);

@@ -34,13 +34,13 @@ TileMap* TileMapGenerator::create_map_simplex(const unsigned int& seed)
 {
 	return nullptr;
 }
-void TileMapGenerator::entities_from_map(TileMap* tm) //TODO: maybe change to multithreading
+void TileMapGenerator::entities_from_map(TileMap* tm) 
 {
 	for (unsigned int i = 0; i < tm->grid.size(); ++i)
 	{
 		int x = TILE_SIZE * (i % (MAP_SIZE));
 		int y = TILE_SIZE * (i / (MAP_SIZE));
-		const auto& type = tm->grid[i];
+		auto& type = tm->grid[i];
 		//std::cout << i << "\n";
 		if (type == 0)
 		{
@@ -48,14 +48,12 @@ void TileMapGenerator::entities_from_map(TileMap* tm) //TODO: maybe change to mu
 		Game::tileEntities[i] = type;
 		continue;
 		}
-		EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), (void*)type);
+		EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), &type);
 		Game::tileEntities[i] = type;
 	}
 }
 void TileMapGenerator::create_boundary(TileMap* tm)
 {
-	//unsigned int rowsize = static_cast<unsigned int>(sqrt(tm->grid.size()));
-
 	for (unsigned int i = 0; i < MAP_SIZE; ++i)
 	{
 		tm->grid[i] = 16;

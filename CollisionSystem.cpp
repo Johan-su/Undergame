@@ -35,7 +35,9 @@ void CollisionSystem::update()
 			if (b1 && b2 && b3 && b4)
 			{
 				collider.Entity = e2;
+#ifdef _DEBUG
 				std::cout << "intersection between " << e << " and " << e2 << std::endl;
+#endif
 			}
 		}
 	}

@@ -64,7 +64,6 @@ void EntityCreator::init()
 
 			Game::coordinator->add_component<ShooterComponent>(e, shc);
 
-			std::cout << "player id: " << e << std::endl;
 
 		});
 	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // NPC 
@@ -127,8 +126,6 @@ void EntityCreator::init()
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
-			std::cout << "tileID: " << e << std::endl;
-
 		});
 	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // mole
 		{
@@ -154,7 +151,7 @@ void EntityCreator::init()
 
 			rc.texture = nullptr; // TODO: determine texture
 
-			mc.speed = 2.0f;
+			mc.speed = 0.0f;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);

@@ -10,6 +10,9 @@
 #include "Tilemap.h"
 #include "TileMapGenerator.h"
 
+//#define NLOOP
+
+
 
 
 void Create_entities()
@@ -28,12 +31,11 @@ void Create_entities()
 		}
 	}
 	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, nullptr);
-
-
 }
 
 int main(int argc, char* argv[])
 {
+
 	auto before = std::chrono::high_resolution_clock::now();
 	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
 	{
@@ -50,7 +52,7 @@ int main(int argc, char* argv[])
 	auto dt = after - before;
 
 	std::cout << "ns: " << dt.count() << " ms: " << dt.count() / 1000000.0f << " s: " << dt.count() / 1000000000.0f << std::endl;
-
+#ifndef NLOOP
 	auto NS_PER_UPDATE = std::chrono::nanoseconds(16666666);
 	auto previous = std::chrono::high_resolution_clock::now();
 	std::chrono::nanoseconds lag(0);
@@ -69,6 +71,14 @@ int main(int argc, char* argv[])
 		}
 		Game::render();
 	}
+#else
+	while (Game::Running)
+	{
+		Game::events();
+		Game::update();
+		Game::render();
+	}
+#endif
 	//t1.join();
 	Game::clean();
 	return 0;

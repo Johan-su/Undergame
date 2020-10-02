@@ -27,7 +27,7 @@ void StaticCollisionSystem::update()
 		id[7] = id[4] + MAP_SIZE;
 		id[8] = id[4] + MAP_SIZE + 1;
 
-		for (unsigned int i = 0; i < 9; ++i) //TODO: add collision checks
+		for (unsigned int i = 0; i < 9; ++i) 
 		{
 
 			int x1 = TILE_SIZE * (id[i] % MAP_SIZE); // lx

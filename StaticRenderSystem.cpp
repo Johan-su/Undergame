@@ -3,7 +3,6 @@
 #include "ECS.h"
 #include "StaticRenderSystem.h"
 
-
 void StaticRenderSystem::init()
 {
 	tile_textures.push_back(Texture::get_texture(0));
@@ -131,16 +130,17 @@ void StaticRenderSystem::init()
 }
 
 
-void StaticRenderSystem::render_tile(const int& x, const int& y)
+void StaticRenderSystem::render_tile(const int& x, const int& y) //TODO: Release mode bug with rendering.
 {
 	for (const auto& e : m_entities)
 	{
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
+		auto& sc = Game::coordinator->get_component<SizeComponent>(e);
+		auto& tc = Game::coordinator->get_component<TileComponent>(e);
+
 
 		if (pc.pos.x >= -100 + x && pc.pos.y >= -100 + y && pc.pos.x <= SCREEN_WIDTH + 100 + x && pc.pos.y <= SCREEN_HEIGHT + 100 + y)
 		{
-		auto& sc = Game::coordinator->get_component<SizeComponent>(e);
-		auto& tc = Game::coordinator->get_component<TileComponent>(e);
 		const auto& func = func_pointers[tc.type];
 		func(pc, sc, x, y);
 		}

@@ -21,6 +21,10 @@ public:
 	ComponentArray()
 		: m_size(0)
 	{
+		for (unsigned int i = 0; i < MAX_ENTITIES; ++i)
+		{
+			index[i] = 0xFFFFFFFF;
+		}
 	}
 	void add_component(const Entity& e, T component)
 	{

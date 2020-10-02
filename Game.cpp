@@ -96,7 +96,6 @@ void Game::render()
 	staticrenderSystem->render_tile(offsetx, offsety);
 	renderSystem->render(offsetx, offsety);
 
-
 	SDL_RenderPresent(renderer);
 }
 
