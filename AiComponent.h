@@ -9,7 +9,8 @@ enum AI_STATES
 
 struct AiComponent
 {
+	float visualRadius;
+	float lastX;
+	float lastY;
 	uint8_t state;
-	float lastx;
-	float lasty;
 };
