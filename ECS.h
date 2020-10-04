@@ -34,6 +34,8 @@
 #include "SizeComponent.h"
 #include "TileComponent.h"
 
+
+#include "AiSystem.h"
 #include "CollisionSystem.h"
 #include "HealthSystem.h"
 #include "InputSystem.h"

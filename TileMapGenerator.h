@@ -5,13 +5,13 @@ class TileMapGenerator
 {
 public:
 
-	static TileMap* create_map_random(const unsigned int& seed);
+	static TileMap* create_map_random(Uint32 seed);
 
-	static TileMap* create_map_perlin(const unsigned int& seed);
+	static TileMap* create_map_perlin(Uint32 seed);
 
-	static TileMap* create_map_cellular(const unsigned int& seed);
+	static TileMap* create_map_cellular(Uint32 seed);
 
-	static TileMap* create_map_simplex(const unsigned int& seed);
+	static TileMap* create_map_simplex(Uint32 seed);
 
 	static void entities_from_map(TileMap* tm);
 

@@ -16,6 +16,9 @@ int Game::offsety;
 //std::vector<Entity>* Game::entities;
 std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
 
+
+
+static std::shared_ptr<AiSystem> aiSystem;
 static std::shared_ptr<CollisionSystem> collisionSystem;
 static std::shared_ptr<HealthSystem> healthSystem;
 static std::shared_ptr<InputSystem> inputSystem;
@@ -130,6 +133,14 @@ void Game::systems_init()
 	std::bitset<MAX_COMPONENTS> sig;
 
 
+	aiSystem = Game::coordinator->register_system<AiSystem>();
+	sig.set(Game::coordinator->get_signature_pos<AiComponent>());
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
+	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
+	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
+	Game::coordinator->set_signature(aiSystem, sig);
+	sig.reset();
 
 
 	collisionSystem = Game::coordinator->register_system<CollisionSystem>();

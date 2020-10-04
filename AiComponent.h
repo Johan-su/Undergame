@@ -12,5 +12,6 @@ struct AiComponent
 	float visualRadius;
 	float lastX;
 	float lastY;
+	float digSpeed;
 	uint8_t state;
 };

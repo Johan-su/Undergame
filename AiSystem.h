@@ -16,14 +16,13 @@ private:
 
 	void move_to();
 
-	void Astar();
+	float Astar(float x, float y, AiComponent& ai);
 
-	void dijkstra();
+	float dijkstra(float x, float y, AiComponent& ai);
 
-	void greedy();
+	float greedy(float x, float y, AiComponent& ai);
 
-	void straight_line();
-
+	float straight_line(AiComponent& ai, PositionComponent& pos);
 
 
 };

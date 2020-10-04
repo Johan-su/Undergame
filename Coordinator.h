@@ -25,7 +25,7 @@ public:
 	{
 		return m_entityManager->Create_entity();
 	}
-	void destroy_entity(const Entity& e) 
+	void destroy_entity(Entity e) 
 	{
 		m_systemManager->remove_entity(e);
 		m_componentManager->remove_entity(e);
@@ -37,7 +37,7 @@ public:
 		m_componentManager->register_component_type<T>();
 	}
 	template<typename T>
-	void add_component(const Entity& e, T component)
+	void add_component(Entity e, T component)
 	{
 		m_componentManager->add_component<T>(e, component);
 		auto& sig = m_entityManager->Get_signature(e);
@@ -46,7 +46,7 @@ public:
 		//m_entityManager->Set_signature(e, sig);
 	}
 	template<typename T>
-	void remove_component(const Entity& e)
+	void remove_component(Entity e)
 	{
 		auto sig = m_entityManager->Get_signature(e);
 		m_componentManager->destroy_component<T>(e);
@@ -55,7 +55,7 @@ public:
 		m_systemManager->entity_changed_signature(e, sig);
 	}
 	template<typename T>
-	T& get_component(const Entity& e)
+	T& get_component(Entity e)
 	{
 		return m_componentManager->get_component<T>(e);
 	}
@@ -74,7 +74,7 @@ public:
 	{
 		m_systemManager->set_signature(system, signature);
 	}
-	std::bitset<MAX_COMPONENTS> get_signature(const Entity& e)
+	std::bitset<MAX_COMPONENTS> get_signature(Entity e)
 	{
 		return m_entityManager->Get_signature(e);
 	}

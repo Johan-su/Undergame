@@ -5,7 +5,7 @@
 #include "ECS.h"
 
 
-TileMap* TileMapGenerator::create_map_random(const unsigned int& seed)
+TileMap* TileMapGenerator::create_map_random(unsigned int seed)
 {
 	std::default_random_engine r;
 	r.seed(seed);
@@ -22,15 +22,18 @@ TileMap* TileMapGenerator::create_map_random(const unsigned int& seed)
 	create_boundary(tilemap);
 	return tilemap;
 }
-TileMap* TileMapGenerator::create_map_perlin(const unsigned int& seed)
+TileMap* TileMapGenerator::create_map_perlin(Uint32 seed)
+{
+	auto tilemap = new TileMap();
+
+
+	return nullptr;
+}
+TileMap* TileMapGenerator::create_map_cellular(Uint32 seed) // maybe not worth doing cellular automata generation
 {
 	return nullptr;
 }
-TileMap* TileMapGenerator::create_map_cellular(const unsigned int& seed) // maybe not worth doing cellular automata generation
-{
-	return nullptr;
-}
-TileMap* TileMapGenerator::create_map_simplex(const unsigned int& seed)
+TileMap* TileMapGenerator::create_map_simplex(Uint32 seed)
 {
 	return nullptr;
 }
@@ -54,7 +57,7 @@ void TileMapGenerator::entities_from_map(TileMap* tm)
 }
 void TileMapGenerator::create_boundary(TileMap* tm)
 {
-	for (unsigned int i = 0; i < MAP_SIZE; ++i)
+	for (Uint32 i = 0; i < MAP_SIZE; ++i)
 	{
 		tm->grid[i] = 16;
 		tm->grid[i * MAP_SIZE] = 16;
