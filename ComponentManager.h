@@ -32,18 +32,18 @@ public:
 		++m_componentTypeCount;
 	}
 	template<typename T>
-	void add_component(const Entity& e, T component)
+	void add_component(Entity e, T component)
 	{
 		std::string componentName = typeid(T).name();
 		get_component_array<T>()->add_component(e, component);
 
 	}
 	template<typename T>
-	void destroy_component(const Entity& e)
+	void destroy_component(Entity e)
 	{
 		get_component_array<T>()->destroy_component(e);
 	}
-	void remove_entity(const Entity& e)
+	void remove_entity(Entity e)
 	{
 		for (unsigned i = 0; i < m_componentTypeCount; ++i)
 		{
@@ -68,7 +68,7 @@ public:
 	}
 
 	template<typename T>
-	T& get_component(const Entity& e)
+	T& get_component(Entity e)
 	{
 		return get_component_array<T>()->get_component(e);
 	}
@@ -83,6 +83,7 @@ public:
 		{
 			delete m_arrayPointers[i];
 		}
+		delete m_arrayPointers[];
 	}
 private:
 	//std::array<std::string, MAX_COMPONENTS> m_componentTypes;

@@ -14,21 +14,21 @@ void AiSystem::update()
 
 float AiSystem::Astar(float x, float y, AiComponent& ai)
 {
-
+	return NULL;
 }
 
 float AiSystem::dijkstra(float x, float y, AiComponent& ai)
 {
-
+	return NULL;
 }
 
 float AiSystem::greedy(float x, float y, AiComponent& ai)
 {
-
+	return NULL;
 }
 float AiSystem::straight_line(AiComponent& ai, PositionComponent& pos) //TODO: find a way to detect intersections between 2 points.
 {
 	float length = hypotf(ai.lastX - pos.pos.x, ai.lastY - pos.pos.y);
 
-
+	return NULL;
 }
