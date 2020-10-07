@@ -15,6 +15,7 @@ void HealthSystem::clean()
 
 void HealthSystem::update() //TODO: probably possible to make faster
 {
+	return;
 	for(auto e : m_entities)
 	{
 		auto& health =  Game::coordinator->get_component<HealthComponent>(e);

@@ -2,6 +2,13 @@
 #include "ECS.h"
 
 constexpr int maxID = MAP_SIZE * MAP_SIZE - 1;
+
+void StaticCollisionSystem::init(std::shared_ptr<HealthSystem> healthsystem)
+{
+	m_healthSystem = healthsystem;
+}
+
+
 void StaticCollisionSystem::update() 
 {
 	for (const auto& e : m_entities)
@@ -61,8 +68,9 @@ void StaticCollisionSystem::update()
 
 					pos.pos.x += speed * (-movement.velocity.x);
 					pos.pos.y += speed * (-movement.velocity.y);
-				}
 
+					m_healthSystem->update();
+				}
 			}
 		}
 	}

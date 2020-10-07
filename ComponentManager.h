@@ -83,7 +83,6 @@ public:
 		{
 			delete m_arrayPointers[i];
 		}
-		delete m_arrayPointers[];
 	}
 private:
 	//std::array<std::string, MAX_COMPONENTS> m_componentTypes;

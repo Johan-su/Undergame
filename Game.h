@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <SDL.h>
 #include "ECS.h"
 
@@ -37,8 +38,10 @@ public:
 
 	static int offsetx, offsety;
 
+
+
 private:
-	Game();
+	Game() = delete;
 
 private:
 };

@@ -1,5 +1,11 @@
 #include "CollisionSystem.h"
+#include "HealthSystem.h"
 #include "ECS.h"
+
+void CollisionSystem::init(std::shared_ptr<HealthSystem> healthSystem)
+{
+	m_healthSystem = healthSystem;
+}
 
 void CollisionSystem::update() //TODO: make faster using the tile grid.
 {
@@ -35,6 +41,7 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			if (b1 && b2 && b3 && b4)
 			{
 				collider.Entity = e2;
+				m_healthSystem->update();
 #ifdef _DEBUG
 				std::cout << "intersection between " << e << " and " << e2 << std::endl;
 #endif
