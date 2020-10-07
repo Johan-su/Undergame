@@ -1,3 +1,4 @@
+#include "HealthComponent.h"
 #include "HealthSystem.h"
 #include "ECS.h"
 

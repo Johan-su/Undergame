@@ -1,8 +1,6 @@
 #include "StaticCollisionSystem.h"
 #include "ECS.h"
 
-constexpr int maxID = MAP_SIZE * MAP_SIZE - 1;
-
 void StaticCollisionSystem::init(std::shared_ptr<HealthSystem> healthsystem)
 {
 	m_healthSystem = healthsystem;
@@ -11,7 +9,7 @@ void StaticCollisionSystem::init(std::shared_ptr<HealthSystem> healthsystem)
 
 void StaticCollisionSystem::update() 
 {
-	for (const auto& e : m_entities)
+	for (auto e : m_entities)
 	{
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
@@ -34,7 +32,7 @@ void StaticCollisionSystem::update()
 		id[7] = id[4] + MAP_SIZE;
 		id[8] = id[4] + MAP_SIZE + 1;
 
-		for (unsigned int i = 0; i < 9; ++i) 
+		for (Uint8 i = 0; i < 9; ++i) 
 		{
 
 			int x1 = TILE_SIZE * (id[i] % MAP_SIZE); // lx
