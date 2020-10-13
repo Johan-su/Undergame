@@ -4,7 +4,7 @@
 #define MAX_ENTITIES 100000u
 #define MAX_SYSTEMS 256u
 #define TILE_SIZE 64u
-#define MAP_SIZE 256u
+#define MAP_SIZE 128u
 
 #include "Entity.h"
 

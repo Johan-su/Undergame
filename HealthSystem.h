@@ -17,5 +17,4 @@ public:
 private:
 
 	std::vector<Entity>* dead_entities;
-	Uint16 count;
 };

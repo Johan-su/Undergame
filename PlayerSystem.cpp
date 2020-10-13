@@ -5,7 +5,7 @@
 
 void PlayerSystem::update()
 {
-	for (const auto& e : m_entities)
+	for (auto e : m_entities)
 	{
 		//auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
 		auto& inputc = Game::coordinator->get_component<InputComponent>(e);
