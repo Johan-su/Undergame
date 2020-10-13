@@ -6,6 +6,7 @@
 void HealthSystem::init()
 {
 	dead_entities = new std::vector<Entity>;
+	count = 0;
 }
 
 void HealthSystem::clean()

@@ -1,5 +1,6 @@
 #include <random>
 #include <cmath>
+#include "vecf.h"
 #include "TileMapGenerator.h"
 #include "EntityCreator.h"
 #include "ECS.h"
@@ -64,4 +65,9 @@ void TileMapGenerator::create_boundary(TileMap* tm)
 		tm->grid[i + tm->grid.size() - MAP_SIZE] = 16;
 		tm->grid[i * MAP_SIZE + MAP_SIZE - 1] = 16;
 	}
+}
+
+float TileMapGenerator::dotProduct(const Vec2f& l, const Vec2f& r)
+{
+	return l.x * r.x + l.y * r.y;
 }

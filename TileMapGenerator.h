@@ -15,8 +15,10 @@ public:
 
 	static void entities_from_map(TileMap* tm);
 
-	static void create_boundary(TileMap* tm);
 
 private:
 
+	static void create_boundary(TileMap* tm);
+
+	static float dotProduct(const Vec2f& l, const Vec2f& r);
 };
