@@ -29,4 +29,5 @@ private:
 	static float lerp(float x, float y, float weight);
 
 	static float dotProduct(const Vec2f& l, const Vec2f& r);
+
 };
