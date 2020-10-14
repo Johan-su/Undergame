@@ -46,6 +46,8 @@ int main(int argc, char* argv[])
 
 	EntityCreator::init();
 	//std::thread t1(Create_entities);
+	TileMapGenerator::perlin2d(65.0f, 0.0f);
+	std::cin.ignore();
 	Create_entities();
 	auto after = std::chrono::high_resolution_clock::now();
 
