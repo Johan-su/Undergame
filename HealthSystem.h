@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include "DebugMacros.h"
 #include "Entity.h"
 #include "System.h"
 

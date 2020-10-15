@@ -23,37 +23,51 @@ public:
 	{
 		for (unsigned int i = 0; i < MAX_ENTITIES; ++i)
 		{
-			index[i] = 0xFFFFFFFF;
+			entity_to_index[i] = 0xFFFFFFFF;
+			index_to_entity[i] = 0xFFFFFFFF;
 		}
 	}
-	void add_component(Entity e, T component)
+	void add_component(Entity e, T component)//TODO: fix problem with entity component "linkage"
 	{
 		m_componentArray[m_size] = component;
-		index[e] = m_size;
+		entity_to_index[e] = m_size;
+		index_to_entity[m_size] = e;
 		++m_size;
 	}
-	void destroy_component(Entity e)
+	void destroy_component(Entity e)//TODO: fix problem with entity component "linkage"
 	{
-		if (index[e] == m_size-1) // if at the end of array just remove it, it will still be a packed array.
+#ifdef ECS_DEBUG
+		SDL_assert(entity_to_index[e] < m_size);
+#endif
+		--m_size;
+		if (entity_to_index[e] == m_size) // if at the end of array just remove it, it will still be a packed array.
 		{
-			--m_size;
+			index_to_entity[m_size] = 0xFFFFFFFF;
+			entity_to_index[e] = 0xFFFFFFFF;
 			return;
 		}
-		index[m_size - 1] = e; // replace last index to point to, replace the last element with the newly destroyed one.
-		//index[e] = m_size - 1;
-		m_componentArray[index[e]] = m_componentArray[m_size-1]; // moves component from last element, to newly destroyed.
-		--m_size;
+
+
+
+		m_componentArray[entity_to_index[e]] = m_componentArray[m_size]; // moves component from last element, to newly destroyed.
+
+		entity_to_index[index_to_entity[m_size]] = entity_to_index[e]; // change last Entity's index to the replaced position.
+		
+		index_to_entity[entity_to_index[e]] = index_to_entity[m_size];
+
+		entity_to_index[e] = 0xFFFFFFFF;
+		index_to_entity[m_size] = 0xFFFFFFFF;
 	}
 	void destroy_entity(Entity e) override
 	{
-		if (index[e] < m_size)
+		if (entity_to_index[e] < m_size)
 		{
 			destroy_component(e);
 		}
 	}
 	T& get_component(Entity e)
 	{
-		return m_componentArray[index[e]]; 
+		return m_componentArray[entity_to_index[e]]; 
 	}
 
 	uint32_t get_size() const
@@ -63,6 +77,7 @@ public:
 
 private:
 	std::array<T, MAX_ENTITIES> m_componentArray;
-	std::array<uint32_t, MAX_ENTITIES> index;
+	std::array<uint32_t, MAX_ENTITIES> entity_to_index;
+	std::array<Uint32, MAX_ENTITIES> index_to_entity;
 	uint32_t m_size;
 };

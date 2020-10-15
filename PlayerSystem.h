@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "DebugMacros.h"
 #include "ECS.h"
 class PlayerSystem : public System
 {

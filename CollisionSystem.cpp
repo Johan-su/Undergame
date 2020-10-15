@@ -1,23 +1,25 @@
+#include "DebugMacros.h"
 #include "CollisionSystem.h"
 #include "HealthSystem.h"
 #include "ECS.h"
 
-void CollisionSystem::init(std::shared_ptr<HealthSystem> healthSystem)
-{
-	m_healthSystem = healthSystem;
-}
 
 void CollisionSystem::update() //TODO: make faster using the tile grid.
 {
-	for (const auto& e : m_entities)
+	for (auto e : m_entities)
 	{
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
 		auto& position = Game::coordinator->get_component<PositionComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
 
-
-		for (const auto& e2 : m_entities)
+#ifdef ECS_DEBUG
+		SDL_assert(collider.entity == e);
+		SDL_assert(position.entity == e);
+		SDL_assert(size.entity == e);
+		SDL_assert(movement.entity == e);
+#endif
+		for (auto e2 : m_entities)
 		{
 			if (e == e2)
 			{
@@ -40,8 +42,7 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 
 			if (b1 && b2 && b3 && b4)
 			{
-				collider.Entity = e2;
-				m_healthSystem->update();
+				collider.other_entity = e2;
 #ifdef _DEBUG
 				std::cout << "intersection between " << e << " and " << e2 << std::endl;
 #endif

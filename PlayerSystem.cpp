@@ -1,3 +1,4 @@
+#include "DebugMacros.h"
 #include "Game.h"
 #include "ECS.h"
 #include <cmath>
@@ -13,6 +14,14 @@ void PlayerSystem::update()
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
 		auto& shoot = Game::coordinator->get_component<ShooterComponent>(e);
+
+#ifdef ECS_DEBUG
+		SDL_assert(inputc.entity == e);
+		SDL_assert(size.entity == e);
+		SDL_assert(movec.entity == e);
+		SDL_assert(pc.entity == e);
+		SDL_assert(shoot.entity == e);
+#endif
 
 		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
 		movec.rotation = static_cast<float>(atanf(static_cast<float>(pc.pos.y + size.size.y - static_cast<float>(inputc.y)) / static_cast<float>(pc.pos.x + size.size.x - static_cast<float>(inputc.x)))); // 1.57079632679 == pi / 2

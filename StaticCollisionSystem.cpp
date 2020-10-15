@@ -1,10 +1,6 @@
+#include "DebugMacros.h"
 #include "StaticCollisionSystem.h"
 #include "ECS.h"
-
-void StaticCollisionSystem::init(std::shared_ptr<HealthSystem> healthsystem)
-{
-	m_healthSystem = healthsystem;
-}
 
 
 void StaticCollisionSystem::update() 
@@ -15,6 +11,13 @@ void StaticCollisionSystem::update()
 		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
+
+#ifdef ECS_DEBUG
+		SDL_assert(pos.entity == e);
+		SDL_assert(movement.entity == e);
+		SDL_assert(size.entity == e);
+		SDL_assert(collider.entity == e);
+#endif
 
 		int middlex = static_cast<int>(pos.pos.x + size.size.x);
 		int middley = static_cast<int>(pos.pos.y + size.size.y);
@@ -55,8 +58,9 @@ void StaticCollisionSystem::update()
 				//std::cout << "intersection ID: " << id[i] << "\n";
 				if (Game::tileEntities[id[i]] != 0)
 				{
+#ifdef _DEBUG
 					std::cout << "Tileintersection between " << e << " and " << id[i] << std::endl;
-
+#endif
 					collider.id = id[i];
 					auto speed = movement.speed;
 					if (movement.velocity.x && movement.velocity.y)
@@ -67,7 +71,6 @@ void StaticCollisionSystem::update()
 					pos.pos.x += speed * (-movement.velocity.x);
 					pos.pos.y += speed * (-movement.velocity.y);
 
-					m_healthSystem->update();
 				}
 			}
 		}

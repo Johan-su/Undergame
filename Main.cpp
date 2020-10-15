@@ -3,6 +3,7 @@
 #include <memory>
 #include <thread>
 #include <SDL.h>
+#include "DebugMacros.h"
 #include "EntityCreator.h"
 #include "Texture.h"
 #include "ECS.h"
@@ -12,13 +13,13 @@
 
 //#define NLOOP
 
-
+constexpr Uint32 seed = 134194;
 
 
 void Create_entities()
 {
 
-	auto tm = TileMapGenerator::create_map_random(-1);
+	auto tm = TileMapGenerator::create_map_perlin();
 	TileMapGenerator::entities_from_map(tm);
 	float x, y;
 	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
@@ -35,7 +36,9 @@ void Create_entities()
 
 int main(int argc, char* argv[])
 {
-
+#ifdef ECS_DEBUG
+	std::cout << "ECS_DEBUG ENABLED" << std::endl;
+#endif
 	auto before = std::chrono::high_resolution_clock::now();
 	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
 	{
@@ -45,9 +48,11 @@ int main(int argc, char* argv[])
 	}
 
 	EntityCreator::init();
+	TileMapGenerator::init(seed);
+
 	//std::thread t1(Create_entities);
-	TileMapGenerator::perlin2d(63.0f, 32.0f, -1);
-	std::cin.ignore();
+
+
 	Create_entities();
 	auto after = std::chrono::high_resolution_clock::now();
 

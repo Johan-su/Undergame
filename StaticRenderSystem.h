@@ -2,6 +2,7 @@
 #include <functional>
 #include <array>
 #include <SDL.h>
+#include "DebugMacros.h"
 #include "ECS.h"
 #include "Tilemap.h"
 

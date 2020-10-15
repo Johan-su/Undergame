@@ -1,3 +1,4 @@
+#include "DebugMacros.h"
 #include "HealthComponent.h"
 #include "HealthSystem.h"
 #include "ECS.h"
@@ -16,12 +17,13 @@ void HealthSystem::clean()
 
 void HealthSystem::update() //TODO: probably possible to make faster
 {
-	return;
 	for(auto e : m_entities)
 	{
 		auto& health =  Game::coordinator->get_component<HealthComponent>(e);
-
-		if (health.health <= 0)
+#ifdef ECS_DEBUG
+		SDL_assert(health.entity == e);
+#endif
+		if (health.health < 0.0f)
 		{
 			dead_entities->push_back(e);
 		}

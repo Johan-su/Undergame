@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include "DebugMacros.h"
 #include "Texture.h"
 #include "ECS.h"
 #include "StaticRenderSystem.h"
@@ -135,11 +136,26 @@ void StaticRenderSystem::render_tile(int x, int y)
 	{
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
 		auto& sc = Game::coordinator->get_component<SizeComponent>(e);
+
+		bool b1 = pc.pos.x < 0 + x + SCREEN_WIDTH;
+
+		bool b2 = pc.pos.x + sc.size.x > 0 + x;
+
+		bool b3 = pc.pos.y < 0 + y + SCREEN_HEIGHT;
+
+		bool b4 = pc.pos.y + sc.size.y > 0 + y;
+
+
+		if (b1 && b2 && b3 && b4)
+		{
 		auto& tc = Game::coordinator->get_component<TileComponent>(e);
 
+#ifdef ECS_DEBUG
+		SDL_assert(pc.entity == e);
+		SDL_assert(sc.entity == e);
+		SDL_assert(tc.entity == e);
+#endif
 
-		if (pc.pos.x >= -100 + x && pc.pos.y >= -100 + y && pc.pos.x <= SCREEN_WIDTH + 100 + x && pc.pos.y <= SCREEN_HEIGHT + 100 + y)
-		{
 		const auto& func = func_pointers[tc.type];
 		func(pc, sc, x, y);
 		}

@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "DebugMacros.h"
 #include "Game.h"
 #include "ECS.h"
 class InputSystem : public System

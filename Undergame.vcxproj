@@ -173,6 +173,7 @@
     <ClInclude Include="AiSystem.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="DebugMacros.h" />
     <ClInclude Include="HealthSystem.h" />
     <ClInclude Include="ProjectileComponent.h" />
     <ClInclude Include="ProjectileSystem.h" />

@@ -1,4 +1,5 @@
 #include <functional>
+#include "DebugMacros.h"
 #include "SDL.h"
 #include "Texture.h"
 #include "ECS.h"
@@ -28,11 +29,27 @@ void EntityCreator::init()
 
 			auto shc = ShooterComponent();
 
+#ifdef ECS_DEBUG
+			positionc.entity = e;
+			cc.entity = e;
+
+			sc.entity = e;
+			rc.entity = e;
+
+			pc.entity = e;
+			ic.entity = e;
+
+			hc.entity = e;
+			mc.entity = e;
+
+			shc.entity = e;
+#endif
+
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
 			cc.id = 0xFFFFFFFF;
-			cc.Entity = 0xFFFFFFFF;
+			cc.other_entity = 0xFFFFFFFF;
 
 			sc.size.x = 24;
 			sc.size.y = 24; 
@@ -73,7 +90,15 @@ void EntityCreator::init()
 			auto rc = RenderComponent();
 			auto pc = PlayerComponent();
 			auto hc = HealthComponent();
+#ifdef ECS_DEBUG
+			positionc.entity = e;
+			sc.entity = e;
 
+			rc.entity = e;
+			pc.entity = e;
+
+			hc.entity = e;
+#endif
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
@@ -99,6 +124,14 @@ void EntityCreator::init()
 			auto tc = TileComponent();
 			auto sc = SizeComponent();
 			auto hc = HealthComponent();
+
+#ifdef ECS_DEBUG
+			positionc.entity = e;
+			tc.entity = e;
+
+			sc.entity = e;
+			hc.entity = e;
+#endif
 
 			positionc.pos.x = x;
 			positionc.pos.y = y;
@@ -140,11 +173,24 @@ void EntityCreator::init()
 
 			auto ai = AiComponent();
 
+#ifdef ECS_DEBUG
+			positionc.entity = e;
+			cc.entity = e;
+
+			sc.entity = e;
+			rc.entity = e;
+
+			hc.entity = e;
+			mc.entity = e;
+
+			ai.entity = e;
+#endif
+
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
 			cc.id = 0xFFFFFFFF;
-			cc.Entity = 0xFFFFFFFF;
+			cc.other_entity = 0xFFFFFFFF;
 
 			sc.size.x = 0;
 			sc.size.y = 0;
@@ -177,11 +223,24 @@ void EntityCreator::init()
 
 			auto health = HealthComponent();
 
+#ifdef ECS_DEBUG
+			positionc.entity = e;
+			cc.entity = e;
+
+			sc.entity = e;
+			rc.entity = e;
+
+			mc.entity = e;
+			pc.entity = e;
+
+			health.entity = e;
+#endif
+
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
 			cc.id = 0xFFFFFFFF;
-			cc.Entity = 0xFFFFFFFF;
+			cc.other_entity = 0xFFFFFFFF;
 
 			sc.size.x = 4;
 			sc.size.y = 4;
@@ -190,7 +249,9 @@ void EntityCreator::init()
 
 			rc.texture = Texture::get_texture(1); // TODO: determine texture
 
-			mc.speed = 10.0f;
+			mc.speed = 1.0f;
+			//mc.rotation = 4.0f;
+
 			mc.rotation = *static_cast<float*>(data);
 
 			mc.velocity.x = cosf(mc.rotation);

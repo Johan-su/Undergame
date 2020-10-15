@@ -1,14 +1,18 @@
+#include "DebugMacros.h"
 #include "MovementSystem.h"
 
 void MovementSystem::update()
 {
 	static float normalizer;
-	for (const auto& e : m_entities)
+	for (auto e : m_entities)
 	{
 		auto& positionc = Game::coordinator->get_component<PositionComponent>(e);
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 
-
+#ifdef ECS_DEBUG
+		SDL_assert(positionc.entity == e);
+		SDL_assert(movec.entity == e);
+#endif
 		if (movec.velocity.x && movec.velocity.y)
 		{
 			normalizer = 0.707106781187f; // 1 / sqrt(2)

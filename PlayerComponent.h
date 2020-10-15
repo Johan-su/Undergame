@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include "DebugMacros.h"
 struct PlayerComponent
 {
 	unsigned int id;
@@ -9,4 +10,8 @@ struct PlayerComponent
 	unsigned int bullets;
 	unsigned int bombs;
 
+
+#ifdef ECS_DEBUG
+	Uint32 entity;
+#endif
 };

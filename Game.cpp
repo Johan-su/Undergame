@@ -17,6 +17,7 @@ int Game::offsety;
 std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
 
 
+static Uint8 count = 0;
 
 static std::shared_ptr<AiSystem> aiSystem;
 static std::shared_ptr<CollisionSystem> collisionSystem;
@@ -78,10 +79,16 @@ void Game::update()
 	staticcollisionSystem->update();
 	collisionSystem->update();
 	projectileSystem->update();
-	healthSystem->update(); // deletes entities
+	if (count == 60)
+	{
+		healthSystem->update(); // deletes entities
+		count = 0;
+	}
 
 	//offsetx++;
 	//offsety+= 16;
+
+	++count;
 }
 void Game::events()
 {
