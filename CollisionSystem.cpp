@@ -31,6 +31,13 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			auto& size2 = Game::coordinator->get_component<SizeComponent>(e2);
 			auto& movement2 = Game::coordinator->get_component<MovementComponent>(e2);
 
+#ifdef ECS_DEBUG
+			SDL_assert(collider2.entity == e2);
+			SDL_assert(position2.entity == e2);
+			SDL_assert(size2.entity == e2);
+			SDL_assert(movement2.entity == e2);
+#endif
+
 			bool b1 = position.pos.x < position2.pos.x + size2.size.x;
 
 			bool b2 = position.pos.x + size.size.x > position2.pos.x;
@@ -44,9 +51,11 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			{
 				collider.other_entity = e2;
 #ifdef _DEBUG
-				std::cout << "intersection between " << e << " and " << e2 << std::endl;
+				//std::cout << "intersection between " << e << " and " << e2 << std::endl;
 #endif
+				continue;
 			}
+			collider.other_entity = 0xFFFFFFFF;
 		}
 	}
 }

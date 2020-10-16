@@ -144,14 +144,11 @@
     <ClInclude Include="ShooterSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="HealthSystem.h">
-      <Filter>Header Files\ECS\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="AiSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="DebugMacros.h">
-      <Filter>Header Files\ECS</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +192,6 @@
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="ShooterSystem.cpp">
-      <Filter>Source Files\ECS\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="AiSystem.cpp">

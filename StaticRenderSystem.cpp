@@ -130,12 +130,39 @@ void StaticRenderSystem::init()
 }
 
 
-void StaticRenderSystem::render_tile(int x, int y)
+void StaticRenderSystem::render_tile(int x, int y) //TODO: optimize using tilegrid
 {
+	int x0 = x - TILE_SIZE;
+	int y0 = y - TILE_SIZE;
+	int x1 = x + SCREEN_WIDTH + TILE_SIZE;
+	int y1 = y + SCREEN_HEIGHT + TILE_SIZE;
+
+	int gridamountx = (x1 - x0) / 64;
+	int gridamounty = (y1 - y0) / 64;
+
+	//Uint16 gid[((SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE) * ((SCREEN_HEIGHT + 2 * TILE_SIZE) / TILE_SIZE)];
+
+	Uint16 gidtl = MAP_SIZE * (y0 / TILE_SIZE) + x0 / TILE_SIZE; // id of top left tile
+
+	for (Uint32 y = 0; y < (SCREEN_HEIGHT + 2 * TILE_SIZE) / TILE_SIZE; ++y)
+	{
+		for (Uint32 x = 0; x < (SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE; ++x)
+		{
+			gidtl + x + y * MAP_SIZE; 
+		} //TODO: finish up new staticrendersystem
+	}
+
+
+
 	for (auto e : m_entities)
 	{
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
 		auto& sc = Game::coordinator->get_component<SizeComponent>(e);
+
+#ifdef ECS_DEBUG
+		SDL_assert(pc.entity == e);
+		SDL_assert(sc.entity == e);
+#endif
 
 		bool b1 = pc.pos.x < 0 + x + SCREEN_WIDTH;
 
@@ -151,8 +178,6 @@ void StaticRenderSystem::render_tile(int x, int y)
 		auto& tc = Game::coordinator->get_component<TileComponent>(e);
 
 #ifdef ECS_DEBUG
-		SDL_assert(pc.entity == e);
-		SDL_assert(sc.entity == e);
 		SDL_assert(tc.entity == e);
 #endif
 

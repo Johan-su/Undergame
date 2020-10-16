@@ -3,10 +3,10 @@
 
 
 #define MAX_COMPONENTS 64u
-#define MAX_ENTITIES 512u
+#define MAX_ENTITIES 80000u
 #define MAX_SYSTEMS 256u
 #define TILE_SIZE 64u
-#define MAP_SIZE 16u
+#define MAP_SIZE 256u
 
 #include "Entity.h"
 

@@ -59,7 +59,7 @@ void StaticCollisionSystem::update()
 				if (Game::tileEntities[id[i]] != 0)
 				{
 #ifdef _DEBUG
-					std::cout << "Tileintersection between " << e << " and " << id[i] << std::endl;
+					//std::cout << "Tileintersection between " << e << " and " << id[i] << std::endl;
 #endif
 					collider.id = id[i];
 					auto speed = movement.speed;

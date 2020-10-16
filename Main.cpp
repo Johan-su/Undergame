@@ -13,13 +13,16 @@
 
 //#define NLOOP
 
-constexpr Uint32 seed = 134194;
+//constexpr Uint32 seed = -10;
+
+const Uint32 seed = time(NULL);
 
 
 void Create_entities()
 {
 
 	auto tm = TileMapGenerator::create_map_perlin();
+	//auto tm = TileMapGenerator::create_map_random();
 	TileMapGenerator::entities_from_map(tm);
 	float x, y;
 	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
@@ -39,6 +42,7 @@ int main(int argc, char* argv[])
 #ifdef ECS_DEBUG
 	std::cout << "ECS_DEBUG ENABLED" << std::endl;
 #endif
+	std::cout << seed << std::endl;
 	auto before = std::chrono::high_resolution_clock::now();
 	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
 	{

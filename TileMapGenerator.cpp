@@ -1,4 +1,5 @@
 #include <random>
+#include <algorithm>
 #include <cmath>
 #include "vecf.h"
 #include "TileMapGenerator.h"
@@ -34,13 +35,18 @@ TileMap* TileMapGenerator::create_map_random()
 TileMap* TileMapGenerator::create_map_perlin()
 {
 	auto tilemap = new TileMap();
+	float offset = 0.01f;
 
+	std::array<float, MAP_SIZE* MAP_SIZE>* p_values;
+	p_values = new std::array<float, MAP_SIZE* MAP_SIZE>;
 
 	for (int y = 0; y < MAP_SIZE; ++y)
 	{
 		for (int x = 0; x < MAP_SIZE; ++x)
 		{
-			auto p = 4 * TileMapGenerator::perlin2d(0.5f + (float)x * 0.010f, 0.5f + (float)y * 0.010f);
+			auto p = TileMapGenerator::perlin2d((float)x * offset, (float)y * offset);
+			
+			(*p_values)[x + y * MAP_SIZE] = p;
 			std::cout << "p " << p << " it " << x + y * MAP_SIZE << std::endl;
 			if (p > 0.3f)
 			{
@@ -50,10 +56,16 @@ TileMap* TileMapGenerator::create_map_perlin()
 			{
 				tilemap->grid[x + y * MAP_SIZE] = TILE_TYPE_AIR;
 			}
-
 		}
 	}
+	auto maxr = std::distance(p_values->begin(), std::max_element(p_values->begin(), p_values->end()));
+	auto minr = std::distance(p_values->begin(), std::min_element(p_values->begin(), p_values->end()));
+	std::cout << "max element " << maxr << " = " << (*p_values)[maxr] << std::endl;
+	std::cout << "min element " << minr << " = " << (*p_values)[minr] << std::endl;
+
 	create_boundary(tilemap);
+	delete p_values;
+	
 	return tilemap;
 }
 TileMap* TileMapGenerator::create_map_simplex()
@@ -89,7 +101,7 @@ void TileMapGenerator::create_boundary(TileMap* tm)
 	}
 }
 
-float TileMapGenerator::perlin2d(float x, float y)
+float TileMapGenerator::perlin2d(float x, float y) // -1 to 1
 {
 	float x0, x1, y0, y1;
 	float dot1, dot2, dot3, dot4;

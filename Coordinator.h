@@ -27,6 +27,10 @@ public:
 	}
 	void destroy_entity(Entity e) 
 	{
+#ifdef ECS_DEBUG
+		std::cout << "Entity: " << e << " Destroyed" << std::endl;
+#endif
+
 		m_systemManager->remove_entity(e);
 		m_componentManager->remove_entity(e);
 		m_entityManager->destroy_entity(e);

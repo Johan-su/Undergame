@@ -6,6 +6,8 @@ class ProjectileSystem : public System
 {
 public:
 
+	void init();
+
 	void update();
 
 private:

@@ -17,11 +17,9 @@ int Game::offsety;
 std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
 
 
-static Uint8 count = 0;
 
 static std::shared_ptr<AiSystem> aiSystem;
 static std::shared_ptr<CollisionSystem> collisionSystem;
-static std::shared_ptr<HealthSystem> healthSystem;
 static std::shared_ptr<InputSystem> inputSystem;
 static std::shared_ptr<MovementSystem> movementSystem;
 static std::shared_ptr<PlayerSystem> playerSystem;
@@ -79,16 +77,11 @@ void Game::update()
 	staticcollisionSystem->update();
 	collisionSystem->update();
 	projectileSystem->update();
-	if (count == 60)
-	{
-		healthSystem->update(); // deletes entities
-		count = 0;
-	}
+
 
 	//offsetx++;
 	//offsety+= 16;
 
-	++count;
 }
 void Game::events()
 {
@@ -159,13 +152,6 @@ void Game::systems_init()
 	sig.reset();
 
 
-	healthSystem = Game::coordinator->register_system<HealthSystem>();
-	sig.set(Game::coordinator->get_signature_pos<HealthComponent>());
-	Game::coordinator->set_signature(healthSystem, sig);
-	healthSystem->init();
-	sig.reset();
-
-
 	inputSystem = Game::coordinator->register_system<InputSystem>();
 	sig.set(Game::coordinator->get_signature_pos<InputComponent>());
 	Game::coordinator->set_signature(inputSystem, sig);
@@ -192,6 +178,7 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
 	sig.set(Game::coordinator->get_signature_pos<HealthComponent>());
 	Game::coordinator->set_signature(projectileSystem, sig);
+	projectileSystem->init();
 	sig.reset();
 
 

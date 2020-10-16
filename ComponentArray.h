@@ -27,14 +27,14 @@ public:
 			index_to_entity[i] = 0xFFFFFFFF;
 		}
 	}
-	void add_component(Entity e, T component)//TODO: fix problem with entity component "linkage"
+	void add_component(Entity e, T component)
 	{
 		m_componentArray[m_size] = component;
 		entity_to_index[e] = m_size;
 		index_to_entity[m_size] = e;
 		++m_size;
 	}
-	void destroy_component(Entity e)//TODO: fix problem with entity component "linkage"
+	void destroy_component(Entity e)
 	{
 #ifdef ECS_DEBUG
 		SDL_assert(entity_to_index[e] < m_size);
@@ -67,6 +67,9 @@ public:
 	}
 	T& get_component(Entity e)
 	{
+#ifdef ECS_DEBUG
+		SDL_assert(entity_to_index[e] != 0xFFFFFFFF);
+#endif
 		return m_componentArray[entity_to_index[e]]; 
 	}
 
