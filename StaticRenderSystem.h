@@ -17,6 +17,6 @@ public:
 	void render_tile(Uint16 e, int offx, int offy);
 
 private:
-	std::vector<std::function<void(PositionComponent & pc, SizeComponent & sc, int x, int y)>> func_pointers;
+	std::vector<std::function<void(float x, float y, int offx, int offy)>> func_pointers;
 	std::vector<SDL_Texture*> tile_textures;
 };
