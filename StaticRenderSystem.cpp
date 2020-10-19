@@ -162,8 +162,8 @@ void StaticRenderSystem::render_tile(Uint16 e, int offx, int offy)
 	}
 
 
-	auto x = TILE_SIZE * (e % MAP_SIZE);
-	auto y = TILE_SIZE * (e / MAP_SIZE);
+	float x = TILE_SIZE * (e % MAP_SIZE);
+	float y = TILE_SIZE * (e / MAP_SIZE);
 
 
 	const auto& func = func_pointers[type];
