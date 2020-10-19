@@ -17,6 +17,6 @@ struct AiComponent
 	uint8_t state;
 
 #ifdef ECS_DEBUG
-	Uint32 entity;
+	 uint32_t entity;
 #endif
 };

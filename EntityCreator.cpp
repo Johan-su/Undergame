@@ -28,6 +28,7 @@ void EntityCreator::init()
 			auto mc = MovementComponent();
 
 			auto shc = ShooterComponent();
+			auto dc = DiggerComponent();
 
 #ifdef ECS_DEBUG
 			positionc.entity = e;
@@ -43,6 +44,7 @@ void EntityCreator::init()
 			mc.entity = e;
 
 			shc.entity = e;
+			dc.entity = e;
 #endif
 
 			positionc.pos.x = x;
@@ -58,7 +60,11 @@ void EntityCreator::init()
 
 			rc.texture = Texture::get_texture(2); // TODO: determine texture
 
-			pc.id = create_player_id();
+			//pc.id = create_player_id();
+			pc.bombs = 0;
+			pc.bullets = 0;
+			pc.bulletWeaponsType = 0;
+			pc.explosiveWeaponsType = 0;
 
 			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
@@ -66,6 +72,8 @@ void EntityCreator::init()
 			mc.speed = 2.0f;
 
 			shc.gunlength = 34;
+			dc.drillLVL = 0;
+			dc.drillStates = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);
@@ -88,15 +96,12 @@ void EntityCreator::init()
 			auto positionc = PositionComponent();
 			auto sc = SizeComponent();
 			auto rc = RenderComponent();
-			auto pc = PlayerComponent();
 			auto hc = HealthComponent();
 #ifdef ECS_DEBUG
 			positionc.entity = e;
 			sc.entity = e;
 
 			rc.entity = e;
-			pc.entity = e;
-
 			hc.entity = e;
 #endif
 			positionc.pos.x = x;
@@ -109,12 +114,11 @@ void EntityCreator::init()
 
 			rc.texture = nullptr; //TODO: determine texture
 
-			pc.id = create_player_id();
+			//pc.id = create_player_id();
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
-			Game::coordinator->add_component<PlayerComponent>(e, pc);
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});

@@ -3,15 +3,14 @@
 #include "DebugMacros.h"
 struct PlayerComponent
 {
-	unsigned int id;
-	unsigned int drillLVL;
-	unsigned int bulletWeaponsType; // bullet weapons
-	unsigned int explosiveWeaponsType; // explosive weapons
-	unsigned int bullets;
-	unsigned int bombs;
+	 uint32_t bullets;
+	 uint32_t bombs;
+
+	Uint8 bulletWeaponsType; // bullet weapons
+	Uint8 explosiveWeaponsType; // explosive weapons
 
 
 #ifdef ECS_DEBUG
-	Uint32 entity;
+	 uint32_t entity;
 #endif
 };

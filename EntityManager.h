@@ -48,9 +48,9 @@ public:
 	}
 
 private:
-	std::queue<uint32_t> m_AvailableIDs;
+	std::queue<  uint32_t> m_AvailableIDs;
 
 	std::array<std::bitset<MAX_COMPONENTS>, MAX_ENTITIES> m_signatures;
 
-	uint32_t m_entityCount;
+	  uint32_t m_entityCount;
 };

@@ -6,6 +6,6 @@ struct PositionComponent
 	Vec2f pos;
 
 #ifdef ECS_DEBUG
-	Uint32 entity;
+	 uint32_t entity;
 #endif
 };

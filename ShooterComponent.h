@@ -6,6 +6,6 @@ struct ShooterComponent
 	bool states[4];
 
 #ifdef ECS_DEBUG
-	Uint32 entity;
+	 uint32_t entity;
 #endif
 };

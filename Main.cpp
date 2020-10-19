@@ -13,16 +13,16 @@
 
 //#define NLOOP
 
-//constexpr Uint32 seed = -10;
+//constexpr  uint32_t seed = -10;
 
-const Uint32 seed = time(NULL);
+const  uint32_t seed = static_cast<uint32_t>(time(NULL));
 
 
 void Create_entities()
 {
 
-	auto tm = TileMapGenerator::create_map_perlin();
-	//auto tm = TileMapGenerator::create_map_random();
+	//auto tm = TileMapGenerator::create_map_perlin();
+	auto tm = TileMapGenerator::create_map_random();
 	TileMapGenerator::entities_from_map(tm);
 	float x, y;
 	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)

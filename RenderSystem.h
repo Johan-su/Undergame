@@ -6,5 +6,5 @@
 class RenderSystem : public System
 {
 public:
-	void render(const int& x, const int& y);
+	void render(int x, int y);
 };

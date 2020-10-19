@@ -143,9 +143,9 @@ void StaticRenderSystem::render_tiles(int offx, int offy) //TODO: optimize using
 
 	Uint16 gidtl = MAP_SIZE * (y0 / TILE_SIZE) + x0 / TILE_SIZE; // id of top left tile
 
-	for (Uint32 y = 0; y < (SCREEN_HEIGHT + 2 * TILE_SIZE) / TILE_SIZE; ++y)
+	for ( uint32_t y = 0; y < (SCREEN_HEIGHT + 2 * TILE_SIZE) / TILE_SIZE; ++y)
 	{
-		for (Uint32 x = 0; x < (SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE; ++x)
+		for ( uint32_t x = 0; x < (SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE; ++x)
 		{
 			auto id = gidtl + x + y * MAP_SIZE; 
 			render_tile(id, offx, offy);
@@ -162,8 +162,8 @@ void StaticRenderSystem::render_tile(Uint16 e, int offx, int offy)
 	}
 
 
-	float x = TILE_SIZE * (e % MAP_SIZE);
-	float y = TILE_SIZE * (e / MAP_SIZE);
+	float x = static_cast<float>(TILE_SIZE * (e % MAP_SIZE));
+	float y = static_cast<float>(TILE_SIZE * (e / MAP_SIZE));
 
 
 	const auto& func = func_pointers[type];

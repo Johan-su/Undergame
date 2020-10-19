@@ -7,9 +7,9 @@
 #include "ECS.h"
 
 
-Uint32 TileMapGenerator::seed;
+ uint32_t TileMapGenerator::seed;
 
-void TileMapGenerator::init(Uint32 Seed)
+void TileMapGenerator::init( uint32_t Seed)
 {
 	seed = Seed;
 }
@@ -19,7 +19,7 @@ TileMap* TileMapGenerator::create_map_random()
 {
 	std::default_random_engine r;
 	r.seed(seed);
-	std::uniform_int_distribution<Uint32> d(0, 15); //TODO: change to actual amount of tile types
+	std::uniform_int_distribution< uint32_t> d(0, 15); //TODO: change to actual amount of tile types
 	auto roll = std::bind(d, r);
 
 	auto tilemap = new TileMap();
@@ -27,6 +27,7 @@ TileMap* TileMapGenerator::create_map_random()
 	for (int i = 0; i < tilemap->grid.size(); ++i)
 	{
 		tilemap->grid[i] = roll(); 
+		std::cout << "it " << i << std::endl;
 
 	}
 	create_boundary(tilemap);
@@ -92,7 +93,7 @@ void TileMapGenerator::entities_from_map(TileMap* tm)
 }
 void TileMapGenerator::create_boundary(TileMap* tm)
 {
-	for (Uint32 i = 0; i < MAP_SIZE; ++i)
+	for ( uint32_t i = 0; i < MAP_SIZE; ++i)
 	{
 		tm->grid[i] = 16;
 		tm->grid[i * MAP_SIZE] = 16;
@@ -162,7 +163,7 @@ float TileMapGenerator::perlin2d(float x, float y) // -1 to 1
 
 Vec2f TileMapGenerator::create_gradient_vector(float x, float y, float length)
 {
-	srand(static_cast<Uint32>(seed * x * y + seed * (1 + x + y))); //TODO: check if random algorithm is truly random.
+	srand(static_cast< uint32_t>(seed * x * y + seed * (1 + x + y))); //TODO: check if random algorithm is truly random.
 
 	float random = static_cast<float>(((double)rand() / (double)(RAND_MAX)) * 2 * M_PI);
 

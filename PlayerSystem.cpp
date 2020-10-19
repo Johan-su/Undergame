@@ -8,7 +8,7 @@ void PlayerSystem::update()
 {
 	for (auto e : m_entities)
 	{
-		//auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
+		auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
 		auto& inputc = Game::coordinator->get_component<InputComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
@@ -67,6 +67,10 @@ void PlayerSystem::update()
 
 		}
 		if (inputc.buttonStates[6]) // mouse right
+		{
+				
+		}
+		else
 		{
 
 		}

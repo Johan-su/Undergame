@@ -2,12 +2,12 @@
 #include "ProjectileSystem.h"
 #include "ECS.h"
 
-static std::vector<Uint32>* del_list;
+static std::vector<uint32_t>* del_list;
 
 
 void ProjectileSystem::init()
 {
-	del_list = new std::vector<Uint32>;
+	del_list = new std::vector<uint32_t>;
 }
 
 
@@ -42,7 +42,7 @@ void ProjectileSystem::update()
 			//health.health = -1;
 		}
 	}
-	for (Uint32 i = 0; i < del_list->size(); ++i)
+	for ( uint32_t i = 0; i < del_list->size(); ++i)
 	{
 		Game::coordinator->destroy_entity(del_list->back());
 		del_list->pop_back();

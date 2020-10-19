@@ -62,7 +62,7 @@ void Texture::load_texture(const char* path)
 	std::cout << "failed to load " << path << std::endl;
 }
 
-SDL_Texture* Texture::get_texture(uint32_t pos)
+SDL_Texture* Texture::get_texture(  uint32_t pos)
 {
 	return m_textures->at(pos);
 }

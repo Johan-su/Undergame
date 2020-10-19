@@ -8,6 +8,6 @@ struct RenderComponent
 	SDL_Texture* texture;
 
 #ifdef ECS_DEBUG
-	Uint32 entity;
+	 uint32_t entity;
 #endif
 };

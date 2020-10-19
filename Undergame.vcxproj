@@ -174,6 +174,8 @@
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="DebugMacros.h" />
+    <ClInclude Include="DiggerComponent.h" />
+    <ClInclude Include="DiggerSystem.h" />
     <ClInclude Include="ProjectileComponent.h" />
     <ClInclude Include="ProjectileSystem.h" />
     <ClInclude Include="ShooterComponent.h" />
@@ -211,6 +213,7 @@
   <ItemGroup>
     <ClCompile Include="AiSystem.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="DiggerSystem.cpp" />
     <ClCompile Include="ProjectileSystem.cpp" />
     <ClCompile Include="ShooterSystem.cpp" />
     <ClCompile Include="StaticCollisionSystem.cpp" />

@@ -20,6 +20,7 @@ std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
 
 static std::shared_ptr<AiSystem> aiSystem;
 static std::shared_ptr<CollisionSystem> collisionSystem;
+static std::shared_ptr<DiggerSystem> diggerSystem;
 static std::shared_ptr<InputSystem> inputSystem;
 static std::shared_ptr<MovementSystem> movementSystem;
 static std::shared_ptr<PlayerSystem> playerSystem;
@@ -116,6 +117,7 @@ void Game::components_init()
 {
 	Game::coordinator->register_component<AiComponent>();
 	Game::coordinator->register_component<ColliderComponent>();
+	Game::coordinator->register_component<DiggerComponent>();
 	Game::coordinator->register_component<HealthComponent>();
 	Game::coordinator->register_component<InputComponent>();
 	Game::coordinator->register_component<MovementComponent>();
@@ -149,6 +151,12 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	Game::coordinator->set_signature(collisionSystem, sig);
+	sig.reset();
+
+
+	diggerSystem = Game::coordinator->register_system<DiggerSystem>();
+	sig.set(Game::coordinator->get_signature_pos<DiggerComponent>());
+	Game::coordinator->set_signature(diggerSystem, sig);
 	sig.reset();
 
 

@@ -9,7 +9,7 @@ public:
 
 	static void init();
 
-	static SDL_Texture* get_texture(uint32_t pos);
+	static SDL_Texture* get_texture(  uint32_t pos);
 
 private:
 	static void load_texture(const char* path);

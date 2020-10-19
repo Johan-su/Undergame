@@ -5,7 +5,7 @@
 #include "Game.h"
 
 
-void RenderSystem::render(const int& x, const int& y)
+void RenderSystem::render(int x, int y)
 {
 	for (auto e : m_entities)
 	{

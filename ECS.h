@@ -25,6 +25,7 @@
 
 #include "AiComponent.h"
 #include "ColliderComponent.h"
+#include "DiggerComponent.h"
 #include "HealthComponent.h"
 #include "InputComponent.h"
 #include "MovementComponent.h"
@@ -41,6 +42,7 @@
 
 #include "AiSystem.h"
 #include "CollisionSystem.h"
+#include "DiggerSystem.h"
 #include "HealthSystem.h"
 #include "InputSystem.h"
 #include "MovementSystem.h"

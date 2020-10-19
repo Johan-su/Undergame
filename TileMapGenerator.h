@@ -5,7 +5,7 @@ class TileMapGenerator
 {
 public:
 
-	static void init(Uint32 Seed);
+	static void init( uint32_t Seed);
 
 	static TileMap* create_map_random();
 
@@ -30,6 +30,6 @@ private:
 
 	static float dotProduct(const Vec2f& l, const Vec2f& r);
 
-	static Uint32 seed;
+	static  uint32_t seed;
 
 };

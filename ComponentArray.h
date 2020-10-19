@@ -73,14 +73,14 @@ public:
 		return m_componentArray[entity_to_index[e]]; 
 	}
 
-	uint32_t get_size() const
+	  uint32_t get_size() const
 	{
 		return m_size;
 	}
 
 private:
 	std::array<T, MAX_ENTITIES> m_componentArray;
-	std::array<uint32_t, MAX_ENTITIES> entity_to_index;
-	std::array<Uint32, MAX_ENTITIES> index_to_entity;
-	uint32_t m_size;
+	std::array<  uint32_t, MAX_ENTITIES> entity_to_index;
+	std::array< uint32_t, MAX_ENTITIES> index_to_entity;
+	  uint32_t m_size;
 };
