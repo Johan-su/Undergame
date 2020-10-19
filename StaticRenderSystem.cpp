@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SDL.h>
 #include "DebugMacros.h"
 #include "Texture.h"
@@ -125,17 +126,15 @@ void StaticRenderSystem::init()
 	{
 		SDL_RenderCopyF(Game::renderer, tile_textures[0], &SDL_Rect({ 256, 192, TILE_SIZE, TILE_SIZE }), &SDL_FRect({ pc.pos.x - x, pc.pos.y - y, sc.size.x, sc.size.y}));
 	});
-
-
 }
 
 
-void StaticRenderSystem::render_tile(int x, int y) //TODO: optimize using tilegrid
+void StaticRenderSystem::render_tiles(int offx, int offy) //TODO: optimize using tilegrid
 {
-	int x0 = x - TILE_SIZE;
-	int y0 = y - TILE_SIZE;
-	int x1 = x + SCREEN_WIDTH + TILE_SIZE;
-	int y1 = y + SCREEN_HEIGHT + TILE_SIZE;
+	int x0 = offx - TILE_SIZE;
+	int y0 = offy - TILE_SIZE;
+	int x1 = offx + SCREEN_WIDTH + TILE_SIZE;
+	int y1 = offy + SCREEN_HEIGHT + TILE_SIZE;
 
 	int gridamountx = (x1 - x0) / 64;
 	int gridamounty = (y1 - y0) / 64;
@@ -148,43 +147,44 @@ void StaticRenderSystem::render_tile(int x, int y) //TODO: optimize using tilegr
 	{
 		for (Uint32 x = 0; x < (SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE; ++x)
 		{
-			gidtl + x + y * MAP_SIZE; 
-		} //TODO: finish up new staticrendersystem
+			auto id = gidtl + x + y * MAP_SIZE; 
+			render_tile(id, offx, offy);
+		} 
 	}
-
-
-
-	for (auto e : m_entities)
+}
+void StaticRenderSystem::render_tile(Uint16 e, int offx, int offy)
+{
+	auto type = Game::tileEntities[e];
+	//std::cout << "type " << type << std::endl;
+	if (type == 0)
 	{
-		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
-		auto& sc = Game::coordinator->get_component<SizeComponent>(e);
-
-#ifdef ECS_DEBUG
-		SDL_assert(pc.entity == e);
-		SDL_assert(sc.entity == e);
-#endif
-
-		bool b1 = pc.pos.x < 0 + x + SCREEN_WIDTH;
-
-		bool b2 = pc.pos.x + sc.size.x > 0 + x;
-
-		bool b3 = pc.pos.y < 0 + y + SCREEN_HEIGHT;
-
-		bool b4 = pc.pos.y + sc.size.y > 0 + y;
-
-
-		if (b1 && b2 && b3 && b4)
-		{
-		auto& tc = Game::coordinator->get_component<TileComponent>(e);
-
-#ifdef ECS_DEBUG
-		SDL_assert(tc.entity == e);
-#endif
-
-		const auto& func = func_pointers[tc.type];
-		func(pc, sc, x, y);
-		}
-
-
+		return;
 	}
+
+
+	//auto& pc = Game::coordinator->get_component<PositionComponent>(e);
+	//auto& sc = Game::coordinator->get_component<SizeComponent>(e);
+	//auto& tc = Game::coordinator->get_component<TileComponent>(e);
+	auto pc = PositionComponent();
+	auto sc = SizeComponent();
+
+	pc.entity = e;
+	sc.entity = e;
+
+	pc.pos.x = TILE_SIZE * (e % MAP_SIZE);
+	pc.pos.y = TILE_SIZE * (e / MAP_SIZE);
+
+	sc.size.x = TILE_SIZE;
+	sc.size.y = TILE_SIZE;
+
+
+#ifdef ECS_DEBUG
+	SDL_assert(pc.entity == e);
+	SDL_assert(sc.entity == e);
+	//SDL_assert(tc.entity == e);
+#endif
+
+
+	const auto& func = func_pointers[type];
+	func(pc, sc, offx, offy);
 }

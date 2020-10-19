@@ -12,7 +12,9 @@ public:
 
 	void init();
 
-	void render_tile(int x, int y);
+	void render_tiles(int offx, int offy);
+
+	void render_tile(Uint16 e, int offx, int offy);
 
 private:
 	std::vector<std::function<void(PositionComponent & pc, SizeComponent & sc, int x, int y)>> func_pointers;

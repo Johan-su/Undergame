@@ -96,7 +96,7 @@ void Game::render()
 
 	//SDL_RenderCopy(renderer, Texture::get_texture(1), NULL, NULL);
 
-	staticrenderSystem->render_tile(offsetx, offsety);
+	staticrenderSystem->render_tiles(offsetx, offsety);
 	renderSystem->render(offsetx, offsety);
 
 	SDL_RenderPresent(renderer);
