@@ -33,15 +33,14 @@ TileMap* TileMapGenerator::create_map_random()
 	create_boundary(tilemap);
 	return tilemap;
 }
-
 TileMap* TileMapGenerator::create_map_value()
 {
-
+	return nullptr;
 }
 TileMap* TileMapGenerator::create_map_perlin()
 {
 	auto tilemap = new TileMap();
-	float offset = 0.01f;
+	float offset = 0.05f;
 
 	std::array<float, MAP_SIZE* MAP_SIZE>* p_values;
 	p_values = new std::array<float, MAP_SIZE* MAP_SIZE>;
@@ -50,11 +49,12 @@ TileMap* TileMapGenerator::create_map_perlin()
 	{
 		for (int x = 0; x < MAP_SIZE; ++x)
 		{
-			auto p = TileMapGenerator::perlin2d((float)x * offset, (float)y * offset);
+			auto p = TileMapGenerator::octavePerlin((float)x * offset, (float)y * offset, 12, 0.5f);
 			
-			(*p_values)[x + y * MAP_SIZE] = p;
 			std::cout << "p " << p << " it " << x + y * MAP_SIZE << std::endl;
-			if (p > 0.3f)
+
+			(*p_values)[x + y * MAP_SIZE] = p;
+			if (p > 0.6f)
 			{
 				tilemap->grid[x + y * MAP_SIZE] = TILE_TYPE_STONE;
 			}
@@ -109,7 +109,7 @@ void TileMapGenerator::create_boundary(TileMap* tm)
 
 float TileMapGenerator::octaveValue(float x, float y, uint16_t octaves, float persistance)
 {
-
+	return 0.0f;
 }
 
 float TileMapGenerator::value2d(float x, float y)
@@ -167,13 +167,28 @@ float TileMapGenerator::create_gradient_value(float x, float y)
 
 float TileMapGenerator::octavePerlin(float x, float y, uint16_t octaves, float persistance)
 {
+	float total = 0;
+	float freq = 4;
+	float amplitude = 32;
+	float maxValue = 0;
+	
+	for (int i = 0; i < octaves; ++i)
+	{
+		total += perlin2d(x * freq, y * freq) * amplitude;
+		maxValue += amplitude;
 
+		amplitude *= persistance;
+		freq *= 2;
+	}
+
+	return  (1 + sqrtf(2) * total / maxValue) / 2;
 }
 
 float TileMapGenerator::perlin2d(float x, float y) // -1 to 1
 {
 	float x0, x1, y0, y1;
 	float dot1, dot2, dot3, dot4;
+
 	x0 = floorf(x);
 	x1 = x0 + 1;
 	y0 = floorf(y);
@@ -181,10 +196,10 @@ float TileMapGenerator::perlin2d(float x, float y) // -1 to 1
 
 	Vec2f g1, g2, g3, g4, d1, d2, d3, d4;
 
-	g1 = create_gradient_vector(x0, y0, 1);
-	g2 = create_gradient_vector(x1, y0, 1);
-	g3 = create_gradient_vector(x0, y1, 1);
-	g4 = create_gradient_vector(x1, y1, 1);
+	g1 = create_gradient_vector(x0, y0);
+	g2 = create_gradient_vector(x1, y0);
+	g3 = create_gradient_vector(x0, y1);
+	g4 = create_gradient_vector(x1, y1);
 
 
 	//std::cout << "g1x " << g1.x << " g1y " << g1.y << " g2x " << g2.x << " g2y " << g2.y << " g3x " << g3.x << " g3y " << g3.y << " g4x " << g4.x << " g4y " << g4.y << std::endl;
@@ -210,8 +225,11 @@ float TileMapGenerator::perlin2d(float x, float y) // -1 to 1
  
 	float w1, w2;
 
-	w1 = x - x0;
-	w2 = y - y0;
+
+	//w1 = x - x0;
+	//w2 = y - y0;
+	w1 = fade(x - x0);
+	w2 = fade(y - y0);
 
 	//std::cout << "w1 " << w1 << " w2 " << w2 << std::endl;
 
@@ -232,13 +250,12 @@ float TileMapGenerator::perlin2d(float x, float y) // -1 to 1
 
 Vec2f TileMapGenerator::create_gradient_vector(float x, float y)
 {
-	srand(static_cast<uint32_t>(seed + seed * sinf(x) * y + seed * (1 + x + y))); //TODO: check if random algorithm is truly random.
+	uint32_t cseed = static_cast<uint32_t>(seed * (495222.4135123f + (cosf(x) + sinf(y))));
+	srand(cseed); //TODO: check if random algorithm is truly random.
 
 	float random = static_cast<float>(((double)rand() / (double)(RAND_MAX)) * 2 * M_PI);
 
-	//std::cout << "random " << random << std::endl;
-
-	return Vec2f({ cosf(random) * length, sinf(random) * length });
+	return Vec2f({ cosf(random), sinf(random) });
 }
 
 Vec2f TileMapGenerator::create_direction_vector(float x, float y, const Vec2f& vec)
@@ -257,7 +274,7 @@ float TileMapGenerator::fade(float a)
 	return 6 * powf(a, 5) - 15 * powf(a, 4) + 10 * powf(a, 3);
 }
 
-float TileMapGenerator::dotProduct(const Vec2f& l, const Vec2f& r)
+float TileMapGenerator::dotProduct(const Vec2f& l, const Vec2f& r) 
 {
 	return l.x * r.x + l.y * r.y;
 }

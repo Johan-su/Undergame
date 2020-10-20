@@ -38,8 +38,8 @@ void InputSystem::mouse_pos() const
 #ifdef ECS_DEBUG
 		SDL_assert(ic.entity == e);
 #endif
-		ic.x = Game::event.button.x + Game::offsetx;
-		ic.y = Game::event.button.y + Game::offsety;
+		ic.x = (float)Game::event.button.x + Game::offsetx;
+		ic.y = (float)Game::event.button.y + Game::offsety;
 
 	}
 }

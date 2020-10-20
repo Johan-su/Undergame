@@ -21,7 +21,7 @@ void ShooterSystem::update()
 #endif
 		if (shoot.states[0])
 		{
-			EntityCreator::create_entity(ENTITY_TYPE_BULLET, pos.pos.x + size.size.x / 2 + shoot.gunlength * cosf(move.rotation), pos.pos.y + size.size.y / 2 + shoot.gunlength * sinf(move.rotation), &move.rotation); //TODO: fix bug with bullets, probably in componentArray.
+			EntityCreator::create_entity(ENTITY_TYPE_BULLET, pos.pos.x + size.size.x / 2 + shoot.gunlength * cosf(move.rotation), pos.pos.y + size.size.y / 2 + shoot.gunlength * sinf(move.rotation), &move.rotation);
 
 		}
 	}

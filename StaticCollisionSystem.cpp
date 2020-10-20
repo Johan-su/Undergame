@@ -5,6 +5,7 @@
 
 void StaticCollisionSystem::update() 
 {
+	return;
 	for (auto e : m_entities)
 	{
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);

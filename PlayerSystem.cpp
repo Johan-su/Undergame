@@ -6,8 +6,12 @@
 
 void PlayerSystem::update()
 {
+#ifdef _DEBUG
+	static int count = 0;
+#endif
 	for (auto e : m_entities)
 	{
+
 		auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
 		auto& inputc = Game::coordinator->get_component<InputComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
@@ -16,7 +20,7 @@ void PlayerSystem::update()
 		auto& shoot = Game::coordinator->get_component<ShooterComponent>(e);
 
 #ifdef ECS_DEBUG
-		SDL_assert(playc.entity == 0);
+		SDL_assert(playc.entity == e);
 		SDL_assert(inputc.entity == e);
 		SDL_assert(size.entity == e);
 		SDL_assert(movec.entity == e);
@@ -38,7 +42,13 @@ void PlayerSystem::update()
 		movec.velocity.x = 0;
 		movec.velocity.y = 0;
 
-
+#ifdef _DEBUG
+		if (count == 60)
+		{
+			std::cout << pc.pos.x << " px py" << pc.pos.y << std::endl;
+			count = 0;
+		}
+#endif
 		if (inputc.buttonStates[0]) // w
 		{
 			movec.velocity.y = -1;
@@ -76,6 +86,9 @@ void PlayerSystem::update()
 
 		}
 	}
+#ifdef _DEBUG
+	++count;
+#endif
 }
 void PlayerSystem::set_Camera_to_player(const PositionComponent& pc)
 {

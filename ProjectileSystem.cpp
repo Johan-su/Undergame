@@ -28,7 +28,7 @@ void ProjectileSystem::update()
 #endif
 		if (collider.other_entity != 0xFFFFFFFF)
 		{
-			auto& otherhealth = Game::coordinator->get_component<HealthComponent>(collider.other_entity); //TODO: fix problem with entity component "linkage"
+			auto& otherhealth = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
 
 #ifdef ECS_DEBUG
 			SDL_assert(otherhealth.entity == collider.other_entity);

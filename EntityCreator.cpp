@@ -69,7 +69,7 @@ void EntityCreator::init()
 			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
 
-			mc.speed = 2.0f;
+			mc.speed = 10.0f;
 
 			shc.gunlength = 34;
 			dc.drillLVL = 0;
