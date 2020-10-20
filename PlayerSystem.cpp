@@ -16,6 +16,7 @@ void PlayerSystem::update()
 		auto& shoot = Game::coordinator->get_component<ShooterComponent>(e);
 
 #ifdef ECS_DEBUG
+		SDL_assert(playc.entity == 0);
 		SDL_assert(inputc.entity == e);
 		SDL_assert(size.entity == e);
 		SDL_assert(movec.entity == e);
@@ -54,7 +55,7 @@ void PlayerSystem::update()
 		{
 			movec.velocity.x = 1;
 		}
-		if (inputc.buttonStates[4]) // mouse left
+		if (inputc.buttonStates[4] && playc.bullets > 0) // mouse left
 		{
 			shoot.states[0] = true;
 		}
