@@ -19,11 +19,19 @@ public:
 
 
 private:
-	static float perlin2d(float x, float y); // TODO: move to private
-
 	static void create_boundary(TileMap* tm);
 
-	static Vec2f create_gradient_vector(float x, float y, float length);
+	static float octaveValue(float x, float y, uint16_t octaves, float persistance);
+
+	static float value2d(float x, float y);
+
+	static float create_gradient_value(float x, float y);
+
+	static float octavePerlin(float x, float y, uint16_t octaves, float persistance);
+
+	static float perlin2d(float x, float y);
+
+	static Vec2f create_gradient_vector(float x, float y);
 
 	static Vec2f create_direction_vector(float x, float y, const Vec2f& vec);
 
