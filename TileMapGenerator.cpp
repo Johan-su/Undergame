@@ -254,7 +254,7 @@ float TileMapGenerator::lerp(float a, float b, float weight)
 
 float TileMapGenerator::fade(float a)
 {
-	return 6 * powf(x, 5) - 15 * powf(x, 4) + 10 * powf(x, 3);
+	return 6 * powf(a, 5) - 15 * powf(a, 4) + 10 * powf(a, 3);
 }
 
 float TileMapGenerator::dotProduct(const Vec2f& l, const Vec2f& r)
