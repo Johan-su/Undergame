@@ -5,11 +5,14 @@
 
 void InputSystem::update()
 {
-	mouse_pos();
 	switch (Game::event.type)
 	{
 	case SDL_QUIT:
 		Game::Running = false;
+		break;
+
+	case SDL_MOUSEMOTION:
+	mouse_pos();
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:
@@ -38,8 +41,8 @@ void InputSystem::mouse_pos() const
 #ifdef ECS_DEBUG
 		SDL_assert(ic.entity == e);
 #endif
-		ic.x = Game::event.button.x + Game::offsetx;
-		ic.y = Game::event.button.y + Game::offsety;
+		ic.x = Game::event.button.x/* + Game::offsetx*/;
+		ic.y = Game::event.button.y/* + Game::offsety*/;
 
 	}
 }

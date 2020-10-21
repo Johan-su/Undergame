@@ -45,6 +45,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if (window) {
 			std::cout << "window created" << std::endl;
+			SDL_SetWindowInputFocus(window);
 
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 			if (renderer) {

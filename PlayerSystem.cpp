@@ -29,12 +29,11 @@ void PlayerSystem::update()
 #endif
 
 		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
-		movec.rotation = atanf((pc.pos.y + size.size.y - (float)(inputc.y)) / (pc.pos.x + size.size.x - (float)(inputc.x))); // 1.57079632679 == pi / 2
-		if (inputc.x - pc.pos.x < 0)
+		movec.rotation = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(inputc.y)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(inputc.x))); // 1.57079632679 == pi / 2
+		if (inputc.x - (size.size.x + SCREEN_WIDTH) / 2 < 0)
 		{
 			movec.rotation -= 3.14159265359f; // pi
 		} //TODO:fix player targeting mouse
-
 
 		//std::cout << movec.rotation << std::endl;
 		set_Camera_to_player(pc);
@@ -45,6 +44,8 @@ void PlayerSystem::update()
 #ifdef _DEBUG
 		if (count == 60)
 		{
+			std::cout << inputc.x << " mx my " << inputc.y << std::endl;
+			std::cout << "rotation " << movec.rotation << std::endl;
 			std::cout << pc.pos.x << " px py " << pc.pos.y << std::endl;
 			count = 0;
 		}
