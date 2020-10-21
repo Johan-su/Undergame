@@ -41,6 +41,6 @@ private:
 public:
 	static float dotProduct(const Vec2f& l, const Vec2f& r); //TODO: move to private
 private:
-	static  uint32_t seed;
+	static uint32_t seed;
 
 };

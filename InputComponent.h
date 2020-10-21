@@ -5,8 +5,7 @@
 struct InputComponent
 {
 	bool buttonStates[7];
-	float x;
-	float y;
+	int x, y;
 
 #ifdef ECS_DEBUG
 	 uint32_t entity;

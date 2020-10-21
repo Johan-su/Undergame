@@ -62,7 +62,7 @@ void StaticCollisionSystem::update()
 #ifdef _DEBUG
 					//std::cout << "Tileintersection between " << e << " and " << id[i] << std::endl;
 #endif
-					collider.id = id[i];
+					collider.tile_id = id[i];
 					auto speed = movement.speed;
 					if (movement.velocity.x && movement.velocity.y)
 					{

@@ -28,16 +28,17 @@ void ProjectileSystem::update()
 #endif
 		if (collider.other_entity != 0xFFFFFFFF)
 		{
-			auto& otherhealth = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
+			auto& other_entity_health = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
 
 #ifdef ECS_DEBUG
-			SDL_assert(otherhealth.entity == collider.other_entity);
+			SDL_assert(other_entity_health.entity == collider.other_entity);
 #endif
-			deal_damage(collider.other_entity, otherhealth, proj.damage);
+			deal_damage(collider.other_entity, other_entity_health, proj.damage);
 		}
 
-		if (collider.id != 0xFFFFFFFF)
+		if (collider.tile_id != 0xFFFFFFFF)
 		{
+			auto& tile_health = Game::coordinator->get_component<HealthComponent>(collider.tile_id);
 			del_list->push_back(e);
 			//health.health = -1;
 		}

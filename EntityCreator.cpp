@@ -50,7 +50,7 @@ void EntityCreator::init()
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
-			cc.id = 0xFFFFFFFF;
+			cc.tile_id = 0xFFFFFFFF;
 			cc.other_entity = 0xFFFFFFFF;
 
 			sc.size.x = 24;
@@ -62,7 +62,7 @@ void EntityCreator::init()
 
 			//pc.id = create_player_id();
 			pc.bombs = 0;
-			pc.bullets = 0;
+			pc.bullets = 1000; //TODO: change to real starting values
 			pc.bulletWeaponsType = 0;
 			pc.explosiveWeaponsType = 0;
 
@@ -145,8 +145,12 @@ void EntityCreator::init()
 			switch (tc.type) // setting tilehealth
 			{
 			case 1:
+				hc.max_health = 100.0f;
 
+			case 16:
+				hc.max_health = 3E18f;
 			default:
+			hc.max_health = 100.0f;
 				break;
 			}
 
@@ -154,7 +158,6 @@ void EntityCreator::init()
 			sc.size.y = TILE_SIZE;
 
 
-			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
 
 
@@ -193,7 +196,7 @@ void EntityCreator::init()
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
-			cc.id = 0xFFFFFFFF;
+			cc.tile_id = 0xFFFFFFFF;
 			cc.other_entity = 0xFFFFFFFF;
 
 			sc.size.x = 0;
@@ -243,7 +246,7 @@ void EntityCreator::init()
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
-			cc.id = 0xFFFFFFFF;
+			cc.tile_id = 0xFFFFFFFF;
 			cc.other_entity = 0xFFFFFFFF;
 
 			sc.size.x = 4;

@@ -131,21 +131,21 @@ void StaticRenderSystem::init()
 
 void StaticRenderSystem::render_tiles(int offx, int offy)
 {
-	int x0 = offx - TILE_SIZE;
-	int y0 = offy - TILE_SIZE;
-	int x1 = offx + SCREEN_WIDTH + TILE_SIZE;
-	int y1 = offy + SCREEN_HEIGHT + TILE_SIZE;
+	int x0 = offx - 2 * TILE_SIZE;
+	int y0 = offy - 2 * TILE_SIZE;
+	int x1 = offx + SCREEN_WIDTH + 2 * TILE_SIZE;
+	int y1 = offy + SCREEN_HEIGHT + 2 * TILE_SIZE;
 
-	int gridamountx = (x1 - x0) / TILE_SIZE;
-	int gridamounty = (y1 - y0) / TILE_SIZE;
+	//int gridamountx = (x1 - x0) / TILE_SIZE;
+	//int gridamounty = (y1 - y0) / TILE_SIZE;
 
 	//uint16_t gid[((SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE) * ((SCREEN_HEIGHT + 2 * TILE_SIZE) / TILE_SIZE)];
 
 	uint16_t gidtl = MAP_SIZE * (y0 / TILE_SIZE) + x0 / TILE_SIZE; // id of top left tile
 
-	for (uint32_t y = 0; y < (SCREEN_HEIGHT + 2 * TILE_SIZE) / TILE_SIZE; ++y)
+	for (uint32_t y = 0; y < (SCREEN_HEIGHT + 4 * TILE_SIZE) / TILE_SIZE; ++y)
 	{
-		for (uint32_t x = 0; x < (SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE; ++x)
+		for (uint32_t x = 0; x < (SCREEN_WIDTH + 4 * TILE_SIZE) / TILE_SIZE; ++x)
 		{
 			auto id = gidtl + x + y * MAP_SIZE; 
 			render_tile(id, offx, offy);

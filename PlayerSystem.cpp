@@ -29,7 +29,7 @@ void PlayerSystem::update()
 #endif
 
 		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
-		movec.rotation = static_cast<float>(atanf(static_cast<float>(pc.pos.y + size.size.y - static_cast<float>(inputc.y)) / static_cast<float>(pc.pos.x + size.size.x - static_cast<float>(inputc.x)))); // 1.57079632679 == pi / 2
+		movec.rotation = atanf((pc.pos.y + size.size.y - (float)(inputc.y)) / (pc.pos.x + size.size.x - (float)(inputc.x))); // 1.57079632679 == pi / 2
 		if (inputc.x - pc.pos.x < 0)
 		{
 			movec.rotation -= 3.14159265359f; // pi
@@ -45,7 +45,7 @@ void PlayerSystem::update()
 #ifdef _DEBUG
 		if (count == 60)
 		{
-			std::cout << pc.pos.x << " px py" << pc.pos.y << std::endl;
+			std::cout << pc.pos.x << " px py " << pc.pos.y << std::endl;
 			count = 0;
 		}
 #endif
