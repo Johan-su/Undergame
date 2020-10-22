@@ -7,19 +7,11 @@
 #include "ECS.h"
 
 
- uint32_t TileMapGenerator::seed;
-
-void TileMapGenerator::init( uint32_t Seed)
-{
-	seed = Seed;
-}
-
-
 TileMap* TileMapGenerator::create_map_random()
 {
 	std::default_random_engine r;
-	r.seed(seed);
-	std::uniform_int_distribution< uint32_t> d(0, 15); //TODO: change to actual amount of tile types
+	r.seed(Game::seed);
+	std::uniform_int_distribution<uint32_t> d(0, 15); //TODO: change to actual amount of tile types
 	auto roll = std::bind(d, r);
 
 	auto tilemap = new TileMap();
@@ -137,16 +129,17 @@ void TileMapGenerator::entities_from_map(TileMap* tm)
 	{
 		int x = TILE_SIZE * (i % (MAP_SIZE));
 		int y = TILE_SIZE * (i / (MAP_SIZE));
-		auto& type = tm->grid[i];
+		auto type = tm->grid[i];
 		//std::cout << i << "\n";
-		if (type == 0)
+		Game::tileEntities[i] = type;
+		EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), type);
+	}
+	for (uint32_t i = 0; i < tm->grid.size(); ++i)
+	{
+		if (Game::tileEntities[i] == 0)
 		{
-
-		Game::tileEntities[i] = type;
-		continue;
+			Game::coordinator->destroy_entity(i);
 		}
-		EntityCreator::create_entity(ENTITY_TYPE_TILE, static_cast<float>(x), static_cast<float>(y), &type);
-		Game::tileEntities[i] = type;
 	}
 }
 void TileMapGenerator::create_boundary(TileMap* tm)
@@ -221,7 +214,7 @@ float TileMapGenerator::value2d(float x, float y)
 
 float TileMapGenerator::create_gradient_value(float x, float y)
 {
-	uint32_t cseed = static_cast<uint32_t>(seed * (495222.4135123f + (cosf(x) + sinf(y))));
+	uint32_t cseed = static_cast<uint32_t>(Game::seed * (495222.4135123f + (cosf(x) + sinf(y))));
 	srand(cseed); //TODO: check if random algorithm is truly random.
 
 	float random = static_cast<float>(((double)rand() / (double)(RAND_MAX)));
@@ -314,7 +307,7 @@ float TileMapGenerator::perlin2d(float x, float y)
 
 Vec2f TileMapGenerator::create_gradient_vector(float x, float y)
 {
-	uint32_t cseed = static_cast<uint32_t>(seed * (495222.4135123f + (cosf(x) + sinf(y))));
+	uint32_t cseed = static_cast<uint32_t>(Game::seed * (495222.4135123f + (cosf(x) + sinf(y))));
 	srand(cseed); //TODO: check if random algorithm is truly random.
 
 	float random = static_cast<float>(((double)rand() / (double)(RAND_MAX)) * 2 * M_PI);

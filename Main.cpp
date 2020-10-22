@@ -13,21 +13,21 @@
 
 //#define NLOOP
 
-constexpr  uint32_t seed = -1;
 
-//const  uint32_t seed = static_cast<uint32_t>(time(NULL));
 
 
 void Create_entities()
 {
 
-	//auto tm = TileMapGenerator::create_map_random();
-	auto tm = TileMapGenerator::create_map_value();
+	auto tm = TileMapGenerator::create_map_random();
+	//auto tm = TileMapGenerator::create_map_value();
 	//auto tm = TileMapGenerator::create_map_perlin();
 	//auto tm = TileMapGenerator::create_map_simplex();
 
 	TileMapGenerator::entities_from_map(tm);
 	float x, y;
+	auto& health = Game::coordinator->get_component<HealthComponent>(2 * MAP_SIZE);
+
 	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
 	{
 		if (Game::tileEntities[i] == 0)
@@ -37,7 +37,7 @@ void Create_entities()
 			break;
 		}
 	}
-	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, nullptr);
+	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
 }
 
 int main(int argc, char* argv[])
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 #ifdef ECS_DEBUG
 	std::cout << "ECS_DEBUG ENABLED" << std::endl;
 #endif
-	std::cout << seed << std::endl;
+	std::cout << Game::seed << std::endl;
 	auto before = std::chrono::high_resolution_clock::now();
 	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
 	{
@@ -55,7 +55,6 @@ int main(int argc, char* argv[])
 	}
 
 	EntityCreator::init();
-	TileMapGenerator::init(seed);
 
 	//std::thread t1(Create_entities);
 

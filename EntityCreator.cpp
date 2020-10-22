@@ -7,13 +7,13 @@
 #include "EntityCreator.h"
 
 
-std::vector<std::function<void(const Entity& ,const float&, const float&, void* data)>> EntityCreator::func_pointers;
+std::vector<std::function<void(const Entity& ,const float&, const float&, uint32_t data)>> EntityCreator::func_pointers;
 
 
 
 void EntityCreator::init()
 {
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // Playercontrolled
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // Playercontrolled
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -69,11 +69,12 @@ void EntityCreator::init()
 			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
 
-			mc.speed = 10.0f;
+			mc.speed = 3.0f;
 
 			shc.gunlength = 34;
+			shc.count = 0;
+			shc.firingrate = 15;
 			dc.drillLVL = 0;
-			dc.drillStates = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);
@@ -88,10 +89,11 @@ void EntityCreator::init()
 			Game::coordinator->add_component<MovementComponent>(e, mc);
 
 			Game::coordinator->add_component<ShooterComponent>(e, shc);
+			Game::coordinator->add_component<DiggerComponent>(e, dc);
 
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // NPC 
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // NPC 
 		{
 			auto positionc = PositionComponent();
 			auto sc = SizeComponent();
@@ -122,7 +124,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // tile
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // tile
 		{
 			auto positionc = PositionComponent();
 			auto tc = TileComponent();
@@ -140,26 +142,27 @@ void EntityCreator::init()
 			positionc.pos.x = x;
 			positionc.pos.y = y;
 
-			tc.type = *static_cast<uint8_t*>(data);
-
-			switch (tc.type) // setting tilehealth
+			switch (data) // setting tilehealth
 			{
 			case 1:
 				hc.max_health = 100.0f;
-
+				break;
 			case 16:
 				hc.max_health = 3E18f;
+				break;
 			default:
 			hc.max_health = 100.0f;
 				break;
 			}
-
 			sc.size.x = TILE_SIZE;
 			sc.size.y = TILE_SIZE;
 
 
 			hc.health = hc.max_health;
 
+#ifdef _DEBUG
+			if (data == 16) SDL_assert(hc.health > 100.0f);
+#endif
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<TileComponent>(e, tc);
@@ -167,7 +170,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // mole
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // mole
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -217,7 +220,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 			Game::coordinator->add_component<MovementComponent>(e, mc);
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, void* data) // bullet
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // bullet
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -256,15 +259,15 @@ void EntityCreator::init()
 
 			rc.texture = Texture::get_texture(1); // TODO: determine texture
 
-			mc.speed = 1.0f;
+			mc.speed = 7.0f;
 			//mc.rotation = 4.0f;
 
-			mc.rotation = *static_cast<float*>(data);
+			mc.rotation = *(float*)(&data);
 
 			mc.velocity.x = cosf(mc.rotation);
 			mc.velocity.y = sinf(mc.rotation);
 
-			pc.damage = 0.0f;
+			pc.damage = 1.0f;
 
 			health.max_health = 1.0f;
 
@@ -284,7 +287,7 @@ void EntityCreator::init()
 		});
 }
 
-void EntityCreator::create_entity(const size_t& type, const float& x, const float& y, void* data)
+void EntityCreator::create_entity(const size_t& type, const float& x, const float& y, uint32_t data)
 {
 	SDL_assert(Game::coordinator != nullptr);
 	Entity e = Game::coordinator->create_entity();

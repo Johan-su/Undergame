@@ -9,6 +9,8 @@ public:
 
 	static void init();
 
+	static void clean();
+
 	static SDL_Texture* get_texture(  uint32_t pos);
 
 private:

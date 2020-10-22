@@ -19,10 +19,18 @@ void ShooterSystem::update()
 		SDL_assert(move.entity == e);
 		SDL_assert(shoot.entity == e);
 #endif
+
 		if (shoot.states[0])
 		{
-			EntityCreator::create_entity(ENTITY_TYPE_BULLET, pos.pos.x + size.size.x / 2 + shoot.gunlength * cosf(move.rotation), pos.pos.y + size.size.y / 2 + shoot.gunlength * sinf(move.rotation), &move.rotation);
+			++shoot.count;
 
+			if (shoot.count == shoot.firingrate)
+			{
+
+				EntityCreator::create_entity(ENTITY_TYPE_BULLET, pos.pos.x + size.size.x / 2 + shoot.gunlength * cosf(move.rotation), pos.pos.y + size.size.y / 2 + shoot.gunlength * sinf(move.rotation), *(uint32_t*)(&move.rotation));
+				shoot.count = 0;
+			}
+			//for(int i = 0; i < 10; ++i)
 		}
 	}
 }

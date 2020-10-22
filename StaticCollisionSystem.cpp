@@ -5,13 +5,14 @@
 
 void StaticCollisionSystem::update() 
 {
-	return;
 	for (auto e : m_entities)
 	{
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
+
+		collider.tile_id = 0xFFFFFFFF;
 
 #ifdef ECS_DEBUG
 		SDL_assert(pos.entity == e);
@@ -38,29 +39,32 @@ void StaticCollisionSystem::update()
 
 		for (Uint8 i = 0; i < 9; ++i) 
 		{
-
-			int x1 = TILE_SIZE * (id[i] % MAP_SIZE); // lx
-			int x2 = TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE; //rx 
-			int y1 = TILE_SIZE * (id[i] / MAP_SIZE); // ly
-			int y2 = TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE; // ry
-
-
-			bool b1 = pos.pos.x < x2;
-
-			bool b2 = pos.pos.x + size.size.x > x1;
-
-			bool b3 = pos.pos.y < y2;
-
-			bool b4 = pos.pos.y + size.size.y > y1;
-
-
-			if (b1 && b2 && b3 && b4)
+			if (Game::tileEntities[id[i]] != 0)
 			{
-				//std::cout << "intersection ID: " << id[i] << "\n";
-				if (Game::tileEntities[id[i]] != 0)
+
+
+				int x1 = TILE_SIZE * (id[i] % MAP_SIZE); // lx
+				int x2 = TILE_SIZE * (id[i] % MAP_SIZE) + TILE_SIZE; //rx 
+				int y1 = TILE_SIZE * (id[i] / MAP_SIZE); // ly
+				int y2 = TILE_SIZE * (id[i] / MAP_SIZE) + TILE_SIZE; // ry
+
+
+				bool b1 = pos.pos.x < x2;
+
+				bool b2 = pos.pos.x + size.size.x > x1;
+
+				bool b3 = pos.pos.y < y2;
+
+				bool b4 = pos.pos.y + size.size.y > y1;
+
+				if (b1 && b2 && b3 && b4)
 				{
 #ifdef _DEBUG
+					//auto& health = Game::coordinator->get_component<HealthComponent>(id[i]);
+					//auto& tile = Game::coordinator->get_component<TileComponent>(id[i]);
 					//std::cout << "Tileintersection between " << e << " and " << id[i] << std::endl;
+					//std::cout << " health " << health.health << std::endl;
+					//std::cout << "type " << Game::tileEntities[id[i]] << std::endl;
 #endif
 					collider.tile_id = id[i];
 					auto speed = movement.speed;

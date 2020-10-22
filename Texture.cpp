@@ -34,6 +34,11 @@ void Texture::init()
 	std::cout << "textures initalized" << "\n";
 }
 
+void Texture::clean()
+{
+	delete m_textures;
+}
+
 void Texture::load_texture(const char* path)
 {
 	static SDL_Surface* loader_surface;

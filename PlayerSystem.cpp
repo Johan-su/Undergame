@@ -30,7 +30,7 @@ void PlayerSystem::update()
 
 		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
 		movec.rotation = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(inputc.y)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(inputc.x))); // 1.57079632679 == pi / 2
-		if (inputc.x - (size.size.x + SCREEN_WIDTH) / 2 < 0)
+		if (inputc.x - (size.size.x + SCREEN_WIDTH) / 2 <= 0)
 		{
 			movec.rotation -= 3.14159265359f; // pi
 		} //TODO:fix player targeting mouse

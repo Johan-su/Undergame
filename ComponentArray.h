@@ -9,6 +9,7 @@ class ComponentArrayV
 {
 public:
 	virtual void destroy_entity(Entity e) = 0;
+
 };
 
 

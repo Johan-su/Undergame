@@ -38,9 +38,6 @@ private:
 	static float lerp(float x, float y, float weight);
 
 	static float fade(float a);
-public:
-	static float dotProduct(const Vec2f& l, const Vec2f& r); //TODO: move to private
-private:
-	static uint32_t seed;
 
+	static float dotProduct(const Vec2f& l, const Vec2f& r);
 };

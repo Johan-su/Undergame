@@ -4,6 +4,10 @@
 #include "ECS.h"
 
 
+const uint32_t Game::seed = -1;
+
+//const  uint32_t Game::seed = static_cast<uint32_t>(time(NULL));
+
 bool Game::Running;
 SDL_Window* Game::window;
 SDL_Renderer* Game::renderer;
@@ -67,8 +71,13 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
  void Game::clean()
 {
 	coordinator->clean();
+
+	projectileSystem->clean();
+
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	delete coordinator;
+
 	SDL_Quit();
 }
 void Game::update()
@@ -79,6 +88,7 @@ void Game::update()
 	staticcollisionSystem->update();
 	collisionSystem->update();
 	projectileSystem->update();
+	diggerSystem->update();
 
 
 	//offsetx++;
@@ -157,6 +167,9 @@ void Game::systems_init()
 
 	diggerSystem = Game::coordinator->register_system<DiggerSystem>();
 	sig.set(Game::coordinator->get_signature_pos<DiggerComponent>());
+	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
+	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
+	sig.set(Game::coordinator->get_signature_pos<InputComponent>());
 	Game::coordinator->set_signature(diggerSystem, sig);
 	sig.reset();
 
@@ -219,15 +232,7 @@ void Game::systems_init()
 
 
 	staticrenderSystem = Game::coordinator->register_system<StaticRenderSystem>();
-	sig.set(Game::coordinator->get_signature_pos<TileComponent>());
-	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
-	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
-	sig.set(Game::coordinator->get_signature_pos<HealthComponent>());
 	Game::coordinator->set_signature(staticrenderSystem, sig);
 	staticrenderSystem->init();
 	sig.reset();
-
-
-
-
 }

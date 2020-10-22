@@ -38,6 +38,8 @@ public:
 
 	static int offsetx, offsety;
 
+	static const uint32_t seed;
+
 
 
 private:

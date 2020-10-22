@@ -48,6 +48,8 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			bool b4 = position.pos.y + size.size.y > position2.pos.y;
 
 
+			collider.other_entity = 0xFFFFFFFF;
+
 			if (b1 && b2 && b3 && b4)
 			{
 				collider.other_entity = e2;
@@ -56,7 +58,6 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 #endif
 				continue;
 			}
-			collider.other_entity = 0xFFFFFFFF;
 		}
 	}
 }

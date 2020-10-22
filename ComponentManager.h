@@ -11,6 +11,14 @@ public:
 	: m_componentTypeCount(0), m_arrayPointers({})
 	{
 	}
+
+	void clean()
+	{
+		for (int i = 0; i < m_arrayPointers.size(); ++i)
+		{
+			delete m_arrayPointers[i];
+		}
+	}
 	template<typename T>
 	void register_component_type()
 	{
@@ -76,14 +84,6 @@ public:
 
 
 
-
-	void clean()
-	{
-		for (int i = 0; i < m_componentTypeCount; ++i)
-		{
-			delete m_arrayPointers[i];
-		}
-	}
 private:
 	//std::array<std::string, MAX_COMPONENTS> m_componentTypes;
 
