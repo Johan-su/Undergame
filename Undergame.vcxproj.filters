@@ -42,9 +42,6 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
@@ -90,12 +87,6 @@
     <ClInclude Include="TileComponent.h">
       <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="InputSystem.h">
-      <Filter>Header Files\ECS\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="InputComponent.h">
-      <Filter>Header Files\ECS\Components</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
@@ -104,9 +95,6 @@
     </ClInclude>
     <ClInclude Include="TileMapGenerator.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticRenderSystem.h">
-      <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="PositionComponent.h">
       <Filter>Header Files\ECS\Components</Filter>
@@ -155,6 +143,12 @@
     </ClInclude>
     <ClInclude Include="DiggerSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticRenderSystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,6 @@
 #include "ColliderComponent.h"
 #include "DiggerComponent.h"
 #include "HealthComponent.h"
-#include "InputComponent.h"
 #include "MovementComponent.h"
 #include "PlayerComponent.h"
 #include "PositionComponent.h"

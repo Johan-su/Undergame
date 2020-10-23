@@ -83,5 +83,5 @@ private:
 	std::array<T, MAX_ENTITIES> m_componentArray;
 	std::array<  uint32_t, MAX_ENTITIES> entity_to_index;
 	std::array< uint32_t, MAX_ENTITIES> index_to_entity;
-	  uint32_t m_size;
+	uint32_t m_size;
 };

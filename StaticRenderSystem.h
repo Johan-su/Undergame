@@ -10,13 +10,14 @@ class StaticRenderSystem : public System
 {
 public:
 
-	void init();
 
-	void render_tiles(int offx, int offy);
+	static void render_tiles(int offx, int offy);
 
-	void render_tile(Uint16 e, int offx, int offy);
+	static void render_tile(Uint16 e, int offx, int offy);
+
+	static void init();
 
 private:
-	std::vector<std::function<void(float x, float y, int offx, int offy)>> func_pointers;
-	std::vector<SDL_Texture*> tile_textures;
+	static std::vector<std::function<void(float x, float y, int offx, int offy)>> func_pointers;
+	static std::vector<SDL_Texture*> tile_textures;
 };

@@ -13,24 +13,23 @@ void PlayerSystem::update()
 	{
 
 		auto& playc = Game::coordinator->get_component<PlayerComponent>(e);
-		auto& inputc = Game::coordinator->get_component<InputComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 		auto& pc = Game::coordinator->get_component<PositionComponent>(e);
 		auto& shoot = Game::coordinator->get_component<ShooterComponent>(e);
+		auto& digger = Game::coordinator->get_component<DiggerComponent>(e);
 
 #ifdef ECS_DEBUG
 		SDL_assert(playc.entity == e);
-		SDL_assert(inputc.entity == e);
 		SDL_assert(size.entity == e);
 		SDL_assert(movec.entity == e);
 		SDL_assert(pc.entity == e);
 		SDL_assert(shoot.entity == e);
 #endif
 
-		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, inputc.x - inputc.y);
-		movec.rotation = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(inputc.y)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(inputc.x))); // 1.57079632679 == pi / 2
-		if (inputc.x - (size.size.x + SCREEN_WIDTH) / 2 <= 0)
+		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, InputSystem::mx - InputSystem::my);
+		movec.rotation = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(InputSystem::my)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(InputSystem::mx))); // 1.57079632679 == pi / 2
+		if (InputSystem::mx - (size.size.x + SCREEN_WIDTH) / 2 <= 0)
 		{
 			movec.rotation -= 3.14159265359f; // pi
 		} //TODO:fix player targeting mouse
@@ -44,29 +43,29 @@ void PlayerSystem::update()
 #ifdef _DEBUG
 		if (count == 60)
 		{
-			std::cout << inputc.x << " mx my " << inputc.y << std::endl;
+			std::cout << InputSystem::mx << " mx my " << InputSystem::my << std::endl;
 			std::cout << "rotation " << movec.rotation << std::endl;
 			std::cout << pc.pos.x << " px py " << pc.pos.y << std::endl;
 			count = 0;
 		}
 #endif
-		if (inputc.buttonStates[0]) // w
+		if (InputSystem::buttonStates[0]) // w
 		{
 			movec.velocity.y = -1;
 		}
-		if (inputc.buttonStates[1]) // a
+		if (InputSystem::buttonStates[1]) // a
 		{
 			movec.velocity.x = -1;
 		}
-		if (inputc.buttonStates[2]) // s
+		if (InputSystem::buttonStates[2]) // s
 		{
 			movec.velocity.y = 1;
 		}
-		if (inputc.buttonStates[3]) // d
+		if (InputSystem::buttonStates[3]) // d
 		{
 			movec.velocity.x = 1;
 		}
-		if (inputc.buttonStates[4] && playc.bullets > 0) // mouse left
+		if (InputSystem::buttonStates[4] && playc.bullets > 0) // mouse left
 		{
 			shoot.states[0] = true;
 		}
@@ -74,17 +73,17 @@ void PlayerSystem::update()
 		{
 			shoot.states[0] = false;
 		}
-		if (inputc.buttonStates[5]) // mouse middle
+		if (InputSystem::buttonStates[5]) // mouse middle
 		{
 
 		}
-		if (inputc.buttonStates[6]) // mouse right
+		if (InputSystem::buttonStates[6]) // mouse right
 		{
-				
+			digger.drillState = 1;
 		}
 		else
 		{
-
+			digger.drillState = 0;
 		}
 	}
 #ifdef _DEBUG

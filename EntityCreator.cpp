@@ -22,7 +22,6 @@ void EntityCreator::init()
 			auto rc = RenderComponent();
 
 			auto pc = PlayerComponent();
-			auto ic = InputComponent();
 
 			auto hc = HealthComponent();
 			auto mc = MovementComponent();
@@ -38,7 +37,6 @@ void EntityCreator::init()
 			rc.entity = e;
 
 			pc.entity = e;
-			ic.entity = e;
 
 			hc.entity = e;
 			mc.entity = e;
@@ -83,7 +81,6 @@ void EntityCreator::init()
 			Game::coordinator->add_component<RenderComponent>(e, rc);
 
 			Game::coordinator->add_component<PlayerComponent>(e, pc);
-			Game::coordinator->add_component<InputComponent>(e, ic);
 
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 			Game::coordinator->add_component<MovementComponent>(e, mc);

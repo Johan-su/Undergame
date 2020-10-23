@@ -4,5 +4,5 @@ class System
 
 {
 public:
-	std::set<  uint32_t> m_entities;
+	std::set<uint32_t> m_entities;
 };

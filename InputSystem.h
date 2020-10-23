@@ -6,17 +6,21 @@
 class InputSystem : public System
 {
 public:
-	void update();
+	static void update();
 
-	void mouse_pos() const;
+	static void mouse_pos();
 
-	void mouse_event_down() const;
+	static void mouse_event_down();
 
-	void mouse_event_up() const;
+	static void mouse_event_up();
 
-	void key_event_down() const;
+	static void key_event_down();
 
-	void key_event_up() const;
+	static void key_event_up();
+
+	static bool buttonStates[7];
+
+	static int mx, my;
 
 private:
 

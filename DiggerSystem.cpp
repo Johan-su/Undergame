@@ -8,11 +8,10 @@ void DiggerSystem::update()
 		auto& move = Game::coordinator->get_component<MovementComponent>(e);
 		auto& digger = Game::coordinator->get_component<DiggerComponent>(e);
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
-		auto& input = Game::coordinator->get_component<InputComponent>(e);
 
 
 
-		if (input.buttonStates[6] && collider.tile_id != 0xFFFFFFFF) //TODO: add (looking at the tlle condition)
+		if (digger.drillState == 1 && collider.tile_id != 0xFFFFFFFF) //TODO: add (looking at the tlle condition)
 		{
 			auto& tilehealth = Game::coordinator->get_component<HealthComponent>(collider.tile_id);
 			deal_damage_tile(collider.tile_id, tilehealth, 2.0f * powf(1.1f, digger.drillLVL));

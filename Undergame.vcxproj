@@ -190,9 +190,7 @@
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HealthComponent.h" />
-    <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="SizeComponent.h" />

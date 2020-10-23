@@ -25,14 +25,12 @@ std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
 static std::shared_ptr<AiSystem> aiSystem;
 static std::shared_ptr<CollisionSystem> collisionSystem;
 static std::shared_ptr<DiggerSystem> diggerSystem;
-static std::shared_ptr<InputSystem> inputSystem;
 static std::shared_ptr<MovementSystem> movementSystem;
 static std::shared_ptr<PlayerSystem> playerSystem;
 static std::shared_ptr<ProjectileSystem> projectileSystem;
 static std::shared_ptr<RenderSystem> renderSystem;
 static std::shared_ptr<ShooterSystem> shooterSystem;
 static std::shared_ptr<StaticCollisionSystem> staticcollisionSystem;
-static std::shared_ptr<StaticRenderSystem> staticrenderSystem;
 
 
 
@@ -99,7 +97,7 @@ void Game::events()
 {
 	while (SDL_PollEvent(&event))
 	{
-		inputSystem->update();
+		InputSystem::update();
 	}
 }
 void Game::render()
@@ -108,7 +106,8 @@ void Game::render()
 
 	//SDL_RenderCopy(renderer, Texture::get_texture(1), NULL, NULL);
 
-	staticrenderSystem->render_tiles(offsetx, offsety);
+	//staticrenderSystem->render_tiles(offsetx, offsety);
+	StaticRenderSystem::render_tiles(offsetx, offsety);
 	renderSystem->render(offsetx, offsety);
 
 	SDL_RenderPresent(renderer);
@@ -130,7 +129,6 @@ void Game::components_init()
 	Game::coordinator->register_component<ColliderComponent>();
 	Game::coordinator->register_component<DiggerComponent>();
 	Game::coordinator->register_component<HealthComponent>();
-	Game::coordinator->register_component<InputComponent>();
 	Game::coordinator->register_component<MovementComponent>();
 	Game::coordinator->register_component<PlayerComponent>();
 	Game::coordinator->register_component<PositionComponent>();
@@ -143,6 +141,7 @@ void Game::components_init()
 
 void Game::systems_init()
 {
+	StaticRenderSystem::init();
 	std::bitset<MAX_COMPONENTS> sig;
 
 
@@ -169,14 +168,7 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<DiggerComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
-	sig.set(Game::coordinator->get_signature_pos<InputComponent>());
 	Game::coordinator->set_signature(diggerSystem, sig);
-	sig.reset();
-
-
-	inputSystem = Game::coordinator->register_system<InputSystem>();
-	sig.set(Game::coordinator->get_signature_pos<InputComponent>());
-	Game::coordinator->set_signature(inputSystem, sig);
 	sig.reset();
 
 
@@ -189,8 +181,11 @@ void Game::systems_init()
 
 	playerSystem = Game::coordinator->register_system<PlayerSystem>();
 	sig.set(Game::coordinator->get_signature_pos<PlayerComponent>());
-	sig.set(Game::coordinator->get_signature_pos<InputComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<ShooterComponent>());
+	sig.set(Game::coordinator->get_signature_pos<DiggerComponent>());
 	Game::coordinator->set_signature(playerSystem, sig);
 	sig.reset();
 
@@ -231,8 +226,4 @@ void Game::systems_init()
 	sig.reset();
 
 
-	staticrenderSystem = Game::coordinator->register_system<StaticRenderSystem>();
-	Game::coordinator->set_signature(staticrenderSystem, sig);
-	staticrenderSystem->init();
-	sig.reset();
 }
