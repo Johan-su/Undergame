@@ -108,10 +108,11 @@ void Game::render()
 
 	//staticrenderSystem->render_tiles(offsetx, offsety);
 	StaticRenderSystem::render_tiles(offsetx, offsety);
-	renderSystem->render(offsetx, offsety);
+	renderSystem->render();
 
 	SDL_RenderPresent(renderer);
 }
+
 
 void Game::ECS_init()
 {

@@ -5,7 +5,7 @@
 #include "Game.h"
 
 
-void RenderSystem::render(int offx, int offy)
+void RenderSystem::render()
 {
 	for (auto e : m_entities)
 	{
@@ -21,7 +21,7 @@ void RenderSystem::render(int offx, int offy)
 		SDL_assert(move.entity == e);
 #endif
 
-		SDL_FRect dst_rect = { position.pos.x - (float)offx, position.pos.y - (float)offy, size.size.x, size.size.y };
+		SDL_FRect dst_rect = { position.pos.x - (float)Game::offsetx, position.pos.y - (float)Game::offsety, size.size.x, size.size.y };
 
 
 

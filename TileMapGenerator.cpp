@@ -26,6 +26,7 @@ TileMap* TileMapGenerator::create_map_random()
 	return tilemap;
 }
 
+
 TileMap* TileMapGenerator::create_map_value()
 {
 	auto tilemap = new TileMap();
@@ -73,6 +74,8 @@ TileMap* TileMapGenerator::create_map_value()
 
 	return tilemap;
 }
+
+
 TileMap* TileMapGenerator::create_map_perlin()
 {
 	auto tilemap = new TileMap();
@@ -120,10 +123,14 @@ TileMap* TileMapGenerator::create_map_perlin()
 	
 	return tilemap;
 }
+
+
 TileMap* TileMapGenerator::create_map_simplex()
 {
 	return nullptr;
 }
+
+
 void TileMapGenerator::entities_from_map(TileMap* tm) 
 {
 	for (unsigned int i = 0; i < tm->grid.size(); ++i)
@@ -154,6 +161,7 @@ void TileMapGenerator::create_boundary(TileMap* tm)
 	}
 }
 
+
 float TileMapGenerator::octaveValue(float x, float y, uint16_t octaves, float persistance)
 {
 	float total = 0;
@@ -172,6 +180,7 @@ float TileMapGenerator::octaveValue(float x, float y, uint16_t octaves, float pe
 
 	return  total / maxValue;
 }
+
 
 float TileMapGenerator::value2d(float x, float y)
 {
@@ -213,6 +222,7 @@ float TileMapGenerator::value2d(float x, float y)
 	return l3;
 }
 
+
 float TileMapGenerator::create_gradient_value(float x, float y)
 {
 	uint32_t cseed = static_cast<uint32_t>(Game::seed * (495222.4135123f + (cosf(x) + sinf(y))));
@@ -222,6 +232,7 @@ float TileMapGenerator::create_gradient_value(float x, float y)
 
 	return random;
 }
+
 
 float TileMapGenerator::octavePerlin(float x, float y, uint16_t octaves, float persistance)
 {
@@ -241,6 +252,7 @@ float TileMapGenerator::octavePerlin(float x, float y, uint16_t octaves, float p
 
 	return  (1 + sqrtf(2) * total / maxValue) / 2;
 }
+
 
 float TileMapGenerator::perlin2d(float x, float y)
 {
@@ -316,10 +328,12 @@ Vec2f TileMapGenerator::create_gradient_vector(float x, float y)
 	return Vec2f({ cosf(random), sinf(random) });
 }
 
+
 Vec2f TileMapGenerator::create_direction_vector(float x, float y, const Vec2f& vec)
 {
 	return Vec2f({ x - vec.x, y - vec.y });
 }
+
 
 float TileMapGenerator::lerp(float a, float b, float weight)
 {
@@ -327,10 +341,12 @@ float TileMapGenerator::lerp(float a, float b, float weight)
 
 }
 
+
 float TileMapGenerator::fade(float a)
 {
 	return 6 * powf(a, 5) - 15 * powf(a, 4) + 10 * powf(a, 3);
 }
+
 
 float TileMapGenerator::dotProduct(const Vec2f& l, const Vec2f& r) 
 {
