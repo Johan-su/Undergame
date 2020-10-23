@@ -170,14 +170,8 @@
     <ClCompile Include="PlayerSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
-      <Filter>Source Files\ECS\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="TileMapGenerator.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticRenderSystem.cpp">
-      <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="MovementSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
@@ -199,6 +193,12 @@
     </ClCompile>
     <ClCompile Include="DiggerSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticRenderSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
