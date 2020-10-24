@@ -27,7 +27,7 @@ void ShooterSystem::update()
 			if (shoot.count == shoot.firingrate)
 			{
 
-				EntityCreator::create_entity(ENTITY_TYPE_BULLET, pos.pos.x + size.size.x / 2 + shoot.gunlength * cosf(move.rotation), pos.pos.y + size.size.y / 2 + shoot.gunlength * sinf(move.rotation), *(uint32_t*)(&move.rotation));
+				EntityCreator::create_entity(ENTITY_TYPE_BULLET, pos.pos.x + size.size.x / 2 + shoot.gunlength * cosf(move.angle), pos.pos.y + size.size.y / 2 + shoot.gunlength * sinf(move.angle), *(uint32_t*)(&move.angle));
 				shoot.count = 0;
 			}
 			//for(int i = 0; i < 10; ++i)

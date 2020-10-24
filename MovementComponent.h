@@ -5,7 +5,7 @@ struct MovementComponent
 {
 	Vec2f velocity;
 	float speed;
-	float rotation;
+	float angle;
 
 #ifdef ECS_DEBUG
 	 uint32_t entity;

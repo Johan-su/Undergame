@@ -28,16 +28,16 @@ void PlayerSystem::update()
 #endif
 
 		set_Camera_to_player(pc);
-		movec.rotation = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(InputSystem::my)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(InputSystem::mx)));
+		movec.angle = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(InputSystem::my)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(InputSystem::mx)));
 
 		if ((size.size.x + SCREEN_WIDTH) / 2 - InputSystem::mx >= 0)
 		{
-			movec.rotation += 3.14159265359f; // pi
+			movec.angle += 3.14159265359f; // pi
 		}
 
-		movec.rotation = fmod(movec.rotation + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
+		movec.angle = fmod(movec.angle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
 
-		//std::cout << movec.rotation << std::endl;
+		//std::cout << movec.angle << std::endl;
 
 		movec.velocity.x = 0;
 		movec.velocity.y = 0;
@@ -46,7 +46,7 @@ void PlayerSystem::update()
 		if (count == 60)
 		{
 			std::cout << InputSystem::mx << " mx my " << InputSystem::my << std::endl;
-			std::cout << "rotation " << movec.rotation << std::endl;
+			std::cout << "angle " << movec.angle << std::endl;
 			std::cout << pc.pos.x << " px py " << pc.pos.y << std::endl;
 			count = 0;
 		}

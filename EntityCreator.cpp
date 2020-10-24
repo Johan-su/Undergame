@@ -257,12 +257,12 @@ void EntityCreator::init()
 			rc.texture = Texture::get_texture(1); // TODO: determine texture
 
 			mc.speed = 7.0f;
-			//mc.rotation = 4.0f;
+			//mc.angle = 4.0f;
 
-			mc.rotation = *(float*)(&data);
+			mc.angle = *(float*)(&data);
 
-			mc.velocity.x = cosf(mc.rotation);
-			mc.velocity.y = sinf(mc.rotation);
+			mc.velocity.x = cosf(mc.angle);
+			mc.velocity.y = sinf(mc.angle);
 
 			pc.damage = 1.0f;
 
