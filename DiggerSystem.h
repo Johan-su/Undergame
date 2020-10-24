@@ -12,4 +12,7 @@ public:
 private:
 
 	void deal_damage_tile(Entity e, HealthComponent& health, const float& damage);
+
+	bool is_facing_tile(Entity tile, PositionComponent& facersPos, SizeComponent& facersSize, MovementComponent& facersMove);
+
 };

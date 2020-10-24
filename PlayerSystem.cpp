@@ -27,15 +27,17 @@ void PlayerSystem::update()
 		SDL_assert(shoot.entity == e);
 #endif
 
-		//movec.rotation = atan2f(pc.pos.x - pc.pos.y, InputSystem::mx - InputSystem::my);
-		movec.rotation = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(InputSystem::my)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(InputSystem::mx))); // 1.57079632679 == pi / 2
-		if (InputSystem::mx - (size.size.x + SCREEN_WIDTH) / 2 <= 0)
+		set_Camera_to_player(pc);
+		movec.rotation = atanf((SCREEN_HEIGHT / 2 + size.size.y / 2 - (float)(InputSystem::my)) / (SCREEN_WIDTH / 2 + size.size.x / 2 - (float)(InputSystem::mx)));
+
+		if ((size.size.x + SCREEN_WIDTH) / 2 - InputSystem::mx >= 0)
 		{
-			movec.rotation -= 3.14159265359f; // pi
-		} //TODO:fix player targeting mouse
+			movec.rotation += 3.14159265359f; // pi
+		}
+
+		movec.rotation = fmod(movec.rotation + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
 
 		//std::cout << movec.rotation << std::endl;
-		set_Camera_to_player(pc);
 
 		movec.velocity.x = 0;
 		movec.velocity.y = 0;

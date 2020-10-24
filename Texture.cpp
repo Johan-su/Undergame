@@ -45,6 +45,7 @@ void Texture::load_texture(const char* path)
 	SDL_Texture* texture;
 	if (loader_surface = SDL_LoadBMP(path))
 	{
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 		if (texture = SDL_CreateTextureFromSurface(Game::renderer, loader_surface))
 		{
 			m_textures->push_back(texture);

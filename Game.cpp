@@ -80,13 +80,13 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 }
 void Game::update()
 {
-	playerSystem->update();
-	shooterSystem->update();
 	movementSystem->update();
 	staticcollisionSystem->update();
 	collisionSystem->update();
 	projectileSystem->update();
 	diggerSystem->update();
+	playerSystem->update();
+	shooterSystem->update();
 
 
 	//offsetx++;
@@ -166,6 +166,8 @@ void Game::systems_init()
 
 
 	diggerSystem = Game::coordinator->register_system<DiggerSystem>();
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
 	sig.set(Game::coordinator->get_signature_pos<DiggerComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
