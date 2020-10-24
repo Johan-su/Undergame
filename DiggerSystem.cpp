@@ -50,7 +50,7 @@ bool DiggerSystem::is_facing_tile(Entity tile, PositionComponent& facersPos, Siz
 	auto tx = tilePos.pos.x + TILE_SIZE / 2;
 	auto ty = tilePos.pos.y + TILE_SIZE / 2;
 
-	float offset = 1.04719755f; // pi / 6
+	float offset = 1.0471975512f; // pi / 3
 
 	float angleToCenter = atanf((fy - ty) / (fx - tx));
 
@@ -64,7 +64,9 @@ bool DiggerSystem::is_facing_tile(Entity tile, PositionComponent& facersPos, Siz
 	//std::cout << "angle " << angleToCenter << std::endl;
 	if (angleToCenter + offset > facersMove.rotation && angleToCenter - offset < facersMove.rotation)
 	{
+		std::cout << "is facing" << std::endl;
 		return 1;
 	}
+	std::cout << "is not facing" << std::endl;
 	return 0;
 }
