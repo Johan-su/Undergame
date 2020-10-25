@@ -32,7 +32,7 @@ void PlayerSystem::update()
 
 		if ((size.size.x + SCREEN_WIDTH) / 2 - InputSystem::mx >= 0)
 		{
-			movec.angle += 3.14159265359f; // pi
+			movec.angle -= 3.14159265359f; // pi
 		}
 
 		movec.angle = fmod(movec.angle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi

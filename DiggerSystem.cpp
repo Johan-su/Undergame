@@ -41,7 +41,7 @@ void DiggerSystem::deal_damage_tile(Entity e, HealthComponent& health, const flo
 	}
 }
 
-bool DiggerSystem::is_facing_tile(Entity tile, PositionComponent& facersPos, SizeComponent& facersSize, MovementComponent& facersMove) //TODO: fix angle stuff
+bool DiggerSystem::is_facing_tile(Entity tile, PositionComponent& facersPos, SizeComponent& facersSize, MovementComponent& facersMove)
 {
 	auto& tilePos = Game::coordinator->get_component<PositionComponent>(tile);
 
@@ -56,17 +56,29 @@ bool DiggerSystem::is_facing_tile(Entity tile, PositionComponent& facersPos, Siz
 
 	if (fx - tx >= 0)
 	{
-		angleToCenter += 3.14159265359f; // pi
+		angleToCenter -= 3.14159265359f; // pi
 	}
 	angleToCenter = fmod(angleToCenter + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
+
+	float oxp = fmod(angleToCenter + offset + 6.28318530718f, 6.28318530718f);
+	float oxm = fmod(angleToCenter - offset + 6.28318530718f, 6.28318530718f);
 	//std::cout << fx << " fx fy " << fy << " " << tx << " tx ty " << ty << " angle " << angleToCenter << std::endl;
 
 	//std::cout << "angle " << angleToCenter << std::endl;
-	if (angleToCenter + offset < facersMove.angle && fmod(angleToCenter - offset + 6.28318530718f, 6.28318530718f) > facersMove.angle) //TODO: offset doesnt work exactly correctly.
+	if (oxp > facersMove.angle && oxm < facersMove.angle)
 	{
-		std::cout << "is facing " << angleToCenter << std::endl;
+	//	std::cout << "is facing " << angleToCenter << std::endl;
 		return 1;
 	}
-	std::cout << "is not facing " << angleToCenter <<std::endl;
+
+	if (oxm > oxp)
+	{
+		if (oxp > facersMove.angle || oxm < facersMove.angle)
+		{
+		//	std::cout << "is facing " << angleToCenter << std::endl;
+			return 1;
+		}
+	}
+	//std::cout << "is not facing " << angleToCenter <<std::endl;
 	return 0;
 }
