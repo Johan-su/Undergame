@@ -58,10 +58,12 @@ bool DiggerSystem::is_facing_tile(Entity tile, PositionComponent& facersPos, Siz
 	{
 		angleToCenter -= 3.14159265359f; // pi
 	}
+
 	angleToCenter = fmod(angleToCenter + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
 
 	float oxp = fmod(angleToCenter + offset + 6.28318530718f, 6.28318530718f);
 	float oxm = fmod(angleToCenter - offset + 6.28318530718f, 6.28318530718f);
+
 	//std::cout << fx << " fx fy " << fy << " " << tx << " tx ty " << ty << " angle " << angleToCenter << std::endl;
 
 	//std::cout << "angle " << angleToCenter << std::endl;

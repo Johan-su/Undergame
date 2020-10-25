@@ -11,6 +11,7 @@ void AiSystem::update()
 		auto& ai = Game::coordinator->get_component<AiComponent>(e);
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 
+
 #ifdef ECS_DEBUG
 		SDL_assert(ai.entity == e);
 		SDL_assert(pos.entity == e);
