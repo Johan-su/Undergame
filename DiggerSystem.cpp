@@ -6,6 +6,7 @@ void DiggerSystem::update()
 {
 	for (auto e : m_entities)
 	{
+		auto& render = Game::coordinator->get_component<RenderComponent>(e);
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& move = Game::coordinator->get_component<MovementComponent>(e);
@@ -18,8 +19,13 @@ void DiggerSystem::update()
 		{
 			if (is_facing_tile(collider.tile_id, pos, size, move))
 			{
+				render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when digging
 				auto& tilehealth = Game::coordinator->get_component<HealthComponent>(collider.tile_id);
 				deal_damage_tile(collider.tile_id, tilehealth, 2.0f * powf(1.1f, digger.drillLVL));
+			}
+			else
+			{
+				render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when not digging
 			}
 		}
 	}

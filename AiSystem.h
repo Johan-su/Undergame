@@ -5,6 +5,8 @@ class AiSystem : public System
 {
 public:
 
+	void clean();
+
 	void update();
 
 
@@ -17,13 +19,13 @@ private:
 
 	void move_to();
 
-	float Astar(float x, float y, AiComponent& ai);
+	void Astar(float x, float y, AiComponent& ai);
 
-	float dijkstra(float x, float y, AiComponent& ai);
+	void dijkstra(float x, float y, AiComponent& ai);
 
-	float greedy(float x, float y, AiComponent& ai);
+	void greedy(float x, float y, AiComponent& ai);
 
-	float straight_line(AiComponent& ai, PositionComponent& pos);
+	void straight_line(AiComponent& ai, PositionComponent& pos);
 
-
+	std::vector<uint32_t>* path_list;
 };

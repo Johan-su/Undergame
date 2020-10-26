@@ -18,7 +18,7 @@ int Game::offsetx;
 int Game::offsety;
 
 //std::vector<Entity>* Game::entities;
-std::array<Entity, MAP_SIZE* MAP_SIZE> Game::tileEntities;
+std::array<Entity, MAP_SIZE * MAP_SIZE> Game::tileEntities;
 
 
 
@@ -31,6 +31,7 @@ static std::shared_ptr<ProjectileSystem> projectileSystem;
 static std::shared_ptr<RenderSystem> renderSystem;
 static std::shared_ptr<ShooterSystem> shooterSystem;
 static std::shared_ptr<StaticCollisionSystem> staticcollisionSystem;
+static std::shared_ptr<TargetingSystem> targetingSystem;
 
 
 
@@ -130,6 +131,7 @@ void Game::components_init()
 	Game::coordinator->register_component<ColliderComponent>();
 	Game::coordinator->register_component<DiggerComponent>();
 	Game::coordinator->register_component<HealthComponent>();
+	Game::coordinator->register_component<ItemComponent>();
 	Game::coordinator->register_component<MovementComponent>();
 	Game::coordinator->register_component<PlayerComponent>();
 	Game::coordinator->register_component<PositionComponent>();
@@ -166,6 +168,7 @@ void Game::systems_init()
 
 
 	diggerSystem = Game::coordinator->register_system<DiggerSystem>();
+	sig.set(Game::coordinator->get_signature_pos<RenderComponent>());
 	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
 	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
 	sig.set(Game::coordinator->get_signature_pos<DiggerComponent>());
@@ -228,5 +231,13 @@ void Game::systems_init()
 	Game::coordinator->set_signature(staticcollisionSystem, sig);
 	sig.reset();
 
+
+	targetingSystem = Game::coordinator->register_system<TargetingSystem>();
+	sig.set(Game::coordinator->get_signature_pos<PlayerComponent>());
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
+	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
+	Game::coordinator->set_signature(targetingSystem, sig);
+	sig.reset();
 
 }

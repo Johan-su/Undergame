@@ -1,7 +1,10 @@
 #include <cmath>
 #include "DebugMacros.h"
 #include "AiSystem.h"
+#include "TargetingSystem.h"
 #include "ECS.h"
+
+
 
 
 void AiSystem::update()
@@ -11,6 +14,7 @@ void AiSystem::update()
 		auto& ai = Game::coordinator->get_component<AiComponent>(e);
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 
+		Entity e = TargetingSystem::nearest_player(pos.pos.x, pos.pos.y);
 
 #ifdef ECS_DEBUG
 		SDL_assert(ai.entity == e);
@@ -19,23 +23,19 @@ void AiSystem::update()
 	}
 }
 
-float AiSystem::Astar(float x, float y, AiComponent& ai)
+void AiSystem::Astar(float x, float y, AiComponent& ai)
 {
-	return NULL;
 }
 
-float AiSystem::dijkstra(float x, float y, AiComponent& ai)
+void AiSystem::dijkstra(float x, float y, AiComponent& ai)
 {
-	return NULL;
 }
 
-float AiSystem::greedy(float x, float y, AiComponent& ai)
+void AiSystem::greedy(float x, float y, AiComponent& ai)
 {
-	return NULL;
 }
-float AiSystem::straight_line(AiComponent& ai, PositionComponent& pos) //TODO: find a way to detect intersections between 2 points.
+void AiSystem::straight_line(AiComponent& ai, PositionComponent& pos)
 {
 	float length = hypotf(ai.lastX - pos.pos.x, ai.lastY - pos.pos.y);
 
-	return NULL;
 }

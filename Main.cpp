@@ -38,6 +38,7 @@ void Create_entities()
 		}
 	}
 	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
+	delete tm;
 }
 
 int main(int argc, char* argv[])

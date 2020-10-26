@@ -10,10 +10,11 @@ enum AI_STATES
 
 struct AiComponent
 {
-	float visualRadius;
+	float detectionRadius;
 	float lastX;
 	float lastY;
 	uint8_t state;
+	std::array<uint32_t, > path_list;
 
 #ifdef ECS_DEBUG
 	 uint32_t entity;
