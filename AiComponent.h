@@ -1,10 +1,12 @@
 #pragma once
+#include <vector>
 #include "DebugMacros.h"
+
 enum AI_STATES
 {
-	RANDOM_WALKING,
-	TRACK_LAST_KNOWN,
-	TRACKING
+	AI_STATE_RANDOM_WALKING,
+	AI_STATE_TRACK_LAST_KNOWN,
+	AI_STATE_TRACKING
 };
 
 
@@ -14,7 +16,7 @@ struct AiComponent
 	float lastX;
 	float lastY;
 	uint8_t state;
-	std::array<uint32_t, > path_list;
+	std::vector<uint32_t> path_list;
 
 #ifdef ECS_DEBUG
 	 uint32_t entity;

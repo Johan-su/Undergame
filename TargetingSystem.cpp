@@ -1,5 +1,10 @@
 #include <cmath>
 #include "TargetingSystem.h"
+#include "Entity.h"
+#include "Game.h"
+#include "PositionComponent.h"
+#include "SizeComponent.h"
+#include "vecf.h"
 
 Entity TargetingSystem::nearest_player(float x, float y)
 {
@@ -39,4 +44,13 @@ float TargetingSystem::nearest_player_distance(float x, float y)
 	auto& size = Game::coordinator->get_component<SizeComponent>(e);
 
 	return hypotf(pos.pos.x + size.size.x - x, pos.pos.y + size.size.y - y);
+}
+
+Vec2f TargetingSystem::nearest_player_pos(float x, float y)
+{
+	Entity e = nearest_player(x, y);
+
+	auto& pos = Game::coordinator->get_component<PositionComponent>(e);
+
+	return pos.pos;
 }

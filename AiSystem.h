@@ -1,9 +1,15 @@
 #pragma once
+#include <memory>
 #include "DebugMacros.h"
-#include "ECS.h"
+#include "PositionComponent.h"
+#include "AiComponent.h"
+#include "System.h"
+#include "TargetingSystem.h"
 class AiSystem : public System
 {
 public:
+
+	void init(std::shared_ptr<TargetingSystem> sys);
 
 	void clean();
 
@@ -15,17 +21,15 @@ public:
 
 private:
 
-	void move_to_diagonally();
+	void move_to(uint32_t gridID);
 
-	void move_to();
+	void Astar(float x, float y, std::vector<uint32_t>& path);
 
-	void Astar(float x, float y, AiComponent& ai);
+	void dijkstra(float x, float y, std::vector<uint32_t>& path); //TODO: if needed for performance changed float x, float y to vec2f
 
-	void dijkstra(float x, float y, AiComponent& ai);
-
-	void greedy(float x, float y, AiComponent& ai);
+	void greedy(float x, float y, std::vector<uint32_t>& path);
 
 	void straight_line(AiComponent& ai, PositionComponent& pos);
 
-	std::vector<uint32_t>* path_list;
+	std::shared_ptr<TargetingSystem> ts;
 };

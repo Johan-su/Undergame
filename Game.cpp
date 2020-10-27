@@ -154,6 +154,7 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
+	sig.set(Game::coordinator->get_signature_pos<DiggerComponent>());
 	Game::coordinator->set_signature(aiSystem, sig);
 	sig.reset();
 
@@ -236,7 +237,6 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<PlayerComponent>());
 	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
 	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
-	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	Game::coordinator->set_signature(targetingSystem, sig);
 	sig.reset();
 

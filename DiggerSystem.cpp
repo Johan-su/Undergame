@@ -21,7 +21,7 @@ void DiggerSystem::update()
 			{
 				render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when digging
 				auto& tilehealth = Game::coordinator->get_component<HealthComponent>(collider.tile_id);
-				deal_damage_tile(collider.tile_id, tilehealth, 2.0f * powf(1.1f, digger.drillLVL));
+				deal_damage_tile(collider.tile_id, tilehealth, 2.0f * (1.0f + digger.drillLVL));
 			}
 			else
 			{
