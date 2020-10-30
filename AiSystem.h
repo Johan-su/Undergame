@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 #include "DebugMacros.h"
-#include "PositionComponent.h"
-#include "MovementComponent.h"
-#include "DiggerComponent.h"
-#include "AiComponent.h"
 #include "System.h"
 #include "TargetingSystem.h"
+#include "PositionComponent.h"
+#include "MovementComponent.h"
+#include "AiComponent.h"
+#include "DiggerComponent.h"
 class AiSystem : public System
 {
 public:
@@ -23,7 +23,7 @@ public:
 
 private:
 
-	void move_to(uint32_t gridID);
+	bool move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size);
 
 	void Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
 

@@ -1,5 +1,5 @@
 #include <cmath>
-#include "DiggerSystem.h"
+#include "ECS.h"
 
 
 void DiggerSystem::update()
@@ -19,13 +19,13 @@ void DiggerSystem::update()
 		{
 			if (is_facing_tile(collider.tile_id, pos, size, move))
 			{
-				render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when digging
+				//render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when digging
 				auto& tilehealth = Game::coordinator->get_component<HealthComponent>(collider.tile_id);
 				deal_damage_tile(collider.tile_id, tilehealth, 2.0f * (1.0f + 0.4f * digger.drillLVL));
 			}
 			else
 			{
-				render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when not digging
+				//render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when not digging
 			}
 		}
 	}

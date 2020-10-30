@@ -1,7 +1,10 @@
 #pragma once
-#include "DiggerComponent.h"
-#include "ECS.h"
-
+#include "System.h"
+#include "Entity.h"
+#include "PositionComponent.h"
+#include "MovementComponent.h"
+#include "HealthComponent.h"
+#include "SizeComponent.h"
 class DiggerSystem : public System
 {
 public:

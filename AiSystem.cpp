@@ -4,6 +4,7 @@
 #include "TargetingSystem.h"
 #include "MovementComponent.h"
 #include "DiggerComponent.h"
+#include "PositionComponent.h"
 #include "ECS.h"
 
 void AiSystem::init(std::shared_ptr<TargetingSystem> sys)
@@ -35,14 +36,18 @@ void AiSystem::update()
 		float pdistance = ts->nearest_player_distance(pos.pos.x, pos.pos.y);
 		Vec2f ppos = ts->nearest_player_pos(pos.pos.x, pos.pos.y);
 
+
+
+		if (pdistance < ai.detectionRadius / 4)
+		{
+			ai.state = AI_STATE_TRACKING;
+		}
+
 		switch (ai.state)
 		{
 		case AI_STATE_RANDOM_WALKING:
-			if (pdistance < ai.detectionRadius / 4)
-			{
-				ai.state = AI_STATE_TRACKING;
-			}
-			else if(pdistance < ai.detectionRadius)
+
+			if(pdistance < ai.detectionRadius)
 			{
 				ai.state = AI_STATE_TRACK_LAST_KNOWN;
 				ai.lastX = ppos.x;
@@ -55,11 +60,8 @@ void AiSystem::update()
 			break;
 
 		case AI_STATE_TRACK_LAST_KNOWN:
-			if (pdistance < ai.detectionRadius / 4)
-			{
-				ai.state = AI_STATE_TRACKING;
-			}
-			else if (ai.path_list.size() > 0)
+
+			if (ai.path_list.size() > 0)
 			{
 
 			}
@@ -85,12 +87,29 @@ void AiSystem::update()
 	}
 }
 
-void AiSystem::move_to(uint32_t gridID) //TODO: finish
+bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size) //TODO: finish
 {
 	float gcx = (float)(TILE_SIZE * (gridID % MAP_SIZE) - TILE_SIZE / 2);
 	float gcy = (float)(TILE_SIZE * (gridID / MAP_SIZE) - TILE_SIZE / 2);
 
 
+	auto ecx = pos.pos.x + size.size.x;
+	auto ecy = pos.pos.y + size.size.y;
+
+	
+
+
+
+
+	if (abs(ecx - gcx) < 16.0f)
+	{
+		return 1;
+	}
+	if (abs(ecy - gcy) < 16.0f)
+	{
+		return 1;
+	}
+	return 0;
 }
 
 void AiSystem::Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
@@ -103,7 +122,7 @@ void AiSystem::dijkstra(float x, float y, MovementComponent& move, DiggerCompone
 
 void AiSystem::greedy(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
 {
-	uint16_t id = (fmod(y, TILE_SIZE)) * x / TILE_SIZE; // find way to get grid id from coords
+	uint16_t id = (uint16_t)((fmod(y, TILE_SIZE)) * x / TILE_SIZE); // find way to get grid id from coords
 }
 void AiSystem::straight_line(AiComponent& ai, PositionComponent& pos)
 {
@@ -121,5 +140,5 @@ float AiSystem::dig_time(uint16_t gridID, MovementComponent& move, DiggerCompone
 
 		time += health.health / digspeed;
 	}
-	return time + (64.0f / move.speed);
+	return time + ((float)(TILE_SIZE) / move.speed);
 }
