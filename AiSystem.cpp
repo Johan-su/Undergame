@@ -2,6 +2,8 @@
 #include "DebugMacros.h"
 #include "AiSystem.h"
 #include "TargetingSystem.h"
+#include "MovementComponent.h"
+#include "DiggerComponent.h"
 #include "ECS.h"
 
 void AiSystem::init(std::shared_ptr<TargetingSystem> sys)
@@ -20,29 +22,31 @@ void AiSystem::update()
 		auto& ai = Game::coordinator->get_component<AiComponent>(e);
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 		auto& digger = Game::coordinator->get_component<DiggerComponent>(e);
+		auto& move = Game::coordinator->get_component<MovementComponent>(e);
 
 #ifdef ECS_DEBUG
 		SDL_assert(ai.entity == e);
 		SDL_assert(pos.entity == e);
 		SDL_assert(digger.entity == e);
+		SDL_assert(move.entity == e);
 #endif
 
 		Entity e = ts->nearest_player(pos.pos.x, pos.pos.y);
-		float edistance = ts->nearest_player_distance(pos.pos.x, pos.pos.y);
-		Vec2f epos = ts->nearest_player_pos(pos.pos.x, pos.pos.y);
+		float pdistance = ts->nearest_player_distance(pos.pos.x, pos.pos.y);
+		Vec2f ppos = ts->nearest_player_pos(pos.pos.x, pos.pos.y);
 
 		switch (ai.state)
 		{
 		case AI_STATE_RANDOM_WALKING:
-			if (edistance < ai.detectionRadius / 4)
+			if (pdistance < ai.detectionRadius / 4)
 			{
 				ai.state = AI_STATE_TRACKING;
 			}
-			else if(edistance < ai.detectionRadius)
+			else if(pdistance < ai.detectionRadius)
 			{
 				ai.state = AI_STATE_TRACK_LAST_KNOWN;
-				ai.lastX = epos.x;
-				ai.lastY = epos.y;
+				ai.lastX = ppos.x;
+				ai.lastY = ppos.y;
 			}
 			else// TODO: add random walking algorithm
 			{
@@ -51,7 +55,7 @@ void AiSystem::update()
 			break;
 
 		case AI_STATE_TRACK_LAST_KNOWN:
-			if (edistance < ai.detectionRadius / 4)
+			if (pdistance < ai.detectionRadius / 4)
 			{
 				ai.state = AI_STATE_TRACKING;
 			}
@@ -63,7 +67,7 @@ void AiSystem::update()
 			{
 				//Astar(epos.x, epos.y, ai.path_list);
 				//dijkstra(epos.x, epos.y, ai.path_list);
-				greedy(ai.lastX, ai.lastY, ai.path_list);
+				greedy(ai.lastX, ai.lastY, move, digger, ai.path_list);
 			}
 			break;
 
@@ -89,20 +93,33 @@ void AiSystem::move_to(uint32_t gridID) //TODO: finish
 
 }
 
-void AiSystem::Astar(float x, float y, std::vector<uint32_t>& path) //TODO: finish
+void AiSystem::Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
 {
 }
 
-void AiSystem::dijkstra(float x, float y, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
+void AiSystem::dijkstra(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
 {
 }
 
-void AiSystem::greedy(float x, float y, std::vector<uint32_t>& path) //TODO: finish
+void AiSystem::greedy(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
 {
-
+	uint16_t id = (fmod(y, TILE_SIZE)) * x / TILE_SIZE; // find way to get grid id from coords
 }
 void AiSystem::straight_line(AiComponent& ai, PositionComponent& pos)
 {
 	float length = hypotf(ai.lastX - pos.pos.x, ai.lastY - pos.pos.y);
 
+}
+
+float AiSystem::dig_time(uint16_t gridID, MovementComponent& move, DiggerComponent& digger)
+{
+	float time = 0.0f;
+	if (Game::tileEntities[gridID] != 0)
+	{
+		auto health = Game::coordinator->get_component<HealthComponent>(gridID);
+		float digspeed =  2.0f * (1.0f + 0.4f * digger.drillLVL);
+
+		time += health.health / digspeed;
+	}
+	return time + (64.0f / move.speed);
 }
