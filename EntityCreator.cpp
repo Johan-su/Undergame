@@ -157,9 +157,7 @@ void EntityCreator::init()
 
 			hc.health = hc.max_health;
 
-#ifdef _DEBUG
-			if (data == 16) SDL_assert(hc.health > 100.0f);
-#endif
+
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<TileComponent>(e, tc);
@@ -179,6 +177,7 @@ void EntityCreator::init()
 			auto mc = MovementComponent();
 
 			auto ai = AiComponent();
+			auto digger = DiggerComponent();
 
 #ifdef ECS_DEBUG
 			positionc.entity = e;
@@ -191,6 +190,7 @@ void EntityCreator::init()
 			mc.entity = e;
 
 			ai.entity = e;
+			digger.entity = e;
 #endif
 
 			positionc.pos.x = x;
@@ -216,6 +216,10 @@ void EntityCreator::init()
 
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 			Game::coordinator->add_component<MovementComponent>(e, mc);
+
+			Game::coordinator->add_component<AiComponent>(e, ai);
+			Game::coordinator->add_component<DiggerComponent>(e, digger);
+
 		});
 	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // bullet
 		{
