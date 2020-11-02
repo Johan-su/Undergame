@@ -22,6 +22,7 @@ void AiSystem::update()
 	{
 		auto& ai = Game::coordinator->get_component<AiComponent>(e);
 		auto& pos = Game::coordinator->get_component<PositionComponent>(e);
+		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& digger = Game::coordinator->get_component<DiggerComponent>(e);
 		auto& move = Game::coordinator->get_component<MovementComponent>(e);
 
@@ -35,6 +36,7 @@ void AiSystem::update()
 		Entity e = ts->nearest_player(pos.pos.x, pos.pos.y);
 		float pdistance = ts->nearest_player_distance(pos.pos.x, pos.pos.y);
 		Vec2f ppos = ts->nearest_player_pos(pos.pos.x, pos.pos.y);
+		Vec2f psize = ts->nearest_player_size(pos.pos.x, pos.pos.y);
 
 
 
@@ -42,24 +44,30 @@ void AiSystem::update()
 		{
 			ai.state = AI_STATE_TRACKING;
 		}
+		else if (pdistance < ai.detectionRadius)
+		{
+			ai.state = AI_STATE_TRACK_LAST_KNOWN;
+			ai.lastX = ppos.x;
+			ai.lastY = ppos.y;
+		}
+		else
+		{
+			ai.state = AI_STATE_RANDOM_WALKING;
+		}
 
 		switch (ai.state)
 		{
 		case AI_STATE_RANDOM_WALKING:
 
-			if(pdistance < ai.detectionRadius)
-			{
-				ai.state = AI_STATE_TRACK_LAST_KNOWN;
-				ai.lastX = ppos.x;
-				ai.lastY = ppos.y;
-			}
-			else// TODO: add random walking algorithm
-			{
+			std::cout << "random walking " << std::endl;
+			// TODO: add random walking algorithm
 
-			}
 			break;
 
 		case AI_STATE_TRACK_LAST_KNOWN:
+
+			std::cout << "last known " << std::endl;
+
 
 			if (ai.path_list.size() > 0)
 			{
@@ -74,6 +82,12 @@ void AiSystem::update()
 			break;
 
 		case AI_STATE_TRACKING:
+
+			std::cout << "tracking " << std::endl;
+
+			ai_track(ppos, psize, pos, size, move);
+
+
 
 			break;
 
@@ -103,12 +117,18 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 	{
 		targetangle -= 3.14159265359f; // pi
 	}
-
 	targetangle = fmod(targetangle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
+
+	move.angle = targetangle;
+
+	move.velocity.x = cos(-targetangle);
+	move.velocity.y = sin(-targetangle);
 
 
 	if (abs(ecx - gcx) < 16.0f && abs(ecy - gcy) < 16.0f)
 	{
+		move.velocity.x = 0.0f;
+		move.velocity.y = 0.0f;
 		return 1;
 	}
 	return 0;
@@ -143,4 +163,27 @@ float AiSystem::dig_time(uint16_t gridID, MovementComponent& move, DiggerCompone
 		time += health.health / digspeed;
 	}
 	return time + ((float)(TILE_SIZE) / move.speed);
+}
+
+void AiSystem::ai_track(Vec2f ppos, Vec2f psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move)
+{
+	float px = ppos.x + psize.x / 2;
+	float py = ppos.y + psize.y / 2;
+
+
+	float ex = pos.pos.x + size.size.x / 2;
+	float ey = pos.pos.y + size.size.y / 2;
+
+	float targetangle = atanf((ey - py) / (ex - px));
+
+	if (ex - px >= 0)
+	{
+		targetangle -= 3.14159265359f; // pi
+	}
+	targetangle = fmod(targetangle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
+
+	move.angle = targetangle;
+
+	move.velocity.x = cos(-targetangle);
+	move.velocity.y = sin(-targetangle);
 }

@@ -3,6 +3,14 @@
 #include <vector>
 #include <SDL.h>
 
+enum TEXTURE
+{
+	TEXTURE_TILESHEET,
+	TEXTURE_BULLET,
+	TEXTURE_PLAYER,
+	TEXTURE_MOLE
+};
+
 class Texture
 {
 public:

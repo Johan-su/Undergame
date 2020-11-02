@@ -7,6 +7,7 @@
 #include "MovementComponent.h"
 #include "AiComponent.h"
 #include "DiggerComponent.h"
+
 class AiSystem : public System
 {
 public:
@@ -34,6 +35,8 @@ private:
 	void straight_line(AiComponent& ai, PositionComponent& pos);
 
 	float dig_time(uint16_t gridID, MovementComponent& move, DiggerComponent& digger);
+
+	void ai_track(Vec2f ppos, Vec2f psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move);
 
 	std::shared_ptr<TargetingSystem> ts;
 };

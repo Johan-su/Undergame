@@ -199,14 +199,17 @@ void EntityCreator::init()
 			cc.tile_id = 0xFFFFFFFF;
 			cc.other_entity = 0xFFFFFFFF;
 
-			sc.size.x = 0;
-			sc.size.y = 0;
+			sc.size.x = 40.0f;
+			sc.size.y = 40.0f;
 
-			rc.src_rect = { 0, 0, 0, 0 }; // TODO: determine texture
+			rc.src_rect = { 0, 0, 400, 503 }; // TODO: determine texture
 
-			rc.texture = nullptr; // TODO: determine texture
+			rc.texture = Texture::get_texture(TEXTURE_MOLE); // TODO: determine texture
 
-			mc.speed = 0.0f;
+			mc.speed = 1.0f;
+
+			ai.detectionRadius = 20.0f;
+			ai.state = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);

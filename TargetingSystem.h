@@ -13,4 +13,6 @@ public:
 
 	Vec2f nearest_player_pos(float x, float y);
 
+	Vec2f nearest_player_size(float x, float y);
+
 };

@@ -88,6 +88,7 @@ void Game::update()
 	diggerSystem->update();
 	playerSystem->update();
 	shooterSystem->update();
+	aiSystem->update();
 
 
 	//offsetx++;

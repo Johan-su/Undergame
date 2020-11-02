@@ -54,3 +54,12 @@ Vec2f TargetingSystem::nearest_player_pos(float x, float y)
 
 	return pos.pos;
 }
+
+Vec2f TargetingSystem::nearest_player_size(float x, float y)
+{
+	Entity e = nearest_player(x, y);
+
+	auto& size = Game::coordinator->get_component<SizeComponent>(e);
+
+	return size.size;
+}

@@ -3,6 +3,11 @@
 #include "Texture.h"
 #include "Game.h"
 
+
+
+
+
+
 std::vector<SDL_Texture*>* Texture::m_textures;
 
 void Texture::init()
@@ -17,6 +22,7 @@ void Texture::init()
 	load_texture("resources/textures/test/Player_placeholder.bmp");
 
 
+	load_texture("resources/textures/mole/Mole_Sprite_TopDown_Flooded_SpriteSheet.bmp");
 
 
 
