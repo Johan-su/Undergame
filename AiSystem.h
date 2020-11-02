@@ -23,7 +23,7 @@ public:
 
 private:
 
-	bool move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size);
+	bool move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move);
 
 	void Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
 

@@ -87,18 +87,24 @@ void AiSystem::update()
 	}
 }
 
-bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size) //TODO: finish
+bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move) //TODO: find out how to control the ai in a good way.
 {
 	float gcx = (float)(TILE_SIZE * (gridID % MAP_SIZE) - TILE_SIZE / 2);
 	float gcy = (float)(TILE_SIZE * (gridID / MAP_SIZE) - TILE_SIZE / 2);
 
 
-	auto ecx = pos.pos.x + size.size.x;
-	auto ecy = pos.pos.y + size.size.y;
+	float ecx = pos.pos.x + size.size.x / 2;
+	float ecy = pos.pos.y + size.size.y / 2;
 
 	
+	float targetangle = atanf((ecy - gcy) / (ecx - gcx));
 
+	if (ecx - gcx >= 0)
+	{
+		targetangle -= 3.14159265359f; // pi
+	}
 
+	targetangle = fmod(targetangle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
 
 
 	if (abs(ecx - gcx) < 16.0f && abs(ecy - gcy) < 16.0f)
