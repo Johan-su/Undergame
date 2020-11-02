@@ -101,11 +101,7 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 
 
 
-	if (abs(ecx - gcx) < 16.0f)
-	{
-		return 1;
-	}
-	if (abs(ecy - gcy) < 16.0f)
+	if (abs(ecx - gcx) < 16.0f && abs(ecy - gcy) < 16.0f)
 	{
 		return 1;
 	}
