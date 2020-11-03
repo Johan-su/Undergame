@@ -84,11 +84,11 @@ void Game::update()
 	movementSystem->update();
 	staticcollisionSystem->update();
 	collisionSystem->update();
-	projectileSystem->update();
 	diggerSystem->update();
+	aiSystem->update();
+	projectileSystem->update();
 	playerSystem->update();
 	shooterSystem->update();
-	aiSystem->update();
 
 
 	//offsetx++;
@@ -241,4 +241,5 @@ void Game::systems_init()
 	Game::coordinator->set_signature(targetingSystem, sig);
 	sig.reset();
 
+	aiSystem->init(targetingSystem);
 }

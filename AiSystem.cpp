@@ -59,14 +59,14 @@ void AiSystem::update()
 		{
 		case AI_STATE_RANDOM_WALKING:
 
-			std::cout << "random walking " << std::endl;
+			//std::cout << "random walking " << std::endl;
 			// TODO: add random walking algorithm
 
 			break;
 
 		case AI_STATE_TRACK_LAST_KNOWN:
 
-			std::cout << "last known " << std::endl;
+			//std::cout << "last known " << std::endl;
 
 
 			if (ai.path_list.size() > 0)
@@ -83,7 +83,7 @@ void AiSystem::update()
 
 		case AI_STATE_TRACKING:
 
-			std::cout << "tracking " << std::endl;
+			//std::cout << "tracking " << std::endl;
 
 			ai_track(ppos, psize, pos, size, move);
 
@@ -117,13 +117,14 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 	{
 		targetangle -= 3.14159265359f; // pi
 	}
-	targetangle = fmod(targetangle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
 
 	move.angle = targetangle;
 
-	move.velocity.x = cos(-targetangle);
-	move.velocity.y = sin(-targetangle);
+	move.velocity.x = cos(targetangle) * 1.41421356237f;
+	move.velocity.y = sin(targetangle) * 1.41421356237f;
+	std::cout << move.velocity.x << " velx vely " << move.velocity.y << std::endl;
 
+	move.angle = fmod(move.angle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
 
 	if (abs(ecx - gcx) < 16.0f && abs(ecy - gcy) < 16.0f)
 	{
@@ -180,7 +181,6 @@ void AiSystem::ai_track(Vec2f ppos, Vec2f psize, PositionComponent& pos, SizeCom
 	{
 		targetangle -= 3.14159265359f; // pi
 	}
-	targetangle = fmod(targetangle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
 
 	move.angle = targetangle;
 

@@ -9,11 +9,16 @@
 Entity TargetingSystem::nearest_player(float x, float y)
 {
 	Entity emin = 0xFFFFFFFF;
-	for (auto e : m_entities) //TODO fix bug with iterator
+	for (auto e : m_entities)
 	{
 		if (emin == 0xFFFFFFFF)
 		{
 			emin = e;
+			continue;
+		}
+		if (emin == e)
+		{
+			continue;
 		}
 
 
@@ -38,7 +43,7 @@ float TargetingSystem::nearest_player_distance(float x, float y)
 	auto& pos = Game::coordinator->get_component<PositionComponent>(e);
 	auto& size = Game::coordinator->get_component<SizeComponent>(e);
 
-	return hypotf(pos.pos.x + size.size.x - x, pos.pos.y + size.size.y - y);
+	return hypotf(pos.pos.x + size.size.x / 2 - x, pos.pos.y + size.size.y / 2 - y);
 }
 
 Vec2f TargetingSystem::nearest_player_pos(float x, float y)

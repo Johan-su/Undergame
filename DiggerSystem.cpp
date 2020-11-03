@@ -13,9 +13,17 @@ void DiggerSystem::update()
 		auto& digger = Game::coordinator->get_component<DiggerComponent>(e);
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
 
+#ifdef ECS_DEBUG
+		SDL_assert(render.entity == e);
+		SDL_assert(pos.entity == e);
+		SDL_assert(size.entity == e);
+		SDL_assert(move.entity == e);
+		SDL_assert(digger.entity == e);
+		SDL_assert(collider.entity == e);
+#endif
 
 
-		if (digger.drillState == 1 && collider.tile_id != 0xFFFFFFFF) //TODO: add (looking at the tlle condition)
+		if (digger.drillState == 1 && collider.tile_id != 0xFFFFFFFF)
 		{
 			if (is_facing_tile(collider.tile_id, pos, size, move))
 			{

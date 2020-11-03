@@ -71,7 +71,7 @@ void EntityCreator::init()
 
 			shc.gunlength = 34;
 			shc.count = 0;
-			shc.firingrate = 15;
+			shc.firingrate = 1;
 			dc.drillLVL = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
@@ -208,8 +208,10 @@ void EntityCreator::init()
 
 			mc.speed = 1.0f;
 
-			ai.detectionRadius = 20.0f;
+			ai.detectionRadius = (float)(TILE_SIZE * 20);
 			ai.state = 0;
+
+			digger.drillState = 1;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
 			Game::coordinator->add_component<ColliderComponent>(e, cc);
