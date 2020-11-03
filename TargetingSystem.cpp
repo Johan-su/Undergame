@@ -9,16 +9,11 @@
 Entity TargetingSystem::nearest_player(float x, float y)
 {
 	Entity emin = 0xFFFFFFFF;
-	for (auto e : m_entities)
+	for (auto e : m_entities) //TODO fix bug with iterator
 	{
 		if (emin == 0xFFFFFFFF)
 		{
 			emin = e;
-			continue;
-		}
-		if (emin == e)
-		{
-			continue;
 		}
 
 
