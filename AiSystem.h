@@ -36,6 +36,8 @@ private:
 
 	float dig_time(uint16_t gridID, MovementComponent& move, DiggerComponent& digger);
 
+	void dig_block(uint16_t gridID, MovementComponent& move, DiggerComponent& digger, PositionComponent& pos, SizeComponent& size);
+
 	void ai_track(Vec2f ppos, Vec2f psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move);
 
 	std::shared_ptr<TargetingSystem> ts;

@@ -35,8 +35,8 @@ void Create_entities()
 	{
 		if (Game::tileEntities[i] == 0)
 		{
-			x = static_cast<float>(TILE_SIZE * (i % MAP_SIZE) + TILE_SIZE / 2);
-			y = static_cast<float>(TILE_SIZE * (i / MAP_SIZE) + TILE_SIZE / 2);
+			x = (float)(TILE_SIZE * (i % MAP_SIZE) + TILE_SIZE / 2);
+			y = (float)(TILE_SIZE * (i / MAP_SIZE) + TILE_SIZE / 2);
 			break;
 		}
 	}
