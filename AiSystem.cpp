@@ -18,7 +18,9 @@ void AiSystem::clean()
 
 void AiSystem::update()
 {
+#ifdef _DEBUG
 	static int count = 0;
+#endif
 	for (auto e : m_entities)
 	{
 		auto& ai = Game::coordinator->get_component<AiComponent>(e);
@@ -61,71 +63,94 @@ void AiSystem::update()
 			{
 				ai.state = AI_STATE_RANDOM_WALKING;
 			}
-
-			switch (ai.state)
-			{
-			case AI_STATE_RANDOM_WALKING:
-
-				//std::cout << "random walking " << std::endl;
-				// TODO: add random walking algorithm
-
-				break;
-
-			case AI_STATE_TRACK_LAST_KNOWN:
-
-				//std::cout << "last known " << std::endl;
-
-
-				if (ai.path_list.size() > 0)
-				{
-
-				}
-				else
-				{
-					//Astar(epos.x, epos.y, ai.path_list);
-					//dijkstra(epos.x, epos.y, ai.path_list);
-					greedy(ai.lastX, ai.lastY, move, digger, ai.path_list);
-				}
-				break;
-
-			case AI_STATE_TRACKING:
-
-				//std::cout << "tracking " << std::endl;
-
-				ai_track(ppos, psize, pos, size, move);
-
-
-
-				break;
-
-			case AI_STATE_DIG:
+		}
+		switch (ai.state)
+		{
+		case AI_STATE_RANDOM_WALKING:
 
 #ifdef _DEBUG
-				if (count == 60)
-				{
-					std::cout << "dig" << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
-					count = 0;
-				}
+			if (count == 60)
+			{
+				std::cout << "random walk" << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				count = 0;
+			}
 #endif
 
-				digger.drillState = 1;
-				move_to(collider.tile_id, pos, size, move);
+			break;
 
-				break;
+		case AI_STATE_TRACK_LAST_KNOWN:
 
-			default:
-				break;
+#ifdef _DEBUG
+			if (count == 60)
+			{
+				std::cout << "last known " << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				count = 0;
 			}
+#endif
+
+
+			if (ai.path_list.size() > 0)
+			{
+
+			}
+			else
+			{
+				//Astar(epos.x, epos.y, ai.path_list);
+				//dijkstra(epos.x, epos.y, ai.path_list);
+				dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
+			}
+			break;
+
+		case AI_STATE_TRACKING:
+
+#ifdef _DEBUG
+			if (count == 60)
+			{
+				std::cout << "tracking " << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				count = 0;
+			}
+#endif
+
+
+			ai_track(ppos, psize, pos, size, move);
+
+
+
+			break;
+
+		case AI_STATE_DIG:
+
+#ifdef _DEBUG
+			if (count == 60)
+			{
+				std::cout << "dig" << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				count = 0;
+			}
+#endif
+
+			digger.drillState = 1;
+
+			move_to(collider.tile_id, pos, size, move, collider);
+			
+			break;
+
+		default:
+				break;
 		}
 	}
+#ifdef _DEBUG
 	++count;
+#endif
 }
 
-bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move) //TODO: find out how to control the ai in a good way.
+bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move, ColliderComponent& collider) //TODO: find out how to control the ai in a good way.
 {
 
-	float gcx = (float)(TILE_SIZE * (gridID % MAP_SIZE) - TILE_SIZE / 2);
-	float gcy = (float)(TILE_SIZE * (gridID / MAP_SIZE) - TILE_SIZE / 2);
+	auto type = Game::tileEntities[gridID];
+
+
+	float gcx = (float)(TILE_SIZE * (gridID % MAP_SIZE) + TILE_SIZE / 2);
+	float gcy = (float)(TILE_SIZE * (gridID / MAP_SIZE) + TILE_SIZE / 2);
 
 
 	float ecx = pos.pos.x + size.size.x / 2;
@@ -138,13 +163,36 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 	{
 		targetangle -= 3.14159265359f; // pi
 	}
-
-
-	move.velocity.x = cos(targetangle) * 1.41421356237f;
-	move.velocity.y = sin(targetangle) * 1.41421356237f;
-	std::cout << move.velocity.x << " velx vely " << move.velocity.y << std::endl;
-
 	move.angle = fmod(targetangle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
+
+	if (type == 16)
+	{
+
+		if (is_right(gcx, ecx)) // right
+		{
+			pos.pos.x += size.size.x / 8;
+		}
+		else
+		{
+			pos.pos.x -= size.size.x / 8;
+		}
+		if (is_down(gcy, ecy))
+		{
+			pos.pos.y += size.size.y / 8;
+
+		}
+		else
+		{
+			pos.pos.y -= size.size.y / 8;
+		}
+		return 0;
+	}
+
+	move.velocity.x = cos(-targetangle);
+	move.velocity.y = sin(targetangle);
+
+
+
 
 	if (abs(ecx - gcx) < 16.0f && abs(ecy - gcy) < 16.0f)
 	{
@@ -157,15 +205,23 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 
 void AiSystem::Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
 {
+	uint16_t targetid = (x / TILE_SIZE) + (y / TILE_SIZE) * MAP_SIZE;
+
 }
 
 void AiSystem::dijkstra(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
 {
+	uint16_t targetid = (x / TILE_SIZE) + (y / TILE_SIZE) * MAP_SIZE;
+
+
+
 }
 
-void AiSystem::greedy(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
+void AiSystem::dstar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
 {
-	uint16_t id = (uint16_t)((fmod(y, TILE_SIZE)) * x / TILE_SIZE); // find way to get grid id from coords
+	uint16_t targetid = (x / TILE_SIZE) + (y / TILE_SIZE) * MAP_SIZE;
+
+
 }
 void AiSystem::straight_line(AiComponent& ai, PositionComponent& pos)
 {
@@ -173,7 +229,7 @@ void AiSystem::straight_line(AiComponent& ai, PositionComponent& pos)
 
 }
 
-float AiSystem::dig_time(uint16_t gridID, MovementComponent& move, DiggerComponent& digger)
+float AiSystem::dig_time(uint32_t gridID, MovementComponent& move, DiggerComponent& digger)
 {
 	float time = 0.0f;
 	if (Game::tileEntities[gridID] != 0)
@@ -186,7 +242,7 @@ float AiSystem::dig_time(uint16_t gridID, MovementComponent& move, DiggerCompone
 	return time + ((float)(TILE_SIZE) / move.speed);
 }
 
-void AiSystem::ai_track(Vec2f ppos, Vec2f psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move)
+void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move)
 {
 	float px = ppos.x + psize.x / 2;
 	float py = ppos.y + psize.y / 2;
@@ -205,29 +261,17 @@ void AiSystem::ai_track(Vec2f ppos, Vec2f psize, PositionComponent& pos, SizeCom
 	move.angle = targetangle;
 
 	move.velocity.x = cos(-targetangle);
-	move.velocity.y = sin(-targetangle);
+	move.velocity.y = sin(targetangle);
 }
 
-void AiSystem::dig_block(uint16_t gridID, MovementComponent& move, DiggerComponent& digger, PositionComponent& pos, SizeComponent& size)
+
+bool AiSystem::is_right(float gcx, float ecx)
 {
-
-	float gcx = (float)(TILE_SIZE * (gridID % MAP_SIZE) - TILE_SIZE / 2);
-	float gcy = (float)(TILE_SIZE * (gridID / MAP_SIZE) - TILE_SIZE / 2);
-
-
-	float ecx = pos.pos.x + size.size.x / 2;
-	float ecy = pos.pos.y + size.size.y / 2;
-
-
-	float targetangle = atanf((ecy - gcy) / (ecx - gcx));
-
-	if (ecx - gcx >= 0)
-	{
-		targetangle -= 3.14159265359f; // pi
-	}
-
-
-	move.angle = fmod(targetangle + 6.28318530718f, 6.28318530718f); // 6.28318530718 == 2pi
-
-
+	return ecx > gcx;
 }
+
+bool AiSystem::is_down(float gcy, float ecy)
+{
+	return ecy > gcy;
+}
+

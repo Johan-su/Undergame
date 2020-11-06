@@ -24,21 +24,23 @@ public:
 
 private:
 
-	bool move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move);
+	bool move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move, ColliderComponent& collider);
 
 	void Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
 
 	void dijkstra(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path); //TODO: if needed for performance changed float x, float y to vec2f
 
-	void greedy(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
+	void dstar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
 
 	void straight_line(AiComponent& ai, PositionComponent& pos);
 
-	float dig_time(uint16_t gridID, MovementComponent& move, DiggerComponent& digger);
+	float dig_time(uint32_t gridID, MovementComponent& move, DiggerComponent& digger);
 
-	void dig_block(uint16_t gridID, MovementComponent& move, DiggerComponent& digger, PositionComponent& pos, SizeComponent& size);
+	void ai_track(const Vec2f& ppos, const Vec2f& psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move);
 
-	void ai_track(Vec2f ppos, Vec2f psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move);
+	bool is_right(float gcx, float ecx);
+
+	bool is_down(float gcy, float ecy);
 
 	std::shared_ptr<TargetingSystem> ts;
 };

@@ -22,8 +22,8 @@
 void Create_entities()
 {
 
-	//auto tm = TileMapGenerator::create_map_random();
-	auto tm = TileMapGenerator::create_map_value();
+	auto tm = TileMapGenerator::create_map_random();
+	//auto tm = TileMapGenerator::create_map_value();
 	//auto tm = TileMapGenerator::create_map_perlin();
 	//auto tm = TileMapGenerator::create_map_simplex();
 

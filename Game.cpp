@@ -67,7 +67,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	return 1;
 
 }
- void Game::clean()
+void Game::clean()
 {
 	coordinator->clean();
 
@@ -82,11 +82,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 void Game::update()
 {
 	movementSystem->update();
+	aiSystem->update(); 
+	diggerSystem->update(); // deletes
 	staticcollisionSystem->update();
 	collisionSystem->update();
-	diggerSystem->update();
-	aiSystem->update();
-	projectileSystem->update();
+	projectileSystem->update(); // deletes
 	playerSystem->update();
 	shooterSystem->update();
 

@@ -23,7 +23,7 @@ void DiggerSystem::update()
 #endif
 
 
-		if (digger.drillState == 1 && collider.tile_id != 0xFFFFFFFF)
+		if (digger.drillState == 1 && collider.tile_id != 0xFFFFFFFF && Game::tileEntities[collider.tile_id])
 		{
 			if (is_facing_tile(collider.tile_id, pos, size, move))
 			{

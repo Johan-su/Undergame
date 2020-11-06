@@ -41,6 +41,7 @@ void PlayerSystem::update()
 
 		movec.velocity.x = 0;
 		movec.velocity.y = 0;
+		digger.drillState = 0;
 
 #ifdef _DEBUG
 		if (count == 60)
@@ -83,11 +84,8 @@ void PlayerSystem::update()
 		{
 			digger.drillState = 1;
 		}
-		else
-		{
-			digger.drillState = 0;
-		}
 	}
+
 #ifdef _DEBUG
 	++count;
 #endif
