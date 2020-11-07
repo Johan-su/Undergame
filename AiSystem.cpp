@@ -7,6 +7,8 @@
 #include "PositionComponent.h"
 #include "ECS.h"
 
+
+
 void AiSystem::init(std::shared_ptr<TargetingSystem> sys)
 {
 	ts = sys;
@@ -18,7 +20,7 @@ void AiSystem::clean()
 
 void AiSystem::update()
 {
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 	static int count = 0;
 #endif
 	for (auto e : m_entities)
@@ -68,10 +70,10 @@ void AiSystem::update()
 		{
 		case AI_STATE_RANDOM_WALKING:
 
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 			if (count == 60)
 			{
-				std::cout << "random walk" << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				DP("random walk"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
 				count = 0;
 			}
 #endif
@@ -80,10 +82,10 @@ void AiSystem::update()
 
 		case AI_STATE_TRACK_LAST_KNOWN:
 
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 			if (count == 60)
 			{
-				std::cout << "last known " << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				DP("last known"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
 				count = 0;
 			}
 #endif
@@ -103,10 +105,10 @@ void AiSystem::update()
 
 		case AI_STATE_TRACKING:
 
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 			if (count == 60)
 			{
-				std::cout << "tracking " << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				DP("tracking"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
 				count = 0;
 			}
 #endif
@@ -120,10 +122,10 @@ void AiSystem::update()
 
 		case AI_STATE_DIG:
 
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 			if (count == 60)
 			{
-				std::cout << "dig" << std::endl; //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				DP("dig"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
 				count = 0;
 			}
 #endif
@@ -138,7 +140,7 @@ void AiSystem::update()
 				break;
 		}
 	}
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 	++count;
 #endif
 }
@@ -205,13 +207,13 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 
 void AiSystem::Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
 {
-	uint16_t targetid = (x / TILE_SIZE) + (y / TILE_SIZE) * MAP_SIZE;
+	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
 
 }
 
 void AiSystem::dijkstra(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
 {
-	uint16_t targetid = (x / TILE_SIZE) + (y / TILE_SIZE) * MAP_SIZE;
+	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
 
 
 
@@ -219,7 +221,7 @@ void AiSystem::dijkstra(float x, float y, MovementComponent& move, DiggerCompone
 
 void AiSystem::dstar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
 {
-	uint16_t targetid = (x / TILE_SIZE) + (y / TILE_SIZE) * MAP_SIZE;
+	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
 
 
 }

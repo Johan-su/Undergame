@@ -1,11 +1,13 @@
 #include <random>
 #include <algorithm>
 #include <cmath>
+#include "DebugMacros.h"
 #include "vecf.h"
 #include "TileMapGenerator.h"
 #include "EntityCreator.h"
 #include "ECS.h"
 
+//#define PRINT_MAP_DATA
 
 TileMap* TileMapGenerator::create_map_random()
 {
@@ -32,8 +34,10 @@ TileMap* TileMapGenerator::create_map_value()
 	auto tilemap = new TileMap();
 	float scale = 0.08f;
 
+#ifdef PRINT_MAP_DATA
 	std::array<float, MAP_SIZE* MAP_SIZE>* v_values;
 	v_values = new std::array<float, MAP_SIZE* MAP_SIZE>;
+#endif
 
 	for (int y = 0; y < MAP_SIZE; ++y)
 	{
@@ -41,9 +45,10 @@ TileMap* TileMapGenerator::create_map_value()
 		{
 			auto v = TileMapGenerator::octaveValue((float)x * scale, (float)y * scale, 4, 0.5f);
 
+#ifdef PRINT_MAP_DATA
 			std::cout << "p " << v << " it " << x + y * MAP_SIZE << std::endl;
-
 			(*v_values)[x + y * MAP_SIZE] = v;
+#endif
 
 			tilemap->grid[x + y * MAP_SIZE] = TILE_TYPE_AIR;
 			if (v < 0.5f)
@@ -64,13 +69,16 @@ TileMap* TileMapGenerator::create_map_value()
 			}
 		}
 	}
+	
+#ifdef PRINT_MAP_DATA
 	auto maxr = std::distance(v_values->begin(), std::max_element(v_values->begin(), v_values->end()));
 	auto minr = std::distance(v_values->begin(), std::min_element(v_values->begin(), v_values->end()));
 	std::cout << "max element " << maxr << " = " << (*v_values)[maxr] << std::endl;
 	std::cout << "min element " << minr << " = " << (*v_values)[minr] << std::endl;
+	delete v_values;
+#endif
 
 	create_boundary(tilemap);
-	delete v_values;
 
 	return tilemap;
 }
@@ -81,18 +89,20 @@ TileMap* TileMapGenerator::create_map_perlin()
 	auto tilemap = new TileMap();
 	float scale = 0.08f;
 
+#ifdef PRINT_MAP_DATA
 	std::array<float, MAP_SIZE* MAP_SIZE>* p_values;
 	p_values = new std::array<float, MAP_SIZE* MAP_SIZE>;
 
+#endif
 	for (int y = 0; y < MAP_SIZE; ++y)
 	{
 		for (int x = 0; x < MAP_SIZE; ++x)
 		{
 			auto p = TileMapGenerator::octavePerlin((float)x * scale, (float)y * scale, 4, 0.5f);
-			
+#ifdef PRINT_MAP_DATA
 			std::cout << "p " << p << " it " << x + y * MAP_SIZE << std::endl;
-
 			(*p_values)[x + y * MAP_SIZE] = p;
+#endif
 
 			tilemap->grid[x + y * MAP_SIZE] = TILE_TYPE_AIR;
 			if (p > 0.4f)
@@ -113,13 +123,15 @@ TileMap* TileMapGenerator::create_map_perlin()
 			}
 		}
 	}
+#ifdef PRINT_MAP_DATA
 	auto maxr = std::distance(p_values->begin(), std::max_element(p_values->begin(), p_values->end()));
 	auto minr = std::distance(p_values->begin(), std::min_element(p_values->begin(), p_values->end()));
 	std::cout << "max element " << maxr << " = " << (*p_values)[maxr] << std::endl;
 	std::cout << "min element " << minr << " = " << (*p_values)[minr] << std::endl;
+	delete p_values;
+#endif
 
 	create_boundary(tilemap);
-	delete p_values;
 	
 	return tilemap;
 }

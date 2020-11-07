@@ -22,9 +22,9 @@
 void Create_entities()
 {
 
-	auto tm = TileMapGenerator::create_map_random();
+	//auto tm = TileMapGenerator::create_map_random();
 	//auto tm = TileMapGenerator::create_map_value();
-	//auto tm = TileMapGenerator::create_map_perlin();
+	auto tm = TileMapGenerator::create_map_perlin();
 	//auto tm = TileMapGenerator::create_map_simplex();
 
 	TileMapGenerator::entities_from_map(tm);
@@ -50,6 +50,7 @@ int main(int argc, char* argv[])
 #ifdef ECS_DEBUG
 	std::cout << "ECS_DEBUG ENABLED" << std::endl;
 #endif
+	DP("PRINT_DEBUG ENABLED");
 	std::cout << Game::seed << std::endl;
 	auto before = std::chrono::high_resolution_clock::now();
 	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0))

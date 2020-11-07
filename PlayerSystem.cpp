@@ -6,7 +6,7 @@
 
 void PlayerSystem::update()
 {
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 	static int count = 0;
 #endif
 	for (auto e : m_entities)
@@ -43,7 +43,7 @@ void PlayerSystem::update()
 		movec.velocity.y = 0;
 		digger.drillState = 0;
 
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 		if (count == 60)
 		{
 			std::cout << InputSystem::mx << " mx my " << InputSystem::my << std::endl;
@@ -86,7 +86,7 @@ void PlayerSystem::update()
 		}
 	}
 
-#ifdef _DEBUG
+#ifdef PRINT_DEBUG
 	++count;
 #endif
 }
