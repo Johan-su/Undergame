@@ -35,8 +35,10 @@ void AiSystem::update()
 #ifdef ECS_DEBUG
 		SDL_assert(ai.entity == e);
 		SDL_assert(pos.entity == e);
+		SDL_assert(size.entity == e);
 		SDL_assert(digger.entity == e);
 		SDL_assert(move.entity == e);
+		SDL_assert(collider.entity == e);
 #endif
 
 		Entity e = ts->nearest_player(pos.pos.x, pos.pos.y);
