@@ -75,7 +75,7 @@ void EntityCreator::init()
 			dc.drillLVL = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
-			Game::coordinator->add_component<ColliderComponent>(e, cc);
+			//Game::coordinator->add_component<ColliderComponent>(e, cc);
 
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
@@ -199,8 +199,8 @@ void EntityCreator::init()
 			cc.tile_id = 0xFFFFFFFF;
 			cc.other_entity = 0xFFFFFFFF;
 
-			sc.size.x = 40.0f;
-			sc.size.y = 40.0f;
+			sc.size.x = 30.0f;
+			sc.size.y = 30.0f;
 
 			rc.src_rect = { 0, 0, 400, 503 }; // TODO: determine texture
 
@@ -208,7 +208,7 @@ void EntityCreator::init()
 
 			mc.speed = 1.0f;
 
-			ai.detectionRadius = (float)(TILE_SIZE * 20);
+			ai.detectionRadius = (float)(TILE_SIZE * 160);
 			ai.state = 0;
 
 			digger.drillState = 1;

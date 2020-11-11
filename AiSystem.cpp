@@ -53,15 +53,14 @@ void AiSystem::update()
 		}
 		else
 		{
-			if (pdistance < ai.detectionRadius / 4)
+			if ( 0 && pdistance < ai.detectionRadius / 4)
 			{
 				ai.state = AI_STATE_TRACKING;
 			}
 			else if (pdistance < ai.detectionRadius)
 			{
 				ai.state = AI_STATE_TRACK_LAST_KNOWN;
-				ai.lastX = ppos.x;
-				ai.lastY = ppos.y;
+
 			}
 			else
 			{
@@ -102,9 +101,12 @@ void AiSystem::update()
 			}
 			else
 			{
+				ai.lastX = ppos.x;
+				ai.lastY = ppos.y;
+
 				//Astar(epos.x, epos.y, ai.path_list);
-				//dijkstra(epos.x, epos.y, ai.path_list);
-				dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
+				dijkstra(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
+				//dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
 			}
 			break;
 
@@ -210,21 +212,94 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 	return 0;
 }
 
-void AiSystem::Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
+void AiSystem::Astar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
 {
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
-
-}
-
-void AiSystem::dijkstra(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
-{
-	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
-
+	uint16_t startid = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
 
 
 }
 
-void AiSystem::dstar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
+void AiSystem::dijkstra(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
+{
+	SDL_assert(path.size() == 0);
+
+	nodesSearched = 1;
+
+
+	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
+	uint16_t startid = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
+
+	uint16_t id[5];
+
+	id[0] = startid;
+
+	for (int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
+	{
+		distance_to_grid[i] = 0xFFFFFFFF;
+		before_grid[i] = 0xFFFFFFFF;
+		searched_grid[i] = false;
+	}
+
+	distance_to_grid[startid] = 0.0f;
+
+	searched_grid[startid] = true;
+
+
+
+
+	while (id[0] != targetid) //TODO: fix problem with all connected grids getting search checked.
+	{
+		DP("target");
+		DP(id[0]);
+		float minimum = 1E38f;
+		uint32_t minid = id[0];
+
+
+		id[1] = id[0] + 1;
+		id[2] = id[0] - MAP_SIZE;
+		id[3] = id[0] - 1;
+		id[4] = id[0] + MAP_SIZE;
+
+
+
+		for (int i = 1; i < 5; ++i)
+		{
+			if (!(searched_grid[id[i]]))
+			{
+				auto time = dig_time(id[i], move, digger);
+
+				if (time < distance_to_grid[id[i]])
+				{
+					distance_to_grid[id[i]] = time;
+					before_grid[id[i]] = id[0];
+				}
+
+
+				if (distance_to_grid[id[i]] <= minimum)
+				{
+					minimum = distance_to_grid[id[i]];
+					minid = id[i];
+				}
+			}
+
+		}
+		searched_grid[minid] = true;
+		id[0] = minid;
+	}
+
+	uint16_t t = id[0];
+
+	while (t != startid)
+	{
+		path.push_back(t);
+		DP("t ");
+		DP(t);
+		t = before_grid[t];
+	}
+}
+
+void AiSystem::dstar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
 {
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
 

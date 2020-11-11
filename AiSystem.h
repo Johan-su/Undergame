@@ -26,11 +26,11 @@ private:
 
 	bool move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move, ColliderComponent& collider);
 
-	void Astar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
+	void Astar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
 
-	void dijkstra(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path); //TODO: if needed for performance changed float x, float y to vec2f
+	void dijkstra(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path); //TODO: if needed for performance changed float x, float y to vec2f
 
-	void dstar(float x, float y, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
+	void dstar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
 
 	void straight_line(AiComponent& ai, PositionComponent& pos);
 
@@ -43,4 +43,12 @@ private:
 	bool is_down(float gcy, float ecy);
 
 	std::shared_ptr<TargetingSystem> ts;
+
+	std::array<float, MAP_SIZE* MAP_SIZE> distance_to_grid;
+
+	std::array<uint32_t, MAP_SIZE* MAP_SIZE> before_grid;
+
+	std::array<bool, MAP_SIZE* MAP_SIZE> searched_grid;
+
+	uint32_t nodesSearched;
 };
