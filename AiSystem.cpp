@@ -75,7 +75,7 @@ void AiSystem::update()
 #ifdef PRINT_DEBUG
 			if (count == 60)
 			{
-				DP("random walk"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				DP("random walk"); 
 				count = 0;
 			}
 #endif
@@ -87,7 +87,7 @@ void AiSystem::update()
 #ifdef PRINT_DEBUG
 			if (count == 60)
 			{
-				DP("last known"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				DP("last known"); 
 				count = 0;
 			}
 #endif
@@ -95,7 +95,10 @@ void AiSystem::update()
 
 			if (ai.path_list.size() > 0)
 			{
-
+				if (move_to(ai.path_list.back(), pos, size, move, collider))
+				{
+					ai.path_list.pop_back();
+				}
 			}
 			else
 			{
