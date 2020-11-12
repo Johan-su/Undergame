@@ -46,93 +46,18 @@ void AiSystem::update()
 		Vec2f ppos = ts->nearest_player_pos(pos.pos.x, pos.pos.y);
 		Vec2f psize = ts->nearest_player_size(pos.pos.x, pos.pos.y);
 
+		SDL_assert(!isnan(pos.pos.x));
+		SDL_assert(!isnan(pos.pos.y));
+
 
 		if (collider.tile_id != 0xFFFFFFFF)
 		{
-			 ai.state = AI_STATE_DIG;
-		}
-		else
-		{
-			if ( 0 && pdistance < ai.detectionRadius / 4)
-			{
-				ai.state = AI_STATE_TRACKING;
-			}
-			else if (pdistance < ai.detectionRadius)
-			{
-				ai.state = AI_STATE_TRACK_LAST_KNOWN;
-
-			}
-			else
-			{
-				ai.state = AI_STATE_RANDOM_WALKING;
-			}
-		}
-		switch (ai.state)
-		{
-		case AI_STATE_RANDOM_WALKING:
-
 #ifdef PRINT_DEBUG
 			if (count == 60)
 			{
-				DP("random walk"); 
-				count = 0;
-			}
-#endif
-
-			break;
-
-		case AI_STATE_TRACK_LAST_KNOWN:
-
-#ifdef PRINT_DEBUG
-			if (count == 60)
-			{
-				DP("last known"); 
-				count = 0;
-			}
-#endif
-
-
-			if (ai.path_list.size() > 0)
-			{
-				if (move_to(ai.path_list.back(), pos, size, move, collider))
-				{
-					ai.path_list.pop_back();
-				}
-			}
-			else
-			{
-				ai.lastX = ppos.x;
-				ai.lastY = ppos.y;
-
-				//Astar(epos.x, epos.y, ai.path_list);
-				dijkstra(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
-				//dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
-			}
-			break;
-
-		case AI_STATE_TRACKING:
-
-#ifdef PRINT_DEBUG
-			if (count == 60)
-			{
-				DP("tracking"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
-				count = 0;
-			}
-#endif
-
-
-			ai_track(ppos, psize, pos, size, move);
-
-
-
-			break;
-
-		case AI_STATE_DIG:
-
-#ifdef PRINT_DEBUG
-			if (count == 60)
-			{
-				DP("dig"); //TODO: remove or rework, generally bad and digs forever at boundary tiles
+				DP("dig");
+				DP(pos.pos.x);
+				DP(pos.pos.y);
 				count = 0;
 			}
 #endif
@@ -140,19 +65,125 @@ void AiSystem::update()
 			digger.drillState = 1;
 
 			move_to(collider.tile_id, pos, size, move, collider);
-			
-			break;
 
-		default:
-				break;
 		}
+		else
+		{
+			uint16_t id = 0;
+
+			switch (ai.state)
+			{
+			case AI_STATE_RANDOM_WALKING:
+
+	#ifdef PRINT_DEBUG
+				if (count == 60)
+				{
+					DP("random walk"); 
+					DP(pos.pos.x);
+					DP(pos.pos.y);
+					count = 0;
+				}
+	#endif
+				if (pdistance < ai.detectionRadius)
+				{
+					ai.state = AI_STATE_TRACK_LAST_KNOWN;
+				}
+
+				random_walk(pos, move, digger);
+
+				if (move_to(id, pos, size, move, collider))
+				{
+
+				}
+				else
+				{
+
+				}
+
+
+
+				break;
+
+			case AI_STATE_TRACK_LAST_KNOWN:
+
+	#ifdef PRINT_DEBUG
+				if (count == 60)
+				{
+					DP("last known"); 
+					DP(pos.pos.x);
+					DP(pos.pos.y);
+					count = 0;
+				}
+	#endif
+				if (pdistance < ai.trackRadius)
+				{
+					ai.state = AI_STATE_TRACKING;
+					ai.path_list.clear();
+					break;
+				}
+
+
+				if (ai.path_list.size() > 0)
+				{
+					if (move_to(ai.path_list.back(), pos, size, move, collider))
+					{
+						ai.path_list.pop_back();
+					}
+				}
+				else
+				{
+					if (pdistance > ai.detectionRadius)
+					{
+						ai.state = AI_STATE_RANDOM_WALKING;
+						ai.path_list.clear();
+						break;
+					}
+
+					ai.lastX = ppos.x;
+					ai.lastY = ppos.y;
+
+					//Astar(epos.x, epos.y, ai.path_list);
+					dijkstra(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
+					//dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
+				}
+				break;
+
+			case AI_STATE_TRACKING: 
+
+	#ifdef PRINT_DEBUG
+				if (count == 60)
+				{
+					DP("tracking");
+					DP(pos.pos.x);
+					DP(pos.pos.y);
+					count = 0;
+				}
+	#endif
+				if (pdistance > ai.trackRadius)
+				{
+					ai.state = AI_STATE_TRACK_LAST_KNOWN;
+					break;
+				}
+
+				ai_track(ppos, psize, pos, size, move); //TODO: fix bug with ai disappearing
+
+
+
+				break;
+
+			default:
+					break;
+			}
+
+		}
+
 	}
 #ifdef PRINT_DEBUG
 	++count;
 #endif
 }
 
-bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move, ColliderComponent& collider) //TODO: find out how to control the ai in a good way.
+bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, const SizeComponent& size, MovementComponent& move, const ColliderComponent& collider) //TODO: find out how to control the ai in a good way.
 {
 
 	auto type = Game::tileEntities[gridID];
@@ -194,6 +225,8 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 		{
 			pos.pos.y -= size.size.y / 8;
 		}
+		SDL_assert(!isnan(pos.pos.x));
+		SDL_assert(!isnan(pos.pos.y));
 		return 0;
 	}
 
@@ -212,7 +245,7 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& s
 	return 0;
 }
 
-void AiSystem::Astar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
+void AiSystem::Astar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
 {
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
 	uint16_t startid = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
@@ -220,7 +253,7 @@ void AiSystem::Astar(float x, float y, PositionComponent& pos, MovementComponent
 
 }
 
-void AiSystem::dijkstra(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
+void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
 {
 	SDL_assert(path.size() == 0);
 
@@ -236,24 +269,23 @@ void AiSystem::dijkstra(float x, float y, PositionComponent& pos, MovementCompon
 
 	for (int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
 	{
-		distance_to_grid[i] = 0xFFFFFFFF;
+		distance_to_grid[i] = 1E37f;
 		before_grid[i] = 0xFFFFFFFF;
 		searched_grid[i] = false;
 	}
 
 	distance_to_grid[startid] = 0.0f;
-
 	searched_grid[startid] = true;
 
 
 
-
-	while (id[0] != targetid) //TODO: fix problem with all connected grids getting search checked.
+	while (!searched_grid[targetid]) 
 	{
+		uint32_t minid = 0;
+		float mindistance = 1E38f;
+
 		DP("target");
 		DP(id[0]);
-		float minimum = 1E38f;
-		uint32_t minid = id[0];
 
 
 		id[1] = id[0] + 1;
@@ -269,49 +301,97 @@ void AiSystem::dijkstra(float x, float y, PositionComponent& pos, MovementCompon
 			{
 				auto time = dig_time(id[i], move, digger);
 
+				auto g = before_grid[id[i]];
+
+				if (g == 0xFFFFFFFF)
+				{
+					before_grid[id[i]] = id[0];
+					g = before_grid[id[i]];
+				}
+				while (g != startid)
+				{
+					time += distance_to_grid[g];
+					g = before_grid[g];
+				}
+
 				if (time < distance_to_grid[id[i]])
 				{
 					distance_to_grid[id[i]] = time;
 					before_grid[id[i]] = id[0];
 				}
-
-
-				if (distance_to_grid[id[i]] <= minimum)
-				{
-					minimum = distance_to_grid[id[i]];
-					minid = id[i];
-				}
+			DP("searched");
+			DP(id[i]);
 			}
 
 		}
+
+		for (int i = 0; i < distance_to_grid.size(); ++i)
+		{
+			if (distance_to_grid[i] < mindistance && !(searched_grid[i]))
+			{
+				minid = i;
+				mindistance = distance_to_grid[i];
+			}
+		}
+
 		searched_grid[minid] = true;
 		id[0] = minid;
+		++nodesSearched;
 	}
 
-	uint16_t t = id[0];
+	uint16_t t = targetid;
+
+	std::cout << "startid " << startid << std::endl;
 
 	while (t != startid)
 	{
 		path.push_back(t);
-		DP("t ");
-		DP(t);
 		t = before_grid[t];
 	}
+	for (int i = 0; i < path.size(); ++i)
+	{
+		std::cout << path[i] << std::endl;
+	}
+	std::cout << "------------------" << std::endl;
 }
 
-void AiSystem::dstar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
+void AiSystem::dstar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
 {
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
 
 
 }
+
+uint16_t AiSystem::random_walk(const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger)
+{
+	uint16_t id[5];
+
+	id[0] = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
+	id[1] = id[0] + 1;
+	id[2] = id[0] - MAP_SIZE;
+	id[3] = id[0] - 1;
+	id[4] = id[0] + MAP_SIZE;
+
+	float time = 0.0f;
+	uint8_t r = 0;
+	do
+	{
+		r = std::rand() % 5;
+		time = dig_time(id[r], move, digger);
+
+	} while (time > 5000.0f);
+
+
+	return id[r];
+}
+
 void AiSystem::straight_line(AiComponent& ai, PositionComponent& pos)
 {
 	float length = hypotf(ai.lastX - pos.pos.x, ai.lastY - pos.pos.y);
 
 }
 
-float AiSystem::dig_time(uint32_t gridID, MovementComponent& move, DiggerComponent& digger)
+float AiSystem::dig_time(uint32_t gridID, const MovementComponent& move, const DiggerComponent& digger)
 {
 	float time = 0.0f;
 	if (Game::tileEntities[gridID] != 0)
@@ -324,7 +404,7 @@ float AiSystem::dig_time(uint32_t gridID, MovementComponent& move, DiggerCompone
 	return time + ((float)(TILE_SIZE) / move.speed);
 }
 
-void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move)
+void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionComponent& pos, const SizeComponent& size, MovementComponent& move) //TODO: fix bug with ai disappearing
 {
 	float px = ppos.x + psize.x / 2;
 	float py = ppos.y + psize.y / 2;
@@ -344,6 +424,7 @@ void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, PositionComponent
 
 	move.velocity.x = cos(-targetangle);
 	move.velocity.y = sin(targetangle);
+
 }
 
 

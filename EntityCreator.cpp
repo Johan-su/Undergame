@@ -141,8 +141,50 @@ void EntityCreator::init()
 
 			switch (data) // setting tilehealth
 			{
-			case 1:
+			case TILE_TYPE_STONE:
+				hc.max_health = 500.0f;
+				break;
+			case TILE_TYPE_DIRT:
 				hc.max_health = 100.0f;
+				break;
+			case TILE_TYPE_WOOD:
+				hc.max_health = 100.0f;
+				break;
+			case TILE_TYPE_STONE_BRICK:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_RUINED_STONE:
+				hc.max_health = 125.0f;
+				break;
+			case TILE_TYPE_SAND:
+				hc.max_health = 100.0f;
+				break;
+			case TILE_TYPE_GRAVEL:
+				hc.max_health = 100.0f;
+				break;
+			case TILE_TYPE_MOSSY_STONE_BRICK:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_GOLD:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_COAL:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_IRON:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_LAPIS:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_EMERALD:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_DIAMOND:
+				hc.max_health = 150.0f;
+				break;
+			case TILE_TYPE_REDSTONE:
+				hc.max_health = 150.0f;
 				break;
 			case 16:
 				hc.max_health = 3E18f;
@@ -206,9 +248,9 @@ void EntityCreator::init()
 
 			rc.texture = Texture::get_texture(TEXTURE_MOLE); // TODO: determine texture
 
-			mc.speed = 1.0f;
-
-			ai.detectionRadius = (float)(TILE_SIZE * 160);
+			mc.speed = 1.5f;
+			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
+			ai.detectionRadius = (float)(TILE_SIZE) * 1.0f;
 			ai.state = 0;
 
 			digger.drillState = 1;

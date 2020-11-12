@@ -5,6 +5,8 @@
 #include "ECS.h"
 #include "StaticRenderSystem.h"
 
+#define RENDER_CHECKED_TILES
+
 
 std::vector<std::function<void(float x, float y, int offx, int offy)>> StaticRenderSystem::func_pointers;
 std::vector<SDL_Texture*> StaticRenderSystem::tile_textures;
@@ -35,6 +37,7 @@ void StaticRenderSystem::render_tiles(int offx, int offy)
 }
 void StaticRenderSystem::render_tile(uint16_t e, int offx, int offy)
 {
+
 	auto type = Game::tileEntities[e];
 	//std::cout << "type " << type << std::endl;
 	if (type == 0)
@@ -46,9 +49,17 @@ void StaticRenderSystem::render_tile(uint16_t e, int offx, int offy)
 	float x = static_cast<float>(TILE_SIZE * (e % MAP_SIZE));
 	float y = static_cast<float>(TILE_SIZE * (e / MAP_SIZE));
 
-
+#ifdef RENDER_SEARCHED_TILES
+	if (Game::searchedTiles[e])
+	{
+		SDL_SetRenderDrawColor(Game::renderer, 0, 255, 255, 255);
+		SDL_RenderDrawRectF(Game::renderer, &SDL_FRect({ x - offx, y - offy, static_cast<float>(TILE_SIZE), static_cast<float>(TILE_SIZE) }));
+		return;
+	}
+#endif
 	const auto& func = func_pointers[type];
 	func(x, y, offx, offy);
+
 }
 
 void StaticRenderSystem::init()

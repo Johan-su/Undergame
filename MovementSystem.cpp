@@ -24,5 +24,9 @@ void MovementSystem::update()
 
 		positionc.pos.x += movec.velocity.x * movec.speed * normalizer;
 		positionc.pos.y += movec.velocity.y * movec.speed * normalizer;
+
+
+		SDL_assert(!isnan(positionc.pos.x));
+		SDL_assert(!isnan(positionc.pos.y));
 	}
 }

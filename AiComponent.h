@@ -7,12 +7,12 @@ enum AI_STATES
 	AI_STATE_RANDOM_WALKING,
 	AI_STATE_TRACK_LAST_KNOWN,
 	AI_STATE_TRACKING,
-	AI_STATE_DIG
 };
 
 
 struct AiComponent
 {
+	float trackRadius;
 	float detectionRadius;
 	float lastX;
 	float lastY;

@@ -22,7 +22,6 @@ int Game::offsety;
 std::array<Entity, MAP_SIZE * MAP_SIZE> Game::tileEntities;
 
 
-
 static std::shared_ptr<AiSystem> aiSystem;
 static std::shared_ptr<CollisionSystem> collisionSystem;
 static std::shared_ptr<DiggerSystem> diggerSystem;
@@ -168,7 +167,6 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	Game::coordinator->set_signature(collisionSystem, sig);
 	sig.reset();
-
 
 	diggerSystem = Game::coordinator->register_system<DiggerSystem>();
 	sig.set(Game::coordinator->get_signature_pos<RenderComponent>());

@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include "DebugMacros.h"
 #include "System.h"
 #include "TargetingSystem.h"
@@ -24,19 +25,21 @@ public:
 
 private:
 
-	bool move_to(uint32_t gridID, PositionComponent& pos, SizeComponent& size, MovementComponent& move, ColliderComponent& collider);
+	bool move_to(uint32_t gridID, PositionComponent& pos, const SizeComponent& size, MovementComponent& move, const ColliderComponent& collider);
 
-	void Astar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
+	void Astar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path);
 
-	void dijkstra(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path); //TODO: if needed for performance changed float x, float y to vec2f
+	void dijkstra(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path); //TODO: if needed for performance changed float x, float y to vec2f
 
-	void dstar(float x, float y, PositionComponent& pos, MovementComponent& move, DiggerComponent& digger, std::vector<uint32_t>& path);
+	void dstar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path);
+
+	uint16_t random_walk(const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger);
 
 	void straight_line(AiComponent& ai, PositionComponent& pos);
 
-	float dig_time(uint32_t gridID, MovementComponent& move, DiggerComponent& digger);
+	float dig_time(uint32_t gridID, const MovementComponent& move, const DiggerComponent& digger);
 
-	void ai_track(const Vec2f& ppos, const Vec2f& psize, PositionComponent& pos, SizeComponent& size, MovementComponent& move);
+	void ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionComponent& pos, const SizeComponent& size, MovementComponent& move);
 
 	bool is_right(float gcx, float ecx);
 
