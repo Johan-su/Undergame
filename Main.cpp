@@ -21,11 +21,19 @@
 
 void Create_entities()
 {
+	//auto before = std::chrono::high_resolution_clock::now(); // för tidsmätning av noise funktionerna
 
 	//auto tm = TileMapGenerator::create_map_random();
 	//auto tm = TileMapGenerator::create_map_value();
 	auto tm = TileMapGenerator::create_map_perlin();
 	//auto tm = TileMapGenerator::create_map_simplex();
+
+	/*auto after = std::chrono::high_resolution_clock::now();
+
+	auto dt = after - before;
+
+	std::cout << "ns: " << dt.count() << " ms: " << dt.count() / 1000000.0f << " s: " << dt.count() / 1000000000.0f << std::endl;
+	std::cin.ignore();*/ // för tidsmätning av noise funktionerna
 
 	TileMapGenerator::entities_from_map(tm);
 	float x, y;
@@ -47,12 +55,12 @@ void Create_entities()
 
 int main(int argc, char* argv[])
 {
+	auto before = std::chrono::high_resolution_clock::now();
 #ifdef ECS_DEBUG
 	std::cout << "ECS_DEBUG ENABLED" << std::endl;
 #endif
 	DP("PRINT_DEBUG ENABLED");
 	std::cout << Game::seed << std::endl;
-	auto before = std::chrono::high_resolution_clock::now();
 	if (Game::init("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
 	{
 		std::cout << "Game_initalization failed" << std::endl;

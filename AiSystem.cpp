@@ -142,8 +142,8 @@ void AiSystem::update()
 					ai.lastX = ppos.x;
 					ai.lastY = ppos.y;
 
-					//Astar(epos.x, epos.y, ai.path_list);
-					dijkstra(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
+					Astar(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
+					//dijkstra(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
 					//dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
 				}
 				break;
@@ -247,10 +247,105 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, const SizeCompon
 
 void AiSystem::Astar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
 {
+	SDL_assert(path.size() == 0);
+
+	nodesSearched = 1;
+
+
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
 	uint16_t startid = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
 
+	uint16_t id[5];
 
+	id[0] = startid;
+
+	for (int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
+	{
+		distance_to_grid[i] = 1E37f;
+		before_grid[i] = 0xFFFFFFFF;
+		searched_grid[i] = false;
+	}
+
+	distance_to_grid[startid] = 0.0f;
+	searched_grid[startid] = true;
+
+
+
+	while (!searched_grid[targetid])
+	{
+		uint32_t minid = 0;
+		float mindistance = 1E38f;
+
+		DP("target");
+		DP(id[0]);
+
+
+		id[1] = id[0] + 1;
+		id[2] = id[0] - MAP_SIZE;
+		id[3] = id[0] - 1;
+		id[4] = id[0] + MAP_SIZE;
+
+
+
+		for (int i = 1; i < 5; ++i)
+		{
+			if (!(searched_grid[id[i]]))
+			{
+				auto time = dig_time(id[i], move, digger);
+
+				auto g = before_grid[id[i]];
+
+				if (g == 0xFFFFFFFF)
+				{
+					before_grid[id[i]] = id[0];
+					g = before_grid[id[i]];
+				}
+				while (g != startid)
+				{
+					time += distance_to_grid[g];
+					g = before_grid[g];
+				}
+				time += hypotf(x - pos.pos.x, y - pos.pos.y);
+
+				if (time < distance_to_grid[id[i]])
+				{
+					distance_to_grid[id[i]] = time;
+					before_grid[id[i]] = id[0];
+				}
+				DP("searched");
+				DP(id[i]);
+			}
+
+		}
+
+		for (int i = 0; i < distance_to_grid.size(); ++i)
+		{
+			if (distance_to_grid[i] < mindistance && !(searched_grid[i]))
+			{
+				minid = i;
+				mindistance = distance_to_grid[i];
+			}
+		}
+
+		searched_grid[minid] = true;
+		id[0] = minid;
+		++nodesSearched;
+	}
+
+	uint16_t t = targetid;
+
+	std::cout << "startid " << startid << std::endl;
+
+	while (t != startid)
+	{
+		path.push_back(t);
+		t = before_grid[t];
+	}
+	for (int i = 0; i < path.size(); ++i)
+	{
+		std::cout << path[i] << std::endl;
+	}
+	std::cout << "------------------" << std::endl;
 }
 
 void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
@@ -379,7 +474,7 @@ uint16_t AiSystem::random_walk(const PositionComponent& pos, const MovementCompo
 		r = std::rand() % 5;
 		time = dig_time(id[r], move, digger);
 
-	} while (time > 5000.0f);
+	} while (time < 5000.0f);
 
 
 	return id[r];
