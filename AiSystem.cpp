@@ -348,7 +348,7 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const Movem
 	std::cout << "------------------" << std::endl;
 }
 
-void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish, find out about priority queue and such
+void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path)
 {
 	SDL_assert(path.size() == 0);
 
@@ -448,13 +448,6 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Mo
 		std::cout << path[i] << std::endl;
 	}
 	std::cout << "------------------" << std::endl;
-}
-
-void AiSystem::dstar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish this 
-{
-	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
-
-
 }
 
 uint16_t AiSystem::random_walk(const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger)

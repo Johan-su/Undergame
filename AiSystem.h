@@ -31,8 +31,6 @@ private:
 
 	void dijkstra(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path); //TODO: if needed for performance changed float x, float y to vec2f
 
-	void dstar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path);
-
 	uint16_t random_walk(const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger);
 
 	void straight_line(AiComponent& ai, PositionComponent& pos);
