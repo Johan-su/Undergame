@@ -142,7 +142,7 @@ void EntityCreator::init()
 			switch (data) // setting tilehealth
 			{
 			case TILE_TYPE_STONE:
-				hc.max_health = 500.0f;
+				hc.max_health = 500000.0f;
 				break;
 			case TILE_TYPE_DIRT:
 				hc.max_health = 100.0f;
@@ -250,7 +250,7 @@ void EntityCreator::init()
 
 			mc.speed = 1.5f;
 			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
-			ai.detectionRadius = (float)(TILE_SIZE) * 1.0f;
+			ai.detectionRadius = (float)(TILE_SIZE) * 10;
 			ai.state = 0;
 
 			digger.drillState = 1;

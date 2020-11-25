@@ -9,6 +9,9 @@ void MovementSystem::update()
 		auto& positionc = Game::coordinator->get_component<PositionComponent>(e);
 		auto& movec = Game::coordinator->get_component<MovementComponent>(e);
 
+		SDL_assert(!isnan(movec.velocity.x));
+		SDL_assert(!isnan(movec.velocity.y));
+
 #ifdef ECS_DEBUG
 		SDL_assert(positionc.entity == e);
 		SDL_assert(movec.entity == e);

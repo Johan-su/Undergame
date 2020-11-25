@@ -5,9 +5,10 @@
 #include <time.h>
 
 
-//const uint32_t Game::seed = -1;
+//const uint32_t Game::seed = -1;																														1606315639
+const uint32_t Game::seed = 1606315639;
 
-const uint32_t Game::seed = static_cast<uint32_t>(time(NULL));
+//const uint32_t Game::seed = static_cast<uint32_t>(time(NULL));
 
 bool Game::Running;
 SDL_Window* Game::window;

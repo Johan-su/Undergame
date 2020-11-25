@@ -89,16 +89,15 @@ void AiSystem::update()
 					ai.state = AI_STATE_TRACK_LAST_KNOWN;
 				}
 
-				random_walk(pos, move, digger);
-
 				if (move_to(id, pos, size, move, collider))
 				{
 
 				}
 				else
 				{
-
+					random_walk(pos, size, move, digger);
 				}
+
 
 
 
@@ -142,8 +141,8 @@ void AiSystem::update()
 					ai.lastX = ppos.x;
 					ai.lastY = ppos.y;
 
-					Astar(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
-					//dijkstra(ai.lastX, ai.lastY, pos, move, digger, ai.path_list);
+					Astar(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
+					//dijkstra(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
 					//dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
 				}
 				break;
@@ -245,7 +244,7 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, const SizeCompon
 	return 0;
 }
 
-void AiSystem::Astar(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
+void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
 {
 	SDL_assert(path.size() == 0);
 
@@ -253,7 +252,7 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const Movem
 
 
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
-	uint16_t startid = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
+	uint16_t startid = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
 
 	uint16_t id[5];
 
@@ -348,7 +347,7 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const Movem
 	std::cout << "------------------" << std::endl;
 }
 
-void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path)
+void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path)
 {
 	SDL_assert(path.size() == 0);
 
@@ -356,7 +355,7 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Mo
 
 
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
-	uint16_t startid = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
+	uint16_t startid = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
 
 	uint16_t id[5];
 
@@ -405,6 +404,7 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Mo
 				}
 				while (g != startid)
 				{
+					DP("time add");
 					time += distance_to_grid[g];
 					g = before_grid[g];
 				}
@@ -450,11 +450,11 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Mo
 	std::cout << "------------------" << std::endl;
 }
 
-uint16_t AiSystem::random_walk(const PositionComponent& pos, const MovementComponent& move, const DiggerComponent& digger)
+uint16_t AiSystem::random_walk(const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger)
 {
 	uint16_t id[5];
 
-	id[0] = ((int)pos.pos.x / TILE_SIZE) + ((int)pos.pos.y / TILE_SIZE) * MAP_SIZE;
+	id[0] = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
 	id[1] = id[0] + 1;
 	id[2] = id[0] - MAP_SIZE;
 	id[3] = id[0] - 1;
@@ -464,11 +464,14 @@ uint16_t AiSystem::random_walk(const PositionComponent& pos, const MovementCompo
 	uint8_t r = 0;
 	do
 	{
+		//DP("random_walk_loop");
 		r = std::rand() % 5;
 		time = dig_time(id[r], move, digger);
 
-	} while (time < 5000.0f);
+	} while (time > 5000.0f);
 
+	DP("ID");
+	DP(id[r]);
 
 	return id[r];
 }
@@ -492,7 +495,7 @@ float AiSystem::dig_time(uint32_t gridID, const MovementComponent& move, const D
 	return time + ((float)(TILE_SIZE) / move.speed);
 }
 
-void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionComponent& pos, const SizeComponent& size, MovementComponent& move) //TODO: fix bug with ai disappearing
+void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionComponent& pos, const SizeComponent& size, MovementComponent& move)
 {
 	float px = ppos.x + psize.x / 2;
 	float py = ppos.y + psize.y / 2;
@@ -501,7 +504,7 @@ void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionCom
 	float ex = pos.pos.x + size.size.x / 2;
 	float ey = pos.pos.y + size.size.y / 2;
 
-	float targetangle = atanf((ey - py) / (ex - px));
+	float targetangle = atanf((ey - py) / (0.000001f + ex - px));
 
 	if (ex - px >= 0)
 	{
@@ -510,8 +513,22 @@ void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionCom
 
 	move.angle = targetangle;
 
+	SDL_assert(!isnan(move.velocity.x));
+	SDL_assert(!isnan(move.velocity.y));
+
 	move.velocity.x = cos(-targetangle);
 	move.velocity.y = sin(targetangle);
+
+	/*DP("targetangle");
+	DP(targetangle);
+
+	DP("VX");
+	DP(move.velocity.x);
+	DP("VY");
+	DP(move.velocity.y);*/
+
+	SDL_assert(!isnan(move.velocity.x));
+	SDL_assert(!isnan(move.velocity.y));
 
 }
 
