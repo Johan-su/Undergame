@@ -142,7 +142,7 @@ void EntityCreator::init()
 			switch (data) // setting tilehealth
 			{
 			case TILE_TYPE_STONE:
-				hc.max_health = 500000.0f;
+				hc.max_health = 500.0f;
 				break;
 			case TILE_TYPE_DIRT:
 				hc.max_health = 100.0f;
@@ -322,7 +322,7 @@ void EntityCreator::init()
 			health.health = health.max_health;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
-			Game::coordinator->add_component<ColliderComponent>(e, cc);
+			//Game::coordinator->add_component<ColliderComponent>(e, cc);
 
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);

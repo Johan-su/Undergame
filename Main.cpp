@@ -12,7 +12,7 @@
 #include "TileMapGenerator.h"
 
 //#define NLOOP
-
+//#define FPSLOOP
 
 
 
@@ -80,7 +80,56 @@ int main(int argc, char* argv[])
 
 	std::cout << "ns: " << dt.count() << " ms: " << dt.count() / 1000000.0f << " s: " << dt.count() / 1000000000.0f << std::endl;
 
-#ifndef NLOOP
+#ifdef FPSLOOP
+	uint32_t fps = 0;
+	uint16_t count = 0;
+	auto NS_PER_UPDATE = std::chrono::nanoseconds(16666666);
+	auto previous = std::chrono::high_resolution_clock::now();
+	std::chrono::nanoseconds lag(0);
+	while (Game::Running) {
+		auto current = std::chrono::high_resolution_clock::now();
+		auto elapsed = current - previous;
+		previous = current;
+		lag += elapsed;
+
+
+		while (lag >= NS_PER_UPDATE)
+		{
+			Game::events();
+			Game::update();
+			lag -= NS_PER_UPDATE;
+			if (count >= 60)
+			{
+				std::cout << "FPS: " << fps << std::endl;
+				count = 0;
+				fps = 0;
+			}
+			++count;
+		}
+		Game::render();
+		++fps;
+	}
+#else
+	auto NS_PER_UPDATE = std::chrono::nanoseconds(16666666);
+	auto previous = std::chrono::high_resolution_clock::now();
+	std::chrono::nanoseconds lag(0);
+	while (Game::Running) {
+		auto current = std::chrono::high_resolution_clock::now();
+		auto elapsed = current - previous;
+		previous = current;
+		lag += elapsed;
+
+
+		while (lag >= NS_PER_UPDATE)
+		{
+			Game::events();
+			Game::update();
+			lag -= NS_PER_UPDATE;
+		}
+		Game::render();
+	}
+#endif
+/*#ifndef NLOOP
 	auto NS_PER_UPDATE = std::chrono::nanoseconds(16666666);
 	auto previous = std::chrono::high_resolution_clock::now();
 	std::chrono::nanoseconds lag(0);
@@ -106,7 +155,7 @@ int main(int argc, char* argv[])
 		Game::update();
 		Game::render();
 	}
-#endif
+#endif*/
 	//t1.join();
 	Game::clean();
 	return 0;

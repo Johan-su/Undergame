@@ -504,7 +504,7 @@ void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionCom
 	float ex = pos.pos.x + size.size.x / 2;
 	float ey = pos.pos.y + size.size.y / 2;
 
-	float targetangle = atanf((ey - py) / (0.000001f + ex - px));
+	float targetangle = atanf((ey - py) / (0.0001f + ex - px));
 
 	if (ex - px >= 0)
 	{

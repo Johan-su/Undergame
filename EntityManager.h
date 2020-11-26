@@ -26,6 +26,7 @@ public:
 		Entity e = m_AvailableIDs.front();
 		m_AvailableIDs.pop();
 		++m_entityCount;
+		std::cout << "entity count: " << m_entityCount << std::endl;
 		return e;
 	}
 
