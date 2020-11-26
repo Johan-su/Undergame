@@ -314,7 +314,6 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 				DP("searched");
 				DP(id[i]);
 			}
-
 		}
 
 		for (int i = 0; i < distance_to_grid.size(); ++i)
