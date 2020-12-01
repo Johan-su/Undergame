@@ -322,7 +322,7 @@ void EntityCreator::init()
 			health.health = health.max_health;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
-			//Game::coordinator->add_component<ColliderComponent>(e, cc);
+			Game::coordinator->add_component<ColliderComponent>(e, cc);
 
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);

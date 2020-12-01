@@ -332,7 +332,7 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 
 	uint16_t t = targetid;
 
-	std::cout << "startid " << startid << std::endl;
+	DP("startid ");
 
 	while (t != startid)
 	{
@@ -341,9 +341,9 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 	}
 	for (int i = 0; i < path.size(); ++i)
 	{
-		std::cout << path[i] << std::endl;
+		DP(path[i]);
 	}
-	std::cout << "------------------" << std::endl;
+	DP("------------------");
 }
 
 void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path)
@@ -435,7 +435,7 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 
 	uint16_t t = targetid;
 
-	std::cout << "startid " << startid << std::endl;
+	DP("startid ");
 
 	while (t != startid)
 	{
@@ -444,9 +444,9 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 	}
 	for (int i = 0; i < path.size(); ++i)
 	{
-		std::cout << path[i] << std::endl;
+		DP(path[i]);
 	}
-	std::cout << "------------------" << std::endl;
+	DP("------------------");
 }
 
 uint16_t AiSystem::random_walk(const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger)
