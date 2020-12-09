@@ -249,7 +249,7 @@ void EntityCreator::init()
 			rc.texture = Texture::get_texture(TEXTURE_MOLE); // TODO: determine texture
 
 			mc.speed = 1.5f;
-			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
+			ai.trackRadius = (float)(TILE_SIZE) * 0.0f;
 			ai.detectionRadius = (float)(TILE_SIZE) * 10;
 			ai.state = 0;
 

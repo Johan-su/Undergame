@@ -1,4 +1,5 @@
 #include <cmath>
+#include <chrono>
 #include "DebugMacros.h"
 #include "AiSystem.h"
 #include "TargetingSystem.h"
@@ -70,7 +71,7 @@ void AiSystem::update()
 		else
 		{
 			uint16_t id = 0;
-
+			ai.state = AI_STATE_TRACK_LAST_KNOWN; //TODO: REMOVE ONLY FOR TIME MEASURING
 			switch (ai.state)
 			{
 			case AI_STATE_RANDOM_WALKING:
@@ -141,9 +142,23 @@ void AiSystem::update()
 					ai.lastX = ppos.x;
 					ai.lastY = ppos.y;
 
-					Astar(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
-					//dijkstra(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
+
+
+					auto before = std::chrono::high_resolution_clock::now();
+
+					//Astar(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
+					dijkstra(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
+
 					//dstar(ai.lastX, ai.lastY, move, digger, ai.path_list);
+
+
+					auto after = std::chrono::high_resolution_clock::now();
+
+					auto dt = after - before;
+					
+					std::cout << "PATHFINDING, TIME" << std::endl;
+					std::cout << "ns: " << dt.count() << " ms: " << dt.count() / 1000000.0f << " s: " << dt.count() / 1000000000.0f << std::endl;
+					std::cin.ignore();
 				}
 				break;
 
@@ -251,8 +266,11 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 	nodesSearched = 1;
 
 
-	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
+	//uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
+	uint16_t targetid = 13159;
 	uint16_t startid = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
+
+	std::cout << "targetid " << targetid << std::endl;
 
 	uint16_t id[5];
 
@@ -270,6 +288,7 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 
 
 
+		int iter = 0;
 	while (!searched_grid[targetid])
 	{
 		uint32_t minid = 0;
@@ -328,7 +347,9 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 		searched_grid[minid] = true;
 		id[0] = minid;
 		++nodesSearched;
+		++iter;
 	}
+	std::cout << "ITERATIONS: " << iter << std::endl;
 
 	uint16_t t = targetid;
 
@@ -353,8 +374,11 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 	nodesSearched = 1;
 
 
-	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
+	//uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
+	uint16_t targetid = 13159;
 	uint16_t startid = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
+
+	std::cout << "targetid " << targetid << std::endl;
 
 	uint16_t id[5];
 
@@ -372,6 +396,7 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 
 
 
+		int iter = 0;
 	while (!searched_grid[targetid]) 
 	{
 		uint32_t minid = 0;
@@ -385,7 +410,6 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 		id[2] = id[0] - MAP_SIZE;
 		id[3] = id[0] - 1;
 		id[4] = id[0] + MAP_SIZE;
-
 
 
 		for (int i = 1; i < 5; ++i)
@@ -431,7 +455,10 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 		searched_grid[minid] = true;
 		id[0] = minid;
 		++nodesSearched;
+		++iter;
 	}
+
+	std::cout << "ITERATIONS: " << iter << std::endl;
 
 	uint16_t t = targetid;
 
