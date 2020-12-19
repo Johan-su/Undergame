@@ -19,6 +19,8 @@ Coordinator* Game::coordinator;
 int Game::offsetx;
 int Game::offsety;
 
+uint32_t Game::points = 0;
+
 //std::vector<Entity>* Game::entities;
 std::array<Entity, MAP_SIZE * MAP_SIZE> Game::tileEntities;
 

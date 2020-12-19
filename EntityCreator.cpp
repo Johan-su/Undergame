@@ -333,6 +333,46 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, health);
 
 		});
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // textbox TODO: add necessary components to text
+		{
+			auto positionc = PositionComponent();
+
+			auto sc = SizeComponent();
+			auto rc = RenderComponent();
+
+			auto mc = MovementComponent();
+
+#ifdef ECS_DEBUG
+			positionc.entity = e;
+
+			sc.entity = e;
+			rc.entity = e;
+
+			mc.entity = e;
+#endif
+
+			positionc.pos.x = x;
+			positionc.pos.y = y;
+
+			sc.size.x = 30.0f;
+			sc.size.y = 30.0f;
+
+			rc.src_rect = { 0, 0, 400, 503 }; // TODO: determine texture
+
+			rc.texture = Texture::get_texture(TEXTURE_MOLE); // TODO: determine texture
+
+			mc.speed = 1.5f;
+
+
+			Game::coordinator->add_component<PositionComponent>(e, positionc);
+
+			Game::coordinator->add_component<SizeComponent>(e, sc);
+			Game::coordinator->add_component<RenderComponent>(e, rc);
+
+			Game::coordinator->add_component<MovementComponent>(e, mc);
+
+
+		});
 }
 
 void EntityCreator::create_entity(const size_t& type, const float& x, const float& y, uint32_t data)

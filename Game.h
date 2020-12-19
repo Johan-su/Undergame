@@ -40,7 +40,7 @@ public:
 
 	static const uint32_t seed;
 
-
+	static uint32_t points;
 
 private:
 	Game() = delete;
