@@ -33,6 +33,8 @@ void AiSystem::update()
 		auto& move = Game::coordinator->get_component<MovementComponent>(e);
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
 
+
+
 #ifdef ECS_DEBUG
 		SDL_assert(ai.entity == e);
 		SDL_assert(pos.entity == e);

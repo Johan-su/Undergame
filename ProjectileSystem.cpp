@@ -1,4 +1,5 @@
 #include "DebugMacros.h"
+#include "EntityCreator.h"
 #include "ProjectileSystem.h"
 #include "ECS.h"
 
@@ -71,6 +72,7 @@ void ProjectileSystem::deal_damage(Entity e, HealthComponent& health, const floa
 	std::cout << "deal_damage" << std::endl;
 #endif
 	health.health -= damage;
+
 	if (health.health < 0)
 	{
 		del_list->push_back(e);
