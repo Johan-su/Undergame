@@ -3,8 +3,8 @@
 #include <SDL.h>
 #include "ECS.h"
 
-#define SCREEN_WIDTH 1366
-#define SCREEN_HEIGHT 768
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 class Game
 {
@@ -33,14 +33,14 @@ public:
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 	static Coordinator* coordinator;
-	//static std::vector<Entity>* entities;
+
 	static std::array<Entity, MAP_SIZE* MAP_SIZE> tileEntities;
 
 	static int offsetx, offsety;
 
 	static const uint32_t seed;
 
-	static uint32_t points;
+	static uint32_t entityDeaths[];
 
 private:
 	Game() = delete;

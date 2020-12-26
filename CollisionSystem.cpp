@@ -6,7 +6,7 @@
 
 void CollisionSystem::update() //TODO: make faster using the tile grid.
 {
-	return;
+	//return;
 	for (auto e : m_entities)
 	{
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
@@ -33,6 +33,7 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			auto& movement2 = Game::coordinator->get_component<MovementComponent>(e2);
 
 #ifdef ECS_DEBUG
+
 			SDL_assert(collider2.entity == e2);
 			SDL_assert(position2.entity == e2);
 			SDL_assert(size2.entity == e2);
@@ -53,8 +54,8 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			if (b1 && b2 && b3 && b4)
 			{
 				collider.other_entity = e2;
-#ifdef _DEBUG
-				//std::cout << "intersection between " << e << " and " << e2 << std::endl;
+#ifdef ECS_DEBUG
+				std::cout << "intersection between " << e << " and " << e2 << std::endl;
 #endif
 				continue;
 			}

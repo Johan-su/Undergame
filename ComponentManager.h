@@ -43,6 +43,7 @@ public:
 	void add_component(Entity e, T component)
 	{
 		std::string componentName = typeid(T).name();
+
 		get_component_array<T>()->add_component(e, component);
 
 	}

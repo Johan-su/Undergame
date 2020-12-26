@@ -1,8 +1,9 @@
 #include <iostream>
+#include <time.h>
 #include "Game.h"
 #include "Texture.h"
 #include "ECS.h"
-#include <time.h>
+#include "EntityCreator.h"
 
 
 //const uint32_t Game::seed = -1;																														1606315639
@@ -19,7 +20,8 @@ Coordinator* Game::coordinator;
 int Game::offsetx;
 int Game::offsety;
 
-uint32_t Game::points = 0;
+uint32_t Game::entityDeaths[20];
+
 
 //std::vector<Entity>* Game::entities;
 std::array<Entity, MAP_SIZE * MAP_SIZE> Game::tileEntities;
@@ -93,6 +95,7 @@ void Game::update()
 	playerSystem->update();
 	shooterSystem->update();
 
+	std::cout << "Points: " << entityDeaths[ENTITY_TYPE_MOLE] << std::endl;
 
 	//offsetx++;
 	//offsety+= 16;
@@ -114,6 +117,8 @@ void Game::render()
 	//staticrenderSystem->render_tiles(offsetx, offsety);
 	StaticRenderSystem::render_tiles(offsetx, offsety);
 	renderSystem->render();
+
+	
 
 	SDL_RenderPresent(renderer);
 }
@@ -170,6 +175,7 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	Game::coordinator->set_signature(collisionSystem, sig);
 	sig.reset();
+
 
 	diggerSystem = Game::coordinator->register_system<DiggerSystem>();
 	sig.set(Game::coordinator->get_signature_pos<RenderComponent>());

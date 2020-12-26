@@ -64,6 +64,7 @@ void EntityCreator::init()
 			pc.bulletWeaponsType = 0;
 			pc.explosiveWeaponsType = 0;
 
+			hc.entity_type = ENTITY_TYPE_PLAYER;
 			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
 
@@ -75,7 +76,7 @@ void EntityCreator::init()
 			dc.drillLVL = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
-			//Game::coordinator->add_component<ColliderComponent>(e, cc);
+			Game::coordinator->add_component<ColliderComponent>(e, cc);
 
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
@@ -193,6 +194,8 @@ void EntityCreator::init()
 			hc.max_health = 100.0f;
 				break;
 			}
+			hc.entity_type = ENTITY_TYPE_TILE;
+
 			sc.size.x = TILE_SIZE;
 			sc.size.y = TILE_SIZE;
 
@@ -207,7 +210,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // mole
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // mole //TODO: fix mole not taking damage
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -241,12 +244,16 @@ void EntityCreator::init()
 			cc.tile_id = 0xFFFFFFFF;
 			cc.other_entity = 0xFFFFFFFF;
 
+			hc.entity_type = ENTITY_TYPE_MOLE;
+			hc.max_health = 100.0f;
+			hc.health = hc.max_health;
+
 			sc.size.x = 30.0f;
 			sc.size.y = 30.0f;
 
-			rc.src_rect = { 0, 0, 400, 503 }; // TODO: determine texture
+			rc.src_rect = { 0, 0, 400, 503 };
 
-			rc.texture = Texture::get_texture(TEXTURE_MOLE); // TODO: determine texture
+			rc.texture = Texture::get_texture(TEXTURE_MOLE); 
 
 			mc.speed = 1.5f;
 			ai.trackRadius = (float)(TILE_SIZE) * 0.0f;
@@ -315,7 +322,9 @@ void EntityCreator::init()
 			mc.velocity.x = cosf(mc.angle);
 			mc.velocity.y = sinf(mc.angle);
 
-			pc.damage = 1.0f;
+			pc.damage = 10.0f;
+
+			health.entity_type = ENTITY_TYPE_BULLET;
 
 			health.max_health = 1.0f;
 
