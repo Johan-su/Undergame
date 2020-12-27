@@ -48,8 +48,9 @@ void Create_entities()
 			break;
 		}
 	}
-	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
+	EntityCreator::create_entity(ENTITY_TYPE_MOLE, x + 40, y - 40, 0);
 	EntityCreator::create_entity(ENTITY_TYPE_MOLE, x, y, 0);
+	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
 	delete tm;
 }
 

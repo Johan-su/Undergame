@@ -68,7 +68,7 @@ void EntityCreator::init()
 			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
 
-			mc.speed = 3.0f;
+			mc.speed = 3.0f + (1.0f + (float)(std::rand()) / (float)RAND_MAX);
 
 			shc.gunlength = 34;
 			shc.count = 0;
