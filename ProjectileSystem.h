@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "DebugMacros.h"
 #include "ECS.h"
 
@@ -6,7 +7,7 @@ class ProjectileSystem : public System
 {
 public:
 
-	void init();
+	void init(std::shared_ptr<HealthSystem> hs);
 
 	void clean();
 
@@ -14,7 +15,5 @@ public:
 
 private:
 
-	void deal_damage(Entity e, HealthComponent& health, const float& damage);
-
-	void deal_damage_tile(Entity e, HealthComponent& health, const float& damage);
+	std::shared_ptr<HealthSystem> m_hs;
 };

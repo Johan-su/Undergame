@@ -30,6 +30,7 @@ std::array<Entity, MAP_SIZE * MAP_SIZE> Game::tileEntities;
 static std::shared_ptr<AiSystem> aiSystem;
 static std::shared_ptr<CollisionSystem> collisionSystem;
 static std::shared_ptr<DiggerSystem> diggerSystem;
+static std::shared_ptr<HealthSystem> healthSystem;
 static std::shared_ptr<MovementSystem> movementSystem;
 static std::shared_ptr<PlayerSystem> playerSystem;
 static std::shared_ptr<ProjectileSystem> projectileSystem;
@@ -87,15 +88,19 @@ void Game::clean()
 void Game::update()
 {
 	movementSystem->update();
-	aiSystem->update(); 
-	diggerSystem->update(); // deletes
+	aiSystem->update(); // pushes to deletes
+	diggerSystem->update(); // pushes to deletes
 	staticcollisionSystem->update();
 	collisionSystem->update();
-	projectileSystem->update(); // deletes
+	projectileSystem->update(); // pushes to deletes
 	playerSystem->update();
 	shooterSystem->update();
 
-	std::cout << "Points: " << entityDeaths[ENTITY_TYPE_MOLE] << std::endl;
+
+
+	healthSystem->delete_entites(); // deletes
+
+	//std::cout << "Points: " << entityDeaths[ENTITY_TYPE_MOLE] << std::endl;
 
 	//offsetx++;
 	//offsety+= 16;
@@ -188,6 +193,12 @@ void Game::systems_init()
 	sig.reset();
 
 
+	healthSystem = Game::coordinator->register_system<HealthSystem>();
+	sig.set(Game::coordinator->get_signature_pos<HealthComponent>());
+	Game::coordinator->set_signature(healthSystem, sig);
+	sig.reset();
+
+
 	movementSystem = Game::coordinator->register_system<MovementSystem>();
 	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
@@ -211,7 +222,6 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<ColliderComponent>());
 	sig.set(Game::coordinator->get_signature_pos<HealthComponent>());
 	Game::coordinator->set_signature(projectileSystem, sig);
-	projectileSystem->init();
 	sig.reset();
 
 
@@ -249,5 +259,8 @@ void Game::systems_init()
 	Game::coordinator->set_signature(targetingSystem, sig);
 	sig.reset();
 
-	aiSystem->init(targetingSystem);
+
+	projectileSystem->init(healthSystem);
+	diggerSystem->init(healthSystem);
+	aiSystem->init(targetingSystem, healthSystem);
 }

@@ -16,8 +16,9 @@ struct AiComponent
 	float detectionRadius;
 	float lastX;
 	float lastY;
-	uint8_t state;
+	float damage;
 	std::vector<uint32_t> path_list;
+	uint8_t state;
 
 #ifdef ECS_DEBUG
 	 uint32_t entity;

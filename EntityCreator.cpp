@@ -13,7 +13,7 @@ std::vector<std::function<void(const Entity& ,const float&, const float&, uint32
 
 void EntityCreator::init()
 {
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // Playercontrolled
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // Playercontrolled //TODO: fix player not taking damage
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -65,10 +65,10 @@ void EntityCreator::init()
 			pc.explosiveWeaponsType = 0;
 
 			hc.entity_type = ENTITY_TYPE_PLAYER;
-			hc.max_health = 100.0f;
+			hc.max_health = 1000.0f;
 			hc.health = hc.max_health;
 
-			mc.speed = 3.0f + (1.0f + (float)(std::rand()) / (float)RAND_MAX);
+			mc.speed = 3.0f;
 
 			shc.gunlength = 34;
 			shc.count = 0;
@@ -76,7 +76,7 @@ void EntityCreator::init()
 			dc.drillLVL = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
-			Game::coordinator->add_component<ColliderComponent>(e, cc);
+			//Game::coordinator->add_component<ColliderComponent>(e, cc);
 
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
@@ -255,9 +255,10 @@ void EntityCreator::init()
 
 			rc.texture = Texture::get_texture(TEXTURE_MOLE); 
 
-			mc.speed = 1.5f;
-			ai.trackRadius = (float)(TILE_SIZE) * 0.0f;
+			mc.speed = 10.0f + (1.0f + (float)(std::rand()) / (float)RAND_MAX);
+			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
 			ai.detectionRadius = (float)(TILE_SIZE) * 10;
+			ai.damage = 3;
 			ai.state = 0;
 
 			digger.drillState = 1;

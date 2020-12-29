@@ -22,6 +22,7 @@
 
 #include "Coordinator.h"
 
+#include "EntityCreator.h"
 
 #include "AiComponent.h"
 #include "ColliderComponent.h"
@@ -42,7 +43,6 @@
 #include "AiSystem.h"
 #include "CollisionSystem.h"
 #include "DiggerSystem.h"
-#include "HealthSystem.h"
 #include "ItemComponent.h"
 #include "MovementSystem.h"
 #include "PlayerSystem.h"
@@ -56,5 +56,6 @@
 
 
 
+#include "HealthSystem.h"
 #include "InputSystem.h"
 #include "StaticRenderSystem.h"

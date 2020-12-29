@@ -1,5 +1,13 @@
 #include <cmath>
+#include <memory>
 #include "ECS.h"
+
+
+
+void DiggerSystem::init(std::shared_ptr<HealthSystem> hs)
+{
+	m_hs = hs;
+}
 
 
 void DiggerSystem::update()
@@ -29,29 +37,15 @@ void DiggerSystem::update()
 			{
 				//render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when digging
 				auto& tilehealth = Game::coordinator->get_component<HealthComponent>(collider.tile_id);
-				deal_damage_tile(collider.tile_id, tilehealth, 2.0f * (1.0f + 0.4f * digger.drillLVL));
+				m_hs->deal_damage(collider.tile_id, tilehealth, 2.0f * (1.0f + 0.4f * digger.drillLVL));
+
+				//deal_damage_tile(collider.tile_id, tilehealth, 2.0f * (1.0f + 0.4f * digger.drillLVL));
 			}
 			else
 			{
 				//render.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture when not digging
 			}
 		}
-	}
-}
-
-void DiggerSystem::deal_damage_tile(Entity e, HealthComponent& health, const float& damage)
-{
-	health.health -= damage;
-	if (health.health <= 0)
-	{
-		Game::coordinator->destroy_entity(e);
-		Game::tileEntities[e] = 0;
-		return;
-	}
-	if (health.health > health.max_health)
-	{
-		health.health = health.max_health;
-		return;
 	}
 }
 

@@ -9,12 +9,14 @@ class DiggerSystem : public System
 {
 public:
 
+	void init(std::shared_ptr<HealthSystem> hs);
+
 	void update();
 
 
 private:
 
-	void deal_damage_tile(Entity e, HealthComponent& health, const float& damage);
+	std::shared_ptr<HealthSystem> m_hs;
 
 	bool is_facing_tile(Entity tile, PositionComponent& facersPos, SizeComponent& facersSize, MovementComponent& facersMove);
 

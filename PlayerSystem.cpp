@@ -19,6 +19,11 @@ void PlayerSystem::update()
 		auto& shoot = Game::coordinator->get_component<ShooterComponent>(e);
 		auto& digger = Game::coordinator->get_component<DiggerComponent>(e);
 
+
+/*TEMP*/
+		auto& health = Game::coordinator->get_component<HealthComponent>(e);
+		std::cout << "health: " << health.health << std::endl;
+		//
 #ifdef ECS_DEBUG
 		SDL_assert(playc.entity == e);
 		SDL_assert(size.entity == e);

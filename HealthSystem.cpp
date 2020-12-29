@@ -1,37 +1,55 @@
-#include "DebugMacros.h"
-#include "HealthComponent.h"
 #include "HealthSystem.h"
-#include "ECS.h"
+#include "HealthComponent.h"
+#include "Entity.h"
+#include "Game.h"
+#include "Coordinator.h"
+#include "EntityCreator.h"
+//#include "ECS.h"
+
+static std::vector<Entity> del_list;
 
 
-void HealthSystem::init()
+void HealthSystem::update()
 {
-	dead_entities = new std::vector<Entity>;
-}
-
-void HealthSystem::clean()
-{
-	delete dead_entities;
-	dead_entities = nullptr;
-}
-
-void HealthSystem::update() //TODO: probably possible to make faster
-{
-	/*for(auto e : m_entities)
+	for (auto e : m_entities)
 	{
-		auto& health =  Game::coordinator->get_component<HealthComponent>(e);
-#ifdef ECS_DEBUG
-		SDL_assert(health.entity == e);
-#endif
-		if (health.health < 0.0f)
-		{
-			dead_entities->push_back(e);
-		}
+
 	}
-	auto size = dead_entities->size();
-	for (Uint32 i = 0; i < size; ++i)
+}
+
+void HealthSystem::delete_entites()
+{
+	while (del_list.size() > 0)
 	{
-		Game::coordinator->destroy_entity(dead_entities->back());
-		dead_entities->pop_back();
-	}*/
+		Game::coordinator->destroy_entity(del_list.back());
+		del_list.pop_back();
+	}
+}
+
+void HealthSystem::deal_damage(Entity e, HealthComponent& health, const float& damage)
+{
+#ifdef ECS_DEBUG
+	std::cout << "deal_damage" << std::endl;
+#endif
+	health.health -= damage;
+
+	if (health.health < 0)
+	{
+		if (health.entity_type == ENTITY_TYPE_TILE)
+		{
+			Game::tileEntities[e] = 0;
+		}
+		++Game::entityDeaths[health.entity_type];
+		//Game::coordinator->destroy_entity(e);
+		del_list.push_back(e);
+
+		//delete_entites();
+
+		return;
+	}
+	if (health.health > health.max_health)
+	{
+		health.health = health.max_health;
+		return;
+	}
 }

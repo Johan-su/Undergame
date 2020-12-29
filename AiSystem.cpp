@@ -2,6 +2,7 @@
 #include <chrono>
 #include "DebugMacros.h"
 #include "AiSystem.h"
+#include "HealthSystem.h"
 #include "TargetingSystem.h"
 #include "MovementComponent.h"
 #include "DiggerComponent.h"
@@ -10,9 +11,10 @@
 
 
 
-void AiSystem::init(std::shared_ptr<TargetingSystem> sys)
+void AiSystem::init(std::shared_ptr<TargetingSystem> ts, std::shared_ptr<HealthSystem> hs)
 {
-	ts = sys;
+	m_ts = ts;
+	m_hs = hs;
 }
 
 void AiSystem::clean()
@@ -44,10 +46,10 @@ void AiSystem::update()
 		SDL_assert(collider.entity == e);
 #endif
 
-		Entity e = ts->nearest_player(pos.pos.x, pos.pos.y);
-		float pdistance = ts->nearest_player_distance(pos.pos.x, pos.pos.y);
-		Vec2f ppos = ts->nearest_player_pos(pos.pos.x, pos.pos.y);
-		Vec2f psize = ts->nearest_player_size(pos.pos.x, pos.pos.y);
+		Entity e = m_ts->nearest_player(pos.pos.x, pos.pos.y);
+		float pdistance = m_ts->nearest_player_distance(pos.pos.x, pos.pos.y);
+		Vec2f ppos = m_ts->nearest_player_pos(pos.pos.x, pos.pos.y);
+		Vec2f psize = m_ts->nearest_player_size(pos.pos.x, pos.pos.y);
 
 		SDL_assert(!isnan(pos.pos.x));
 		SDL_assert(!isnan(pos.pos.y));
@@ -141,8 +143,8 @@ void AiSystem::update()
 						break;
 					}
 
-					ai.lastX = ppos.x;
-					ai.lastY = ppos.y;
+					ai.lastX = ppos.x + psize.x / 2;
+					ai.lastY = ppos.y + psize.y / 2;
 
 
 
@@ -180,8 +182,18 @@ void AiSystem::update()
 					break;
 				}
 
-				ai_track(ppos, psize, pos, size, move); //TODO: fix bug with ai disappearing
 
+
+				ai_track(ppos, psize, pos, size, move);
+
+				if (collider.other_entity != 0xFFFFFFFF)
+				{
+					auto chealth = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
+					if (chealth.entity_type == ENTITY_TYPE_PLAYER)
+					{
+						m_hs->deal_damage(collider.other_entity, chealth, ai.damage);
+					}
+				}
 
 
 				break;
@@ -559,7 +571,6 @@ void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionCom
 
 }
 
-
 bool AiSystem::is_right(float gcx, float ecx)
 {
 	return ecx > gcx;
@@ -569,4 +580,5 @@ bool AiSystem::is_down(float gcy, float ecy)
 {
 	return ecy > gcy;
 }
+
 

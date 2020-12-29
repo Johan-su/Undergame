@@ -4,6 +4,7 @@
 #include "DebugMacros.h"
 #include "System.h"
 #include "TargetingSystem.h"
+#include "HealthSystem.h"
 #include "PositionComponent.h"
 #include "MovementComponent.h"
 #include "AiComponent.h"
@@ -13,7 +14,7 @@ class AiSystem : public System
 {
 public:
 
-	void init(std::shared_ptr<TargetingSystem> sys);
+	void init(std::shared_ptr<TargetingSystem> ts, std::shared_ptr<HealthSystem> hs);
 
 	void clean();
 
@@ -43,7 +44,8 @@ private:
 
 	bool is_down(float gcy, float ecy);
 
-	std::shared_ptr<TargetingSystem> ts;
+	std::shared_ptr<TargetingSystem> m_ts;
+	std::shared_ptr<HealthSystem> m_hs;
 
 	std::array<float, MAP_SIZE* MAP_SIZE> distance_to_grid;
 
