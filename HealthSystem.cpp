@@ -31,6 +31,7 @@ void HealthSystem::deal_damage(Entity e, HealthComponent& health, const float& d
 #ifdef ECS_DEBUG
 	std::cout << "deal_damage" << std::endl;
 #endif
+
 	health.health -= damage;
 
 	if (health.health < 0)

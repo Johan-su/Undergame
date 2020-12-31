@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-//#define ECS_DEBUG
+#define ECS_DEBUG
 //#define PRINT_DEBUG
 
 

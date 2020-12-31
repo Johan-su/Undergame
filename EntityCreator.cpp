@@ -76,7 +76,7 @@ void EntityCreator::init()
 			dc.drillLVL = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
-			//Game::coordinator->add_component<ColliderComponent>(e, cc);
+			Game::coordinator->add_component<ColliderComponent>(e, cc);
 
 			Game::coordinator->add_component<SizeComponent>(e, sc);
 			Game::coordinator->add_component<RenderComponent>(e, rc);
@@ -245,7 +245,7 @@ void EntityCreator::init()
 			cc.other_entity = 0xFFFFFFFF;
 
 			hc.entity_type = ENTITY_TYPE_MOLE;
-			hc.max_health = 100.0f;
+			hc.max_health = 1.0f;
 			hc.health = hc.max_health;
 
 			sc.size.x = 30.0f;
@@ -255,7 +255,8 @@ void EntityCreator::init()
 
 			rc.texture = Texture::get_texture(TEXTURE_MOLE); 
 
-			mc.speed = 10.0f + (1.0f + (float)(std::rand()) / (float)RAND_MAX);
+			mc.speed = 1.0f + (1.0f + (float)(std::rand()) / (float)RAND_MAX);
+
 			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
 			ai.detectionRadius = (float)(TILE_SIZE) * 10;
 			ai.damage = 3;

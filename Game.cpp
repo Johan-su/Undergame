@@ -1,9 +1,12 @@
 #include <iostream>
+#include <chrono>
 #include <time.h>
 #include "Game.h"
+#include "TileMapGenerator.h"
 #include "Texture.h"
 #include "ECS.h"
 #include "EntityCreator.h"
+
 
 
 //const uint32_t Game::seed = -1;																														1606315639
@@ -85,16 +88,107 @@ void Game::clean()
 
 	SDL_Quit();
 }
+
+void Game::start_game_state()
+{
+	//auto before = std::chrono::high_resolution_clock::now(); // för tidsmätning av noise funktionerna
+
+//auto tm = TileMapGenerator::create_map_random();
+//auto tm = TileMapGenerator::create_map_value();
+	auto tm = TileMapGenerator::create_map_perlin();
+	//auto tm = TileMapGenerator::create_map_simplex();
+
+	/*auto after = std::chrono::high_resolution_clock::now();
+
+	auto dt = after - before;
+
+	std::cout << "ns: " << dt.count() << " ms: " << dt.count() / 1000000.0f << " s: " << dt.count() / 1000000000.0f << std::endl;
+	std::cin.ignore();*/ // för tidsmätning av noise funktionerna
+
+	TileMapGenerator::entities_from_map(tm);
+	float x, y;
+	auto& health = Game::coordinator->get_component<HealthComponent>(2 * MAP_SIZE);
+
+	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
+	{
+		if (Game::tileEntities[i] == 0)
+		{
+			x = (float)(TILE_SIZE * (i % MAP_SIZE) + TILE_SIZE / 2);
+			y = (float)(TILE_SIZE * (i / MAP_SIZE) + TILE_SIZE / 2);
+			break;
+		}
+	}
+	EntityCreator::create_entity(ENTITY_TYPE_MOLE, x + 40, y - 40, 0);
+	EntityCreator::create_entity(ENTITY_TYPE_MOLE, x, y, 0);
+	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
+	delete tm;
+}
+
+//#define FPSLOOP
+
+void Game::loop()
+{
+#ifdef FPSLOOP
+	uint32_t fps = 0;
+	uint16_t count = 0;
+	auto NS_PER_UPDATE = std::chrono::nanoseconds(16666666);
+	auto previous = std::chrono::high_resolution_clock::now();
+	std::chrono::nanoseconds lag(0);
+	while (Game::Running) {
+		auto current = std::chrono::high_resolution_clock::now();
+		auto elapsed = current - previous;
+		previous = current;
+		lag += elapsed;
+
+
+		while (lag >= NS_PER_UPDATE)
+		{
+			Game::events();
+			Game::update();
+			lag -= NS_PER_UPDATE;
+			if (count >= 60)
+			{
+				std::cout << "FPS: " << fps << std::endl;
+				count = 0;
+				fps = 0;
+			}
+			++count;
+		}
+		Game::render();
+		++fps;
+	}
+#else
+	auto NS_PER_UPDATE = std::chrono::nanoseconds(16666666);
+	auto previous = std::chrono::high_resolution_clock::now();
+	std::chrono::nanoseconds lag(0);
+	while (Game::Running) {
+		auto current = std::chrono::high_resolution_clock::now();
+		auto elapsed = current - previous;
+		previous = current;
+		lag += elapsed;
+
+
+		while (lag >= NS_PER_UPDATE)
+		{
+			Game::events();
+			Game::update();
+			lag -= NS_PER_UPDATE;
+		}
+		Game::render();
+	}
+#endif
+}
+
 void Game::update()
 {
+	shooterSystem->update(); //creates entities
 	movementSystem->update();
-	aiSystem->update(); // pushes to deletes
-	diggerSystem->update(); // pushes to deletes
 	staticcollisionSystem->update();
 	collisionSystem->update();
-	projectileSystem->update(); // pushes to deletes
+	projectileSystem->update(); // pushes to delete
+	aiSystem->update(); // pushes to delete
+	diggerSystem->update(); // pushes to delete
 	playerSystem->update();
-	shooterSystem->update();
 
 
 

@@ -15,6 +15,10 @@ public:
 	
 	static void clean();
 
+	static void start_game_state();
+
+	static void loop();
+
 	static void update();
 
 	static void events();

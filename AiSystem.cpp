@@ -94,14 +94,7 @@ void AiSystem::update()
 					ai.state = AI_STATE_TRACK_LAST_KNOWN;
 				}
 
-				if (move_to(id, pos, size, move, collider))
-				{
-
-				}
-				else
-				{
-					random_walk(pos, size, move, digger);
-				}
+				random_walk(pos, size, move, digger);
 
 
 
