@@ -194,8 +194,8 @@ void AiSystem::update()
 					{
 						m_hs->deal_damage(collider.other_entity, chealth, ai.damage);
 
-						move.velocity.x *= -ai.trackRadius / 4;
-						move.velocity.y *= -ai.trackRadius / 4;
+						move.velocity.x *= -ai.trackRadius / 3.25f;
+						move.velocity.y *= -ai.trackRadius / 3.25f;
 					}
 				}
 
