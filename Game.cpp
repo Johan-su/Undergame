@@ -106,7 +106,7 @@ void Game::start_game_state()
 	std::cin.ignore();*/ // för tidsmätning av noise funktionerna
 
 	TileMapGenerator::entities_from_map(tm);
-	float x, y;
+	float x = 0.0f, y = 0.0f;
 	auto& health = Game::coordinator->get_component<HealthComponent>(2 * MAP_SIZE);
 
 	for (unsigned int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
@@ -181,14 +181,14 @@ void Game::loop()
 
 void Game::update()
 {
+	playerSystem->update();
 	shooterSystem->update(); //creates entities
 	movementSystem->update();
 	staticcollisionSystem->update();
 	collisionSystem->update();
 	projectileSystem->update(); // pushes to delete
-	aiSystem->update(); // pushes to delete
 	diggerSystem->update(); // pushes to delete
-	playerSystem->update();
+	aiSystem->update(); // pushes to delete
 
 
 

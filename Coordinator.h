@@ -21,6 +21,12 @@ public:
 		m_componentManager = new ComponentManager();
 		m_systemManager = new SystemManager();
 	}
+	void clean()
+	{
+		delete m_entityManager;;
+		delete m_componentManager;
+		delete m_systemManager;
+	}
 	Entity create_entity() // should not be called explicitly, use EntityCreator.
 	{
 		return m_entityManager->Create_entity();
@@ -61,6 +67,7 @@ public:
 	template<typename T>
 	T& get_component(Entity e)
 	{
+
 		return m_componentManager->get_component<T>(e);
 	}
 	template<typename T>
@@ -82,18 +89,6 @@ public:
 	{
 		return m_entityManager->Get_signature(e);
 	}
-	void clean()
-	{
-		delete m_entityManager;;
-		delete m_componentManager;
-		delete m_systemManager;
-	}
-
-
-
-
-
-
 
 private:
 	/*std::unique_ptr<EntityManager> m_entityManager;

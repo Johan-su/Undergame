@@ -9,6 +9,10 @@ void PlayerSystem::update()
 #ifdef PRINT_DEBUG
 	static int count = 0;
 #endif
+	if (m_entities.size() == 0)
+	{
+		Game::Running = false;
+	}
 	for (auto e : m_entities)
 	{
 
@@ -21,8 +25,8 @@ void PlayerSystem::update()
 
 
 /*TEMP*/
-		auto& health = Game::coordinator->get_component<HealthComponent>(e);
-		std::cout << "health: " << health.health << std::endl;
+		//auto& health = Game::coordinator->get_component<HealthComponent>(e);
+		//std::cout << "health: " << health.health << std::endl;
 		//
 #ifdef ECS_DEBUG
 		SDL_assert(playc.entity == e);

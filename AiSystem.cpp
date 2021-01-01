@@ -46,10 +46,18 @@ void AiSystem::update()
 		SDL_assert(collider.entity == e);
 #endif
 
-		Entity e = m_ts->nearest_player(pos.pos.x, pos.pos.y);
-		float pdistance = m_ts->nearest_player_distance(pos.pos.x, pos.pos.y);
-		Vec2f ppos = m_ts->nearest_player_pos(pos.pos.x, pos.pos.y);
-		Vec2f psize = m_ts->nearest_player_size(pos.pos.x, pos.pos.y);
+		Entity ep = m_ts->nearest_player(pos.pos.x, pos.pos.y);
+
+		float pdistance = 0.0f;
+		Vec2f ppos = { 0.0f, 0.0f };
+		Vec2f psize = { 0.0f, 0.0f };
+
+		if (ep != 0xFFFFFFFF)
+		{
+			pdistance = m_ts->nearest_player_distance(pos.pos.x, pos.pos.y);
+			ppos = m_ts->nearest_player_pos(pos.pos.x, pos.pos.y);
+			psize = m_ts->nearest_player_size(pos.pos.x, pos.pos.y);
+		}
 
 		SDL_assert(!isnan(pos.pos.x));
 		SDL_assert(!isnan(pos.pos.y));
@@ -181,10 +189,13 @@ void AiSystem::update()
 
 				if (collider.other_entity != 0xFFFFFFFF)
 				{
-					auto chealth = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
+					auto& chealth = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
 					if (chealth.entity_type == ENTITY_TYPE_PLAYER)
 					{
 						m_hs->deal_damage(collider.other_entity, chealth, ai.damage);
+
+						move.velocity.x *= -ai.trackRadius / 4;
+						move.velocity.y *= -ai.trackRadius / 4;
 					}
 				}
 

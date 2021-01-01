@@ -79,6 +79,9 @@ public:
 	template<typename T>
 	T& get_component(Entity e)
 	{
+#ifdef ECS_DEBUG
+		SDL_assert(e != 0xFFFFFFFF);
+#endif
 		return get_component_array<T>()->get_component(e);
 	}
 

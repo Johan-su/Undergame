@@ -13,7 +13,7 @@ std::vector<std::function<void(const Entity& ,const float&, const float&, uint32
 
 void EntityCreator::init()
 {
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // Playercontrolled //TODO: fix player not taking damage
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // Playercontrolled
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -245,7 +245,7 @@ void EntityCreator::init()
 			cc.other_entity = 0xFFFFFFFF;
 
 			hc.entity_type = ENTITY_TYPE_MOLE;
-			hc.max_health = 1.0f;
+			hc.max_health = 70.0f;
 			hc.health = hc.max_health;
 
 			sc.size.x = 30.0f;
@@ -259,7 +259,7 @@ void EntityCreator::init()
 
 			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
 			ai.detectionRadius = (float)(TILE_SIZE) * 10;
-			ai.damage = 3;
+			ai.damage = 30.0f;
 			ai.state = 0;
 
 			digger.drillState = 1;
@@ -309,8 +309,8 @@ void EntityCreator::init()
 			cc.tile_id = 0xFFFFFFFF;
 			cc.other_entity = 0xFFFFFFFF;
 
-			sc.size.x = 4;
-			sc.size.y = 4;
+			sc.size.x = 4.0f;
+			sc.size.y = 4.0f;
 
 			rc.src_rect = { 0, 0, 677, 320 }; // TODO: determine texture
 
@@ -324,7 +324,7 @@ void EntityCreator::init()
 			mc.velocity.x = cosf(mc.angle);
 			mc.velocity.y = sinf(mc.angle);
 
-			pc.damage = 10.0f;
+			pc.damage = 1000.0f;
 
 			health.entity_type = ENTITY_TYPE_BULLET;
 
