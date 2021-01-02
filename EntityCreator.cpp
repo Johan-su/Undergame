@@ -65,14 +65,14 @@ void EntityCreator::init()
 			pc.explosiveWeaponsType = 0;
 
 			hc.entity_type = ENTITY_TYPE_PLAYER;
-			hc.max_health = 1000.0f;
+			hc.max_health = 10000000000.0f;
 			hc.health = hc.max_health;
 
 			mc.speed = 3.0f;
 
 			shc.gunlength = 34;
 			shc.count = 0;
-			shc.firingrate = 1;
+			shc.firingrate = 4; // lower is faster
 			dc.drillLVL = 0;
 
 			Game::coordinator->add_component<PositionComponent>(e, positionc);
@@ -312,9 +312,9 @@ void EntityCreator::init()
 			sc.size.x = 4.0f;
 			sc.size.y = 4.0f;
 
-			rc.src_rect = { 0, 0, 677, 320 }; // TODO: determine texture
+			rc.src_rect = { 0, 0, 677, 320 }; 
 
-			rc.texture = Texture::get_texture(1); // TODO: determine texture
+			rc.texture = Texture::get_texture(1); 
 
 			mc.speed = 7.0f;
 			//mc.angle = 4.0f;

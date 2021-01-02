@@ -28,9 +28,9 @@ void HealthSystem::delete_entites()
 
 void HealthSystem::deal_damage(Entity e, HealthComponent& health, const float& damage)
 {
-	std::cout << "Entity: " << e << " HP: " << health.health <<" deal_damage: " << damage << std::endl;
+
 #ifdef ECS_DEBUG
-	std::cout << "deal_damage" << std::endl;
+	std::cout << "Entity: " << e << " HP: " << health.health << " deal_damage: " << damage << std::endl;
 #endif
 
 	health.health -= damage;

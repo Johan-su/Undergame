@@ -1,4 +1,5 @@
 #include "DebugMacros.h"
+#include "EntityCreator.h"
 #include "CollisionSystem.h"
 #include "HealthSystem.h"
 #include "ECS.h"
@@ -13,6 +14,26 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 		auto& position = Game::coordinator->get_component<PositionComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
 		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
+
+		collider.other_entity = 0xFFFFFFFF;
+		/*TEMP
+		auto& health = Game::coordinator->get_component<HealthComponent>(e);
+		if (health.entity_type == ENTITY_TYPE_MOLE)
+		{
+			std::cout << "mole collision, other entity: " << collider.other_entity << std::endl;
+		}
+
+		/*TEMP*/
+
+		/*TEMP*/
+		auto& health = Game::coordinator->get_component<HealthComponent>(e);
+		if (health.entity_type == ENTITY_TYPE_BULLET)
+		{
+			std::cout << "bullet collision, other entity: " << collider.other_entity << std::endl;
+		}
+
+		/*TEMP*/
+		
 
 #ifdef ECS_DEBUG
 		SDL_assert(collider.entity == e);
@@ -49,7 +70,6 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			bool b4 = position.pos.y + size.size.y > position2.pos.y;
 
 
-			collider.other_entity = 0xFFFFFFFF;
 
 			if (b1 && b2 && b3 && b4)
 			{

@@ -93,8 +93,8 @@ void Game::start_game_state()
 {
 	//auto before = std::chrono::high_resolution_clock::now(); // för tidsmätning av noise funktionerna
 
-//auto tm = TileMapGenerator::create_map_random();
-//auto tm = TileMapGenerator::create_map_value();
+	//auto tm = TileMapGenerator::create_map_random();
+	//auto tm = TileMapGenerator::create_map_value();
 	auto tm = TileMapGenerator::create_map_perlin();
 	//auto tm = TileMapGenerator::create_map_simplex();
 

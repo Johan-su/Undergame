@@ -30,12 +30,15 @@ void ProjectileSystem::update()
 #endif
 		if (collider.other_entity != 0xFFFFFFFF)
 		{
+			std::cout << "other entity collision: " << collider.other_entity << std::endl;
 			auto& other_entity_health = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
 
 #ifdef ECS_DEBUG
 			SDL_assert(other_entity_health.entity == collider.other_entity);
 #endif
 			m_hs->deal_damage(collider.other_entity, other_entity_health, proj.damage);
+
+			m_hs->deal_damage(e, health, proj.damage);
 		}
 
 
