@@ -30,7 +30,6 @@ void ProjectileSystem::update()
 #endif
 		if (collider.other_entity != 0xFFFFFFFF)
 		{
-			std::cout << "other entity collision: " << collider.other_entity << std::endl;
 			auto& other_entity_health = Game::coordinator->get_component<HealthComponent>(collider.other_entity);
 
 #ifdef ECS_DEBUG

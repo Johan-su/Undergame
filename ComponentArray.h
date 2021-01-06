@@ -2,18 +2,12 @@
 #include <iostream>
 #include "ECS.h"
 
-
-
-
 class ComponentArrayV
 {
 public:
 	virtual void destroy_entity(Entity e) = 0;
 
 };
-
-
-
 
 template<typename T>
 class ComponentArray : public ComponentArrayV
@@ -41,7 +35,7 @@ public:
 		SDL_assert(entity_to_index[e] < m_size);
 #endif
 		--m_size;
-		if (entity_to_index[e] == m_size) // if at the end of array just remove it, it will still be a packed array.
+		if (entity_to_index[e] == m_size) // if at the end of array remove it.
 		{
 			index_to_entity[m_size] = 0xFFFFFFFF;
 			entity_to_index[e] = 0xFFFFFFFF;

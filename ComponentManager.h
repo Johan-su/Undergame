@@ -58,10 +58,6 @@ public:
 		{
 			m_arrayPointers[i]->destroy_entity(e);
 		}
-		/*for (auto const& arr : m_arrayPointers)
-		{
-			arr->destroy_entity(e);
-		}*/
 	}
 	template<typename T>
 	ComponentArray<T>* get_component_array()
@@ -89,7 +85,6 @@ public:
 
 
 private:
-	//std::array<std::string, MAX_COMPONENTS> m_componentTypes;
 
 	std::unordered_map<std::string, uint8_t> m_typeToArray;
 	uint8_t m_componentTypeCount;
