@@ -43,7 +43,6 @@
 #include "AiSystem.h"
 #include "CollisionSystem.h"
 #include "DiggerSystem.h"
-#include "ItemComponent.h"
 #include "MovementSystem.h"
 #include "PlayerSystem.h"
 #include "ProjectileSystem.h"

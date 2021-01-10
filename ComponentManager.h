@@ -22,7 +22,7 @@ public:
 	template<typename T>
 	void register_component_type()
 	{
-		if (m_componentTypeCount >= 64)
+		if (m_componentTypeCount >= MAX_COMPONENTS)
 		{
 			throw "too many component types";
 			return;
@@ -87,7 +87,6 @@ public:
 private:
 
 	std::unordered_map<std::string, uint8_t> m_typeToArray;
+	std::array<IComponentArray*, MAX_COMPONENTS> m_arrayPointers;
 	uint8_t m_componentTypeCount;
-
-	std::array<ComponentArrayV*, MAX_COMPONENTS> m_arrayPointers;
 };

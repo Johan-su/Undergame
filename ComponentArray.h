@@ -2,7 +2,7 @@
 #include <iostream>
 #include "ECS.h"
 
-class ComponentArrayV
+class IComponentArray
 {
 public:
 	virtual void destroy_entity(Entity e) = 0;
@@ -10,7 +10,7 @@ public:
 };
 
 template<typename T>
-class ComponentArray : public ComponentArrayV
+class ComponentArray : public IComponentArray
 {
 public:
 	ComponentArray()
@@ -24,7 +24,7 @@ public:
 	}
 	void add_component(Entity e, T component)
 	{
-		m_componentArray[m_size] = component;
+		m_data[m_size] = component;
 		entity_to_index[e] = m_size;
 		index_to_entity[m_size] = e;
 		++m_size;
@@ -43,15 +43,15 @@ public:
 		}
 
 
-
-		m_componentArray[entity_to_index[e]] = m_componentArray[m_size]; // moves component from last element, to newly destroyed.
+		m_data[entity_to_index[e]] = m_data[m_size]; // moves component from last element, to newly destroyed.
 
 		entity_to_index[index_to_entity[m_size]] = entity_to_index[e]; // change last Entity's index to the replaced position.
 		
 		index_to_entity[entity_to_index[e]] = index_to_entity[m_size];
 
-		entity_to_index[e] = 0xFFFFFFFF;
-		index_to_entity[m_size] = 0xFFFFFFFF;
+		entity_to_index[e] = 0xFFFFFFFF; // removes unused index.
+
+		index_to_entity[m_size] = 0xFFFFFFFF; // removes unused index.
 	}
 	void destroy_entity(Entity e) override
 	{
@@ -65,7 +65,7 @@ public:
 #ifdef ECS_DEBUG
 		SDL_assert(entity_to_index[e] != 0xFFFFFFFF);
 #endif
-		return m_componentArray[entity_to_index[e]]; 
+		return m_data[entity_to_index[e]]; 
 	}
 
 	  uint32_t get_size() const
@@ -74,7 +74,7 @@ public:
 	}
 
 private:
-	std::array<T, MAX_ENTITIES> m_componentArray;
+	std::array<T, MAX_ENTITIES> m_data;
 	std::array<  uint32_t, MAX_ENTITIES> entity_to_index;
 	std::array< uint32_t, MAX_ENTITIES> index_to_entity;
 	uint32_t m_size;

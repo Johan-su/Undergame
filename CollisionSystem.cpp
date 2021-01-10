@@ -7,7 +7,6 @@
 
 void CollisionSystem::update() //TODO: make faster using the tile grid.
 {
-	//return;
 	for (auto e : m_entities)
 	{
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);

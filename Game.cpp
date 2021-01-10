@@ -239,7 +239,6 @@ void Game::components_init()
 	Game::coordinator->register_component<ColliderComponent>();
 	Game::coordinator->register_component<DiggerComponent>();
 	Game::coordinator->register_component<HealthComponent>();
-	Game::coordinator->register_component<ItemComponent>();
 	Game::coordinator->register_component<MovementComponent>();
 	Game::coordinator->register_component<PlayerComponent>();
 	Game::coordinator->register_component<PositionComponent>();

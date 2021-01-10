@@ -177,7 +177,6 @@
     <ClInclude Include="DiggerComponent.h" />
     <ClInclude Include="DiggerSystem.h" />
     <ClInclude Include="HealthSystem.h" />
-    <ClInclude Include="ItemComponent.h" />
     <ClInclude Include="ProjectileComponent.h" />
     <ClInclude Include="ProjectileSystem.h" />
     <ClInclude Include="ShooterComponent.h" />
