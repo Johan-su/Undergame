@@ -103,10 +103,6 @@ void AiSystem::update()
 				}
 
 				random_walk(pos, size, move, digger);
-
-
-
-
 				break;
 
 			case AI_STATE_TRACK_LAST_KNOWN:

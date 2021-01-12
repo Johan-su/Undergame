@@ -25,6 +25,6 @@ void RenderSystem::render()
 
 
 
-		SDL_RenderCopyExF(Game::renderer, render.texture, &render.src_rect, &dst_rect, static_cast<double>((1.57079632679 + static_cast<double>(move.angle)) * 57.29577951310), NULL, SDL_FLIP_NONE); // 57.2957795131 == 180 / PI 
+		SDL_RenderCopyExF(Game::renderer, render.texture, &render.src_rect, &dst_rect, static_cast<double>((1.57079632679 + static_cast<double>(move.angle)) * 57.29577951310), NULL, SDL_FLIP_NONE); // 57.29577951310 == 180 / PI 
 	}
 }

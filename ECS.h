@@ -48,6 +48,7 @@
 #include "ProjectileSystem.h"
 #include "RenderSystem.h"
 #include "ShooterSystem.h"
+#include "SpawnerSystem.h"
 #include "StaticCollisionSystem.h"
 #include "TargetingSystem.h"
 

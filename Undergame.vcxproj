@@ -181,6 +181,7 @@
     <ClInclude Include="ProjectileSystem.h" />
     <ClInclude Include="ShooterComponent.h" />
     <ClInclude Include="ShooterSystem.h" />
+    <ClInclude Include="SpawnerSystem.h" />
     <ClInclude Include="StaticCollisionSystem.h" />
     <ClInclude Include="ComponentArray.h" />
     <ClInclude Include="ComponentManager.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="HealthSystem.cpp" />
     <ClCompile Include="ProjectileSystem.cpp" />
     <ClCompile Include="ShooterSystem.cpp" />
+    <ClCompile Include="SpawnerSystem.cpp" />
     <ClCompile Include="StaticCollisionSystem.cpp" />
     <ClCompile Include="EntityCreator.cpp" />
     <ClCompile Include="Game.cpp" />

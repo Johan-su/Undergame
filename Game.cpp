@@ -65,6 +65,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 				Running = true;
 				offsetx = 0;
 				offsety = 0;
+				spawntimer = 0;
 				Texture::init();
 				ECS_init();
 				return 0;
