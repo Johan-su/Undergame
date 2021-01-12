@@ -59,10 +59,9 @@ void EntityCreator::init()
 			rc.texture = Texture::get_texture(2); // TODO: determine texture
 
 			//pc.id = create_player_id();
-			pc.bombs = 0;
-			pc.bullets = 1000; //TODO: change to real starting values
+
+			pc.bullets = 999999; //TODO: change to real starting values
 			pc.bulletWeaponsType = 0;
-			pc.explosiveWeaponsType = 0;
 
 			hc.entity_type = ENTITY_TYPE_PLAYER;
 			hc.max_health = 10000000000.0f;
@@ -91,36 +90,8 @@ void EntityCreator::init()
 
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // NPC 
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // NPC (unused)
 		{
-			auto positionc = PositionComponent();
-			auto sc = SizeComponent();
-			auto rc = RenderComponent();
-			auto hc = HealthComponent();
-#ifdef ECS_DEBUG
-			positionc.entity = e;
-			sc.entity = e;
-
-			rc.entity = e;
-			hc.entity = e;
-#endif
-			positionc.pos.x = x;
-			positionc.pos.y = y;
-
-			sc.size.x = 50;
-			sc.size.y = 50;
-
-			rc.src_rect = { 0, 0, 0, 0 }; //TODO: determine texture
-
-			rc.texture = nullptr; //TODO: determine texture
-
-			//pc.id = create_player_id();
-
-			Game::coordinator->add_component<PositionComponent>(e, positionc);
-			Game::coordinator->add_component<SizeComponent>(e, sc);
-			Game::coordinator->add_component<RenderComponent>(e, rc);
-			Game::coordinator->add_component<HealthComponent>(e, hc);
-
 		});
 	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // tile
 		{
@@ -210,7 +181,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, hc);
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // mole //TODO: fix mole not taking damage
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // mole 
 		{
 			auto positionc = PositionComponent();
 			auto cc = ColliderComponent();
@@ -317,14 +288,13 @@ void EntityCreator::init()
 			rc.texture = Texture::get_texture(1); 
 
 			mc.speed = 7.0f;
-			//mc.angle = 4.0f;
 
 			mc.angle = *(float*)(&data);
 
 			mc.velocity.x = cosf(mc.angle);
 			mc.velocity.y = sinf(mc.angle);
 
-			pc.damage = 1000.0f;
+			pc.damage = 4;
 
 			health.entity_type = ENTITY_TYPE_BULLET;
 

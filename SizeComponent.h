@@ -5,6 +5,8 @@ struct SizeComponent
 {
 	Vec2f size;
 
+
+
 #ifdef ECS_DEBUG
 	 uint32_t entity;
 #endif

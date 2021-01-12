@@ -20,6 +20,8 @@ struct AiComponent
 	std::vector<uint32_t> path_list;
 	uint8_t state;
 
+
+
 #ifdef ECS_DEBUG
 	 uint32_t entity;
 #endif

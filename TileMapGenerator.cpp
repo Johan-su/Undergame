@@ -13,7 +13,7 @@ TileMap* TileMapGenerator::create_map_random()
 {
 	std::default_random_engine r;
 	r.seed(Game::seed);
-	std::uniform_int_distribution<uint32_t> d(0, 15);																														 //TODO: change to actual amount of tile types
+	std::uniform_int_distribution<uint32_t> d(0, 15);
 	auto roll = std::bind(d, r);
 
 	auto tilemap = new TileMap();
@@ -21,7 +21,7 @@ TileMap* TileMapGenerator::create_map_random()
 	for (int i = 0; i < tilemap->grid.size(); ++i)
 	{
 		tilemap->grid[i] = roll(); 
-																																												//std::cout << "it " << i << std::endl;
+
 
 	}
 	create_boundary(tilemap);

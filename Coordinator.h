@@ -12,11 +12,6 @@ public:
 	}
 	void init()
 	{
-
-		/*m_entityManager = std::make_unique<EntityManager>();
-		m_componentManager = std::make_unique<ComponentManager>(); 
-		m_systemManager = std::make_unique<SystemManager>();*/
-
 		m_entityManager = new EntityManager();
 		m_componentManager = new ComponentManager();
 		m_systemManager = new SystemManager();
@@ -91,9 +86,6 @@ public:
 	}
 
 private:
-	/*std::unique_ptr<EntityManager> m_entityManager;
-	std::unique_ptr<ComponentManager> m_componentManager;
-	std::unique_ptr<SystemManager> m_systemManager;*/
 	EntityManager* m_entityManager;
 	ComponentManager* m_componentManager;
 	SystemManager* m_systemManager;
