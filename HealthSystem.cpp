@@ -42,10 +42,8 @@ void HealthSystem::deal_damage(Entity e, HealthComponent& health, const float& d
 			Game::tileEntities[e] = 0;
 		}
 		++Game::entityDeaths[health.entity_type];
-		//Game::coordinator->destroy_entity(e);
 		del_list.push_back(e);
 
-		//delete_entites();
 
 		return;
 	}

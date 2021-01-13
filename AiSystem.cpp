@@ -100,6 +100,7 @@ void AiSystem::update()
 				if (pdistance < ai.detectionRadius)
 				{
 					ai.state = AI_STATE_TRACK_LAST_KNOWN;
+					break;
 				}
 
 				random_walk(pos, size, move, digger);
@@ -190,8 +191,8 @@ void AiSystem::update()
 					{
 						m_hs->deal_damage(collider.other_entity, chealth, ai.damage);
 
-						move.velocity.x *= -ai.trackRadius / 3.25f;
-						move.velocity.y *= -ai.trackRadius / 3.25f;
+						move.velocity.x *= -ai.trackRadius / 3.5f;
+						move.velocity.y *= -ai.trackRadius / 3.5f;
 					}
 				}
 

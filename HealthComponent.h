@@ -8,7 +8,6 @@ struct HealthComponent
 	uint8_t entity_type;
 
 
-
 #ifdef ECS_DEBUG
 	unsigned int entity;
 #endif

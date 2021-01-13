@@ -9,10 +9,10 @@
 
 
 
-//const uint32_t Game::seed = -1;																														1606315639
-const uint32_t Game::seed = 1606315639;
+//const uint32_t Game::seed = -1;
+//const uint32_t Game::seed = 1606315639;
 
-//const uint32_t Game::seed = static_cast<uint32_t>(time(NULL));
+const uint32_t Game::seed = static_cast<uint32_t>(time(NULL));
 
 bool Game::Running;
 SDL_Window* Game::window;
@@ -39,6 +39,7 @@ static std::shared_ptr<PlayerSystem> playerSystem;
 static std::shared_ptr<ProjectileSystem> projectileSystem;
 static std::shared_ptr<RenderSystem> renderSystem;
 static std::shared_ptr<ShooterSystem> shooterSystem;
+static std::shared_ptr<SpawnerSystem> spawnerSystem;
 static std::shared_ptr<StaticCollisionSystem> staticcollisionSystem;
 static std::shared_ptr<TargetingSystem> targetingSystem;
 
@@ -65,7 +66,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 				Running = true;
 				offsetx = 0;
 				offsety = 0;
-				spawntimer = 0;
 				Texture::init();
 				ECS_init();
 				return 0;
@@ -119,8 +119,6 @@ void Game::start_game_state()
 			break;
 		}
 	}
-	EntityCreator::create_entity(ENTITY_TYPE_MOLE, x + 40, y - 40, 0);
-	EntityCreator::create_entity(ENTITY_TYPE_MOLE, x, y, 0);
 	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
 	delete tm;
 }
@@ -194,6 +192,8 @@ void Game::update()
 
 
 	healthSystem->delete_entites(); // deletes
+
+	spawnerSystem->update(); // creates
 
 	//std::cout << "Points: " << entityDeaths[ENTITY_TYPE_MOLE] << std::endl;
 
@@ -334,6 +334,15 @@ void Game::systems_init()
 	sig.set(Game::coordinator->get_signature_pos<MovementComponent>());
 	sig.set(Game::coordinator->get_signature_pos<ShooterComponent>());
 	Game::coordinator->set_signature(shooterSystem, sig);
+	sig.reset();
+
+
+	spawnerSystem = Game::coordinator->register_system<SpawnerSystem>();
+	sig.set(Game::coordinator->get_signature_pos<PlayerComponent>());
+	sig.set(Game::coordinator->get_signature_pos<PositionComponent>());
+	sig.set(Game::coordinator->get_signature_pos<SizeComponent>());
+	Game::coordinator->set_signature(spawnerSystem, sig);
+	spawnerSystem->init();
 	sig.reset();
 
 

@@ -15,24 +15,6 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
 
 		collider.other_entity = 0xFFFFFFFF;
-		/*TEMP
-		auto& health = Game::coordinator->get_component<HealthComponent>(e);
-		if (health.entity_type == ENTITY_TYPE_MOLE)
-		{
-			std::cout << "mole collision, other entity: " << collider.other_entity << std::endl;
-		}
-
-		/*TEMP*/
-
-		/*TEMP*/
-		auto& health = Game::coordinator->get_component<HealthComponent>(e);
-		if (health.entity_type == ENTITY_TYPE_BULLET)
-		{
-			std::cout << "bullet collision, other entity: " << collider.other_entity << std::endl;
-		}
-
-		/*TEMP*/
-		
 
 #ifdef ECS_DEBUG
 		SDL_assert(collider.entity == e);

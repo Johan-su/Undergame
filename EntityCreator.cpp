@@ -60,11 +60,11 @@ void EntityCreator::init()
 
 			//pc.id = create_player_id();
 
-			pc.bullets = 999999; //TODO: change to real starting values
+			pc.bullets = 99999999; 
 			pc.bulletWeaponsType = 0;
 
 			hc.entity_type = ENTITY_TYPE_PLAYER;
-			hc.max_health = 10000000000.0f;
+			hc.max_health = 100.0f;
 			hc.health = hc.max_health;
 
 			mc.speed = 3.0f;

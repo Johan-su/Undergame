@@ -46,7 +46,17 @@ int main(int argc, char* argv[])
 
 	Game::loop();
 
+	for (int i = 0; i < 100; ++i)
+	{
+		std::cout << "" << std::endl;
+	}
+
 	Game::clean();
+
+	std::cout << Game::entityDeaths[ENTITY_TYPE_MOLE] << " points" << std::endl;
+
+	std::cin.ignore();
+
 	return 0;
 }
 

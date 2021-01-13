@@ -1,17 +1,22 @@
 #pragma once
+#include <random>
 #include "ECS.h"
 
 class SpawnerSystem : public System
 {
 public:
 
-	void update();
-
 	void init();
 
 	void clean();
 
+	void update();
+
+
+
 private:
 
-	uint32_t spawntimer, spawnrate;
+	bool inside_map(float x, float y);
+
+	uint32_t spawntimer, spawnrate, iterations;
 };
