@@ -64,7 +64,7 @@ void EntityCreator::init()
 			pc.bulletWeaponsType = 0;
 
 			hc.entity_type = ENTITY_TYPE_PLAYER;
-			hc.max_health = 100.0f;
+			hc.max_health = 10000000.0f;
 			hc.health = hc.max_health;
 
 			mc.speed = 3.0f;
@@ -229,7 +229,7 @@ void EntityCreator::init()
 			mc.speed = 1.0f + (1.0f + (float)(std::rand()) / (float)RAND_MAX);
 
 			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
-			ai.detectionRadius = (float)(TILE_SIZE) * 10;
+			ai.detectionRadius = (float)(TILE_SIZE) * 0;
 			ai.damage = 30.0f;
 			ai.state = 0;
 
@@ -314,7 +314,7 @@ void EntityCreator::init()
 			Game::coordinator->add_component<HealthComponent>(e, health);
 
 		});
-	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // textbox TODO: add necessary components to text
+	func_pointers.push_back([](const Entity& e, const float& x, const float& y, uint32_t data) // textbox 
 		{
 			auto positionc = PositionComponent();
 

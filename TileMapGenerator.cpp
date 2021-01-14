@@ -247,7 +247,7 @@ float TileMapGenerator::value2d(float x, float y)
 float TileMapGenerator::create_gradient_value(float x, float y)
 {
 	uint32_t cseed = static_cast<uint32_t>(Game::seed * (495222.4135123f + (cosf(x) + sinf(y))));
-	srand(cseed); //TODO: check if random algorithm is truly random.
+	srand(cseed);
 
 	float random = static_cast<float>(((double)rand() / (double)(RAND_MAX)));
 
@@ -342,7 +342,7 @@ float TileMapGenerator::perlin2d(float x, float y)
 Vec2f TileMapGenerator::create_gradient_vector(float x, float y)
 {
 	uint32_t cseed = static_cast<uint32_t>(Game::seed * (495222.4135123f + (cosf(x) + sinf(y))));
-	srand(cseed); //TODO: check if random algorithm is truly random.
+	srand(cseed);
 
 	float random = static_cast<float>(((double)rand() / (double)(RAND_MAX)) * 2 * M_PI);
 

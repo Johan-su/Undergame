@@ -5,7 +5,7 @@
 #include "ECS.h"
 #include "StaticRenderSystem.h"
 
-#define RENDER_CHECKED_TILES
+//#define RENDER_CHECKED_TILES
 
 
 std::vector<std::function<void(float x, float y, int offx, int offy)>> StaticRenderSystem::func_pointers;
@@ -19,10 +19,6 @@ void StaticRenderSystem::render_tiles(int offx, int offy)
 	int x1 = offx + SCREEN_WIDTH + 2 * TILE_SIZE;
 	int y1 = offy + SCREEN_HEIGHT + 2 * TILE_SIZE;
 
-	//int gridamountx = (x1 - x0) / TILE_SIZE;
-	//int gridamounty = (y1 - y0) / TILE_SIZE;
-
-	//uint16_t gid[((SCREEN_WIDTH + 2 * TILE_SIZE) / TILE_SIZE) * ((SCREEN_HEIGHT + 2 * TILE_SIZE) / TILE_SIZE)];
 
 	uint16_t gidtl = MAP_SIZE * (y0 / TILE_SIZE) + x0 / TILE_SIZE; // id of top left tile
 
@@ -39,7 +35,6 @@ void StaticRenderSystem::render_tile(uint16_t e, int offx, int offy)
 {
 
 	auto type = Game::tileEntities[e];
-	//std::cout << "type " << type << std::endl;
 	if (type == 0)
 	{
 		return;

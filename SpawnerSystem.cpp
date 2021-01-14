@@ -20,6 +20,7 @@ void SpawnerSystem::clean()
 
 void SpawnerSystem::update() //TODO: add random generators
 {
+	return;
 	if (spawntimer >= spawnrate)
 	{
 		for (auto e : m_entities)
@@ -52,7 +53,7 @@ void SpawnerSystem::update() //TODO: add random generators
 			EntityCreator::create_entity(ENTITY_TYPE_MOLE, x, y, 0);
 		}
 		spawntimer = 0;
-		spawnrate = 120 * exp(-0.2 * iterations) + 60;
+		spawnrate = 120 * (int)(exp(-0.2 * iterations)) + 60;
 		++iterations;
 	}
 	++spawntimer;

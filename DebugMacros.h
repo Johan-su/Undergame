@@ -2,7 +2,7 @@
 #include <iostream>
 
 //#define ECS_DEBUG
-//#define PRINT_DEBUG
+#define PRINT_DEBUG
 
 
 

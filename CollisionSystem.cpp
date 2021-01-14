@@ -5,14 +5,13 @@
 #include "ECS.h"
 
 
-void CollisionSystem::update() //TODO: make faster using the tile grid.
+void CollisionSystem::update()
 {
 	for (auto e : m_entities)
 	{
 		auto& collider = Game::coordinator->get_component<ColliderComponent>(e);
 		auto& position = Game::coordinator->get_component<PositionComponent>(e);
 		auto& size = Game::coordinator->get_component<SizeComponent>(e);
-		auto& movement = Game::coordinator->get_component<MovementComponent>(e);
 
 		collider.other_entity = 0xFFFFFFFF;
 
@@ -32,7 +31,6 @@ void CollisionSystem::update() //TODO: make faster using the tile grid.
 			auto& collider2 = Game::coordinator->get_component<ColliderComponent>(e2);
 			auto& position2 = Game::coordinator->get_component<PositionComponent>(e2);
 			auto& size2 = Game::coordinator->get_component<SizeComponent>(e2);
-			auto& movement2 = Game::coordinator->get_component<MovementComponent>(e2);
 
 #ifdef ECS_DEBUG
 

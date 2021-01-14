@@ -23,9 +23,6 @@ void AiSystem::clean()
 
 void AiSystem::update()
 {
-#ifdef PRINT_DEBUG
-	static int count = 0;
-#endif
 	for (auto e : m_entities)
 	{
 		auto& ai = Game::coordinator->get_component<AiComponent>(e);
@@ -59,21 +56,10 @@ void AiSystem::update()
 			psize = m_ts->nearest_player_size(pos.pos.x, pos.pos.y);
 		}
 
-		SDL_assert(!isnan(pos.pos.x));
-		SDL_assert(!isnan(pos.pos.y));
 
 
 		if (collider.tile_id != 0xFFFFFFFF)
 		{
-#ifdef PRINT_DEBUG
-			if (count == 60)
-			{
-				DP("dig");
-				DP(pos.pos.x);
-				DP(pos.pos.y);
-				count = 0;
-			}
-#endif
 
 			digger.drillState = 1;
 
@@ -82,41 +68,28 @@ void AiSystem::update()
 		}
 		else
 		{
-			uint16_t id = 0;
+			uint16_t id;
 			//ai.state = AI_STATE_TRACK_LAST_KNOWN; //TODO: REMOVE; ONLY FOR TIME MEASURING
 			switch (ai.state)
 			{
 			case AI_STATE_RANDOM_WALKING:
 
-	#ifdef PRINT_DEBUG
-				if (count == 60)
-				{
-					DP("random walk"); 
-					DP(pos.pos.x);
-					DP(pos.pos.y);
-					count = 0;
-				}
-	#endif
 				if (pdistance < ai.detectionRadius)
 				{
 					ai.state = AI_STATE_TRACK_LAST_KNOWN;
 					break;
 				}
 
-				random_walk(pos, size, move, digger);
+				if (move_to(id, pos, size, move, collider)) //TODO: fix random walk
+				{
+
+					id = random_walk(pos, size, move, digger);
+
+				}
 				break;
 
 			case AI_STATE_TRACK_LAST_KNOWN:
 
-	#ifdef PRINT_DEBUG
-				if (count == 60)
-				{
-					DP("last known"); 
-					DP(pos.pos.x);
-					DP(pos.pos.y);
-					count = 0;
-				}
-	#endif
 				if (pdistance < ai.trackRadius)
 				{
 					ai.state = AI_STATE_TRACKING;
@@ -165,15 +138,6 @@ void AiSystem::update()
 
 			case AI_STATE_TRACKING: 
 
-	#ifdef PRINT_DEBUG
-				if (count == 60)
-				{
-					DP("tracking");
-					DP(pos.pos.x);
-					DP(pos.pos.y);
-					count = 0;
-				}
-	#endif
 				if (pdistance > ai.trackRadius)
 				{
 					ai.state = AI_STATE_TRACK_LAST_KNOWN;
@@ -200,20 +164,20 @@ void AiSystem::update()
 				break;
 
 			default:
-					break;
+
+				break;
 			}
 
 		}
-
 	}
-#ifdef PRINT_DEBUG
-	++count;
-#endif
 }
 
-bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, const SizeComponent& size, MovementComponent& move, const ColliderComponent& collider) //TODO: find out how to control the ai in a good way.
+bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, const SizeComponent& size, MovementComponent& move, const ColliderComponent& collider)
 {
-
+	if (gridID < 0 || gridID >= MAP_SIZE * MAP_SIZE)
+	{
+		return 1;
+	}
 	auto type = Game::tileEntities[gridID];
 
 
@@ -273,7 +237,7 @@ bool AiSystem::move_to(uint32_t gridID, PositionComponent& pos, const SizeCompon
 	return 0;
 }
 
-void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path) //TODO: finish
+void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path)
 {
 	SDL_assert(path.size() == 0);
 
@@ -495,17 +459,17 @@ uint16_t AiSystem::random_walk(const PositionComponent& pos, const SizeComponent
 	uint16_t id[5];
 
 	id[0] = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
-	id[1] = id[0] + 1;
-	id[2] = id[0] - MAP_SIZE;
-	id[3] = id[0] - 1;
-	id[4] = id[0] + MAP_SIZE;
+	id[1] = id[0] + 4;
+	id[2] = id[0] - 4 * MAP_SIZE;
+	id[3] = id[0] - 4;
+	id[4] = id[0] + 4 * MAP_SIZE;
 
 	float time = 0.0f;
 	uint8_t r = 0;
 	do
 	{
 		//DP("random_walk_loop");
-		r = std::rand() % 5;
+		r = 1 + (3 * std::rand() / RAND_MAX);
 		time = dig_time(id[r], move, digger);
 
 	} while (time > 5000.0f);
@@ -516,11 +480,6 @@ uint16_t AiSystem::random_walk(const PositionComponent& pos, const SizeComponent
 	return id[r];
 }
 
-void AiSystem::straight_line(AiComponent& ai, PositionComponent& pos)
-{
-	float length = hypotf(ai.lastX - pos.pos.x, ai.lastY - pos.pos.y);
-
-}
 
 float AiSystem::dig_time(uint32_t gridID, const MovementComponent& move, const DiggerComponent& digger)
 {
@@ -559,13 +518,6 @@ void AiSystem::ai_track(const Vec2f& ppos, const Vec2f& psize, const PositionCom
 	move.velocity.x = cos(-targetangle);
 	move.velocity.y = sin(targetangle);
 
-	/*DP("targetangle");
-	DP(targetangle);
-
-	DP("VX");
-	DP(move.velocity.x);
-	DP("VY");
-	DP(move.velocity.y);*/
 
 	SDL_assert(!isnan(move.velocity.x));
 	SDL_assert(!isnan(move.velocity.y));
