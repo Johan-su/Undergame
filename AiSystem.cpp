@@ -68,7 +68,6 @@ void AiSystem::update()
 		}
 		else
 		{
-			uint16_t id;
 			//ai.state = AI_STATE_TRACK_LAST_KNOWN; //TODO: REMOVE; ONLY FOR TIME MEASURING
 			switch (ai.state)
 			{
@@ -80,10 +79,10 @@ void AiSystem::update()
 					break;
 				}
 
-				if (move_to(id, pos, size, move, collider)) //TODO: fix random walk
+				if (move_to(ai.id, pos, size, move, collider)) //TODO: fix random walk
 				{
 
-					id = random_walk(pos, size, move, digger);
+					ai.id = random_walk(pos, size, move, digger);
 
 				}
 				break;
@@ -155,8 +154,8 @@ void AiSystem::update()
 					{
 						m_hs->deal_damage(collider.other_entity, chealth, ai.damage);
 
-						move.velocity.x *= -ai.trackRadius / 3.5f;
-						move.velocity.y *= -ai.trackRadius / 3.5f;
+						move.velocity.x *= -ai.trackRadius / 7.5f;
+						move.velocity.y *= -ai.trackRadius / 7.5f;
 					}
 				}
 
@@ -364,24 +363,22 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 
 	for (int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
 	{
-		distance_to_grid[i] = 1E37f;
-		before_grid[i] = 0xFFFFFFFF;
-		searched_grid[i] = false;
+		distance_to_grid[i] = 1E37f; // assumes infinite distance until searched
+		before_grid[i] = 0xFFFFFFFF; // grid path initalized to unused value.
+		searched_grid[i] = false; // initalize every searched_grid to false
 	}
 
-	distance_to_grid[startid] = 0.0f;
-	searched_grid[startid] = true;
+	distance_to_grid[startid] = 0.0f; // distance to start tile is 0;
+	searched_grid[startid] = true; // start tile is searched instantly
 
 
 
 	//	int iter = 0;
-	while (!searched_grid[targetid]) 
+	while (!searched_grid[targetid]) // loop until target grid is searched
 	{
 		uint32_t minid = 0;
 		float mindistance = 1E38f;
 
-		DP("target");
-		DP(id[0]);
 
 
 		id[1] = id[0] + 1;
@@ -415,8 +412,8 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 					distance_to_grid[id[i]] = time;
 					before_grid[id[i]] = id[0];
 				}
-			DP("searched");
-			DP(id[i]);
+				DP("searched");
+				DP(id[i]);
 			}
 
 		}
@@ -459,23 +456,20 @@ uint16_t AiSystem::random_walk(const PositionComponent& pos, const SizeComponent
 	uint16_t id[5];
 
 	id[0] = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
-	id[1] = id[0] + 4;
-	id[2] = id[0] - 4 * MAP_SIZE;
-	id[3] = id[0] - 4;
-	id[4] = id[0] + 4 * MAP_SIZE;
+	id[1] = id[0] + 1;
+	id[2] = id[0] - MAP_SIZE;
+	id[3] = id[0] - 1;
+	id[4] = id[0] + MAP_SIZE;
 
 	float time = 0.0f;
 	uint8_t r = 0;
 	do
 	{
 		//DP("random_walk_loop");
-		r = 1 + (3 * std::rand() / RAND_MAX);
+		r = 1 + (4 * std::rand() / RAND_MAX);
 		time = dig_time(id[r], move, digger);
 
 	} while (time > 5000.0f);
-
-	DP("ID");
-	DP(id[r]);
 
 	return id[r];
 }

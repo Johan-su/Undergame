@@ -18,7 +18,9 @@ struct AiComponent
 	float lastY;
 	float damage;
 	std::vector<uint32_t> path_list;
+	uint16_t id;
 	uint8_t state;
+
 
 
 

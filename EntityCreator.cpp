@@ -228,9 +228,10 @@ void EntityCreator::init()
 
 			mc.speed = 1.0f + (1.0f + (float)(std::rand()) / (float)RAND_MAX);
 
-			ai.trackRadius = (float)(TILE_SIZE) * 0.5f;
-			ai.detectionRadius = (float)(TILE_SIZE) * 0;
+			ai.trackRadius = (float)(TILE_SIZE) * 1.5f;
+			ai.detectionRadius = (float)(TILE_SIZE) * 6.0f;
 			ai.damage = 30.0f;
+			ai.id = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;;
 			ai.state = 0;
 
 			digger.drillState = 1;

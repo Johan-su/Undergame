@@ -20,7 +20,6 @@ void SpawnerSystem::clean()
 
 void SpawnerSystem::update() //TODO: add random generators
 {
-	return;
 	if (spawntimer >= spawnrate)
 	{
 		for (auto e : m_entities)
