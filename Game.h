@@ -3,8 +3,8 @@
 #include <SDL.h>
 #include "ECS.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1366
+#define SCREEN_HEIGHT 768
 
 class Game
 {

@@ -38,12 +38,10 @@ void SpawnerSystem::update() //TODO: add random generators
 			do
 			{
 				angle = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (float)M_PI));
-				std::cout << "loop " << angle << std::endl;
 
 				x = (cos(angle) * TILE_SIZE * 10) + px;
 				y = (sin(angle) * TILE_SIZE * 10) + py; //TODO: change to real values
 
-				std::cout << x << " x y " << y << std::endl;
 
 			} while (!inside_map(x, y));
 
