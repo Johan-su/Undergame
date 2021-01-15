@@ -120,7 +120,6 @@ void Game::start_game_state()
 		}
 	}
 	EntityCreator::create_entity(ENTITY_TYPE_PLAYER, x, y, 0);
-	EntityCreator::create_entity(ENTITY_TYPE_MOLE, x, y, 0);
 	delete tm;
 }
 
