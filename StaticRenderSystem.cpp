@@ -5,8 +5,6 @@
 #include "ECS.h"
 #include "StaticRenderSystem.h"
 
-//#define RENDER_CHECKED_TILES
-
 
 std::vector<std::function<void(float x, float y, int offx, int offy)>> StaticRenderSystem::func_pointers;
 std::vector<SDL_Texture*> StaticRenderSystem::tile_textures;
@@ -14,10 +12,11 @@ std::vector<SDL_Texture*> StaticRenderSystem::tile_textures;
 
 void StaticRenderSystem::render_tiles(int offx, int offy)
 {
-	int x0 = offx - 2 * TILE_SIZE;
-	int y0 = offy - 2 * TILE_SIZE;
-	int x1 = offx + SCREEN_WIDTH + 2 * TILE_SIZE;
-	int y1 = offy + SCREEN_HEIGHT + 2 * TILE_SIZE;
+	int x0 = offx - 2 * TILE_SIZE; // top left X value corner of the window + extra
+	int y0 = offy - 2 * TILE_SIZE; // top left Y value corner of the window + extra
+
+	int x1 = offx + SCREEN_WIDTH + 2 * TILE_SIZE; // bottom right X value corner of the window + extra
+	int y1 = offy + SCREEN_HEIGHT + 2 * TILE_SIZE; // bottom right Y value corner of the window + extra
 
 
 	uint16_t gidtl = MAP_SIZE * (y0 / TILE_SIZE) + x0 / TILE_SIZE; // id of top left tile
@@ -26,7 +25,7 @@ void StaticRenderSystem::render_tiles(int offx, int offy)
 	{
 		for (uint32_t x = 0; x < (SCREEN_WIDTH + 4 * TILE_SIZE) / TILE_SIZE; ++x)
 		{
-			auto id = gidtl + x + y * MAP_SIZE; 
+			uint16_t id = gidtl + x + y * MAP_SIZE; 
 			render_tile(id, offx, offy);
 		} 
 	}
@@ -44,14 +43,6 @@ void StaticRenderSystem::render_tile(uint16_t e, int offx, int offy)
 	float x = static_cast<float>(TILE_SIZE * (e % MAP_SIZE));
 	float y = static_cast<float>(TILE_SIZE * (e / MAP_SIZE));
 
-#ifdef RENDER_SEARCHED_TILES
-	if (Game::searchedTiles[e])
-	{
-		SDL_SetRenderDrawColor(Game::renderer, 0, 255, 255, 255);
-		SDL_RenderDrawRectF(Game::renderer, &SDL_FRect({ x - offx, y - offy, static_cast<float>(TILE_SIZE), static_cast<float>(TILE_SIZE) }));
-		return;
-	}
-#endif
 	const auto& func = func_pointers[type];
 	func(x, y, offx, offy);
 
