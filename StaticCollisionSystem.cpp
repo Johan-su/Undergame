@@ -59,13 +59,7 @@ void StaticCollisionSystem::update()
 
 				if (b1 && b2 && b3 && b4)
 				{
-#ifdef _DEBUG
-					//auto& health = Game::coordinator->get_component<HealthComponent>(id[i]);
-					//auto& tile = Game::coordinator->get_component<TileComponent>(id[i]);
-					//std::cout << "Tileintersection between " << e << " and " << id[i] << std::endl;
-					//std::cout << " health " << health.health << std::endl;
-					//std::cout << "type " << Game::tileEntities[id[i]] << std::endl;
-#endif
+
 					collider.tile_id = id[i];
 					auto speed = movement.speed;
 					if (movement.velocity.x && movement.velocity.y)

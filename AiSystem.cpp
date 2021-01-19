@@ -68,7 +68,6 @@ void AiSystem::update()
 		}
 		else
 		{
-			//ai.state = AI_STATE_TRACK_LAST_KNOWN; //TODO: REMOVE; ONLY FOR TIME MEASURING
 			switch (ai.state)
 			{
 			case AI_STATE_RANDOM_WALKING:
@@ -79,7 +78,7 @@ void AiSystem::update()
 					break;
 				}
 
-				if (move_to(ai.id, pos, size, move, collider)) //TODO: fix random walk
+				if (move_to(ai.id, pos, size, move, collider))
 				{
 
 					ai.id = random_walk(pos, size, move, digger);
@@ -118,20 +117,7 @@ void AiSystem::update()
 
 
 
-					//auto before = std::chrono::high_resolution_clock::now(); //TODO: REMOVE; ONLY FOR TIME MEASURING
-
-					//Astar(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
 					dijkstra(ai.lastX, ai.lastY, pos, size, move, digger, ai.path_list);
-
-
-
-					//auto after = std::chrono::high_resolution_clock::now(); //TODO: REMOVE; ONLY FOR TIME MEASURING
-
-					//auto dt = after - before;
-					
-					//std::cout << "PATHFINDING, TIME" << std::endl; //TODO: REMOVE; ONLY FOR TIME MEASURING
-					//std::cout << "ns: " << dt.count() << " ms: " << dt.count() / 1000000.0f << " s: " << dt.count() / 1000000000.0f << std::endl; //TODO: REMOVE; ONLY FOR TIME MEASURING
-					//std::cin.ignore(); //TODO: REMOVE; ONLY FOR TIME MEASURING
 				}
 				break;
 
@@ -244,10 +230,8 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 
 
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
-	//uint16_t targetid = 13159; //TODO: REMOVE; ONLY FOR TIME MEASURING
 	uint16_t startid = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
 
-	//std::cout << "targetid " << targetid << std::endl;
 
 	uint16_t id[5];
 
@@ -265,14 +249,10 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 
 
 
-	//	int iter = 0;
 	while (!searched_grid[targetid])
 	{
 		uint32_t minid = 0;
 		float mindistance = 1E38f;
-
-		DP("target");
-		DP(id[0]);
 
 
 		id[1] = id[0] + 1;
@@ -324,24 +304,16 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 		searched_grid[minid] = true;
 		id[0] = minid;
 		++nodesSearched;
-		//++iter;
 	}
-	//std::cout << "ITERATIONS: " << iter << std::endl;
 
 	uint16_t t = targetid;
 
-	DP("startid ");
 
 	while (t != startid)
 	{
 		path.push_back(t);
 		t = before_grid[t];
 	}
-	for (int i = 0; i < path.size(); ++i)
-	{
-		DP(path[i]);
-	}
-	DP("------------------");
 }
 
 void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger, std::vector<uint32_t>& path)
@@ -352,10 +324,8 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 
 
 	uint16_t targetid = ((int)x / TILE_SIZE) + ((int)y / TILE_SIZE) * MAP_SIZE;
-	//uint16_t targetid = 13159; //TODO: REMOVE; ONLY FOR TIME MEASURING
 	uint16_t startid = ((int)(pos.pos.x + size.size.x / 2) / TILE_SIZE) + ((int)(pos.pos.y + size.size.y / 2) / TILE_SIZE) * MAP_SIZE;
 
-	//std::cout << "targetid " << targetid << std::endl;
 
 	uint16_t id[5];
 
@@ -373,7 +343,6 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 
 
 
-	//	int iter = 0;
 	while (!searched_grid[targetid]) // loop until target grid is searched
 	{
 		uint32_t minid = 0;
@@ -402,7 +371,6 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 				}
 				while (g != startid)
 				{
-					DP("time add");
 					time += distance_to_grid[g];
 					g = before_grid[g];
 				}
@@ -412,8 +380,6 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 					distance_to_grid[id[i]] = time;
 					before_grid[id[i]] = id[0];
 				}
-				DP("searched");
-				DP(id[i]);
 			}
 
 		}
@@ -430,10 +396,8 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 		searched_grid[minid] = true;
 		id[0] = minid;
 		++nodesSearched;
-		//++iter;
 	}
 
-	//std::cout << "ITERATIONS: " << iter << std::endl;
 
 	uint16_t t = targetid;
 
@@ -444,11 +408,6 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 		path.push_back(t);
 		t = before_grid[t];
 	}
-	for (int i = 0; i < path.size(); ++i)
-	{
-		DP(path[i]);
-	}
-	DP("------------------");
 }
 
 uint16_t AiSystem::random_walk(const PositionComponent& pos, const SizeComponent& size, const MovementComponent& move, const DiggerComponent& digger)
