@@ -239,17 +239,17 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 
 	for (int i = 0; i < MAP_SIZE * MAP_SIZE; ++i)
 	{
-		distance_to_grid[i] = 1E37f;
-		before_grid[i] = 0xFFFFFFFF;
-		searched_grid[i] = false;
+		distance_to_grid[i] = 1E37f; // assumes infinite distance until searched
+		before_grid[i] = 0xFFFFFFFF; // grid path initalized to unused value.
+		searched_grid[i] = false; // initalize every searched_grid to false
 	}
 
-	distance_to_grid[startid] = 0.0f;
-	searched_grid[startid] = true;
+	distance_to_grid[startid] = 0.0f; // distance to start tile is 0;
+	searched_grid[startid] = true; // start tile is searched instantly
 
 
 
-	while (!searched_grid[targetid])
+	while (!searched_grid[targetid]) // loop until target grid is searched
 	{
 		uint32_t minid = 0;
 		float mindistance = 1E38f;
@@ -287,8 +287,6 @@ void AiSystem::Astar(float x, float y, const PositionComponent& pos, const SizeC
 					distance_to_grid[id[i]] = time;
 					before_grid[id[i]] = id[0];
 				}
-				DP("searched");
-				DP(id[i]);
 			}
 		}
 
@@ -401,8 +399,6 @@ void AiSystem::dijkstra(float x, float y, const PositionComponent& pos, const Si
 
 	uint16_t t = targetid;
 
-	DP("startid ");
-
 	while (t != startid)
 	{
 		path.push_back(t);
@@ -432,7 +428,6 @@ uint16_t AiSystem::random_walk(const PositionComponent& pos, const SizeComponent
 
 	return id[r];
 }
-
 
 float AiSystem::dig_time(uint32_t gridID, const MovementComponent& move, const DiggerComponent& digger)
 {

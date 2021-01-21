@@ -221,23 +221,16 @@ float TileMapGenerator::value2d(float x, float y)
 
 	float w1, w2;
 
-	//w1 = x - x0;
-	//w2 = y - y0;
 
 	w1 = fade(x - x0);
 	w2 = fade(y - y0);
 
-	//std::cout << "w1 " << w1 << " w2 " << w2 << std::endl;
 
-	auto l1 = lerp(r1, r2, w1);
-	auto l2 = lerp(r3, r4, w1);
+	float l1 = lerp(r1, r2, w1);
+	float l2 = lerp(r3, r4, w1);
 
-	auto l3 = lerp(l1, l2, w2);
+	float l3 = lerp(l1, l2, w2);
 
-
-	//std::cout << "x0 " << x0 << " x1 " << x1 << " y0 " << y0 << " y1 " << y1 << std::endl;
-
-	//std::cout << "l1 " << l1 << " l2 " << l2 << " l3 " << l3 << std::endl;
 
 
 	return l3;
@@ -293,7 +286,6 @@ float TileMapGenerator::perlin2d(float x, float y)
 	g4 = create_gradient_vector(x1, y1);
 
 
-	//std::cout << "g1x " << g1.x << " g1y " << g1.y << " g2x " << g2.x << " g2y " << g2.y << " g3x " << g3.x << " g3y " << g3.y << " g4x " << g4.x << " g4y " << g4.y << std::endl;
 
 
 
@@ -304,7 +296,6 @@ float TileMapGenerator::perlin2d(float x, float y)
 	d4 = create_direction_vector(x, y, Vec2f({ x1, y1 }));
 
 
-	//std::cout << "d1x " << d1.x << " d1y " << d1.y << " d2x " << d2.x << " d2y " << d2.y << " d3x " << d3.x << " d3y " << d3.y << " d4x " << d4.x << " d4y " << d4.y << std::endl;
 
 
 	dot1 = dotProduct(g1, d1);
@@ -312,28 +303,18 @@ float TileMapGenerator::perlin2d(float x, float y)
 	dot3 = dotProduct(g3, d3);
 	dot4 = dotProduct(g4, d4);
 
-	//std::cout << "dot1 " << dot1 << " dot2 " << dot2 << " dot3 " << dot3 << " dot4 " << dot4 << std::endl;
  
 	float w1, w2;
 
 
-	//w1 = x - x0;
-	//w2 = y - y0;
 	w1 = fade(x - x0);
 	w2 = fade(y - y0);
 
-	//std::cout << "w1 " << w1 << " w2 " << w2 << std::endl;
 
-	auto l1 = lerp(dot1, dot2, w1);
-	auto l2 = lerp(dot3, dot4, w1);
+	float l1 = lerp(dot1, dot2, w1);
+	float l2 = lerp(dot3, dot4, w1);
 
-	auto l3 = lerp(l1, l2, w2);
-
-
-	//std::cout << "x0 " << x0 << " x1 " << x1 << " y0 " << y0 << " y1 " << y1 << std::endl;
-
-	//std::cout << "l1 " << l1 << " l2 " << l2 << " l3 " << l3 << std::endl;
-
+	float l3 = lerp(l1, l2, w2);
 
 	return l3;
 }
